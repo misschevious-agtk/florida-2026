@@ -29,7 +29,7 @@
 
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; -webkit-font-smoothing: antialiased; }
 
-  html, body { height: 100%; overflow: hidden; }
+  html, body { height: 100%; overflow: hidden; -webkit-font-smoothing: antialiased; }
 
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
@@ -49,12 +49,19 @@
 
   /* ─── HERO ─── */
   .hero {
-    background: linear-gradient(160deg, #0A0F1E 0%, #0D1F4A 55%, #0055DD 100%);
+    background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=80') center center / cover no-repeat;
     padding: 52px 24px 36px;
     text-align: center;
     position: relative;
     overflow: hidden;
   }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,20,60,0.45) 0%, rgba(0,40,100,0.55) 100%);
+  }
+  .hero > * { position: relative; z-index: 1; }
   .hero::before {
     content: '';
     position: absolute;
@@ -88,7 +95,7 @@
   .section-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--soft); margin-bottom: 10px; padding: 0 2px; }
 
   /* ─── CARD ─── */
-  .card { background: var(--white); border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; box-shadow: 0 2px 16px rgba(0,0,0,0.04); }
+  .card { background: var(--white); border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; box-shadow: 0 4px 24px rgba(0,30,80,0.07); }
   #p-costs .card { overflow: visible; }
   #p-costs .container { padding-bottom: 100px; }
   .card + .card { margin-top: 10px; }
