@@ -631,8 +631,9 @@
       <div class="section-label">Cost Split</div>
 
       <div class="ct-toggle">
-        <div class="ct-tab active" onclick="ctSwitch('harris',this)">&#127968; Harris Family</div>
+        <div class="ct-tab active" onclick="ctSwitch('harris',this)">&#127968; Harris</div>
         <div class="ct-tab" onclick="ctSwitch('bruce',this)">&#128100; Bruce</div>
+        <div class="ct-tab" onclick="ctSwitch('total',this)">&#128200; Total</div>
       </div>
 
       <div class="ct-panel active" id="ct-harris">
@@ -712,6 +713,89 @@
             <div style="text-align:right"><div class="ct-total-amt">&euro;1,899</div><div class="ct-total-conv">~$2,061 &middot; ~&pound;1,621</div></div>
           </div>
           <div class="ct-note">* Highlighted rows = amounts Bruce owes Tara for tickets already paid</div>
+        </div>
+      </div>
+
+      <!-- TOTAL PANEL -->
+      <div class="ct-panel" id="ct-total">
+        <div class="card">
+          <div class="ct-header">
+            <div class="ct-avatar" style="background:#f0f4ff;">&#128200;</div>
+            <div><div class="ct-name">Full Trip Summary</div><div class="ct-name-sub">Harris Family + Bruce &middot; Aug 1&ndash;17 2026</div></div>
+          </div>
+
+          <!-- CATEGORY ROWS -->
+          <div class="ct-row">
+            <div><div class="ct-label">&#9992;&#65039; Flights</div><div class="ct-sub">Harris: 5 pax KLM/Delta &middot; Bruce: separate</div></div>
+            <div style="text-align:right"><div class="ct-amt" style="color:var(--soft)">TBC</div><div class="ct-conv">Harris paid &#10003;</div></div>
+          </div>
+          <div class="ct-row">
+            <div><div class="ct-label">&#127969; Airbnb Kissimmee</div><div class="ct-sub">4 rooms &middot; 16 nights &middot; Harris 3/4 &middot; Bruce 1/4</div></div>
+            <div style="text-align:right">
+              <div class="ct-amt">&euro;2,379.73</div>
+              <div style="font-size:10px;color:var(--soft);margin-top:4px;">Harris &euro;1,784.80 &middot; Bruce &euro;594.93</div>
+            </div>
+          </div>
+          <div class="ct-row">
+            <div><div class="ct-label">&#127968; SLS LUX Brickell</div><div class="ct-sub">2 rooms &middot; 1 night &middot; Harris &euro;381.54 &middot; Bruce &euro;322</div></div>
+            <div style="text-align:right">
+              <div class="ct-amt">&euro;703.54</div>
+              <div style="font-size:10px;color:var(--soft);margin-top:4px;">Harris &euro;381.54 &middot; Bruce &euro;322.00</div>
+            </div>
+          </div>
+          <div class="ct-row">
+            <div><div class="ct-label">&#127904; Universal + Volcano Bay</div><div class="ct-sub">All 6 guests &middot; Orders U13692737 + TBC</div></div>
+            <div style="text-align:right">
+              <div class="ct-amt">$3,252.48</div>
+              <div style="font-size:10px;color:var(--soft);margin-top:4px;">Harris $2,743 &middot; Bruce $509 owes Tara</div>
+            </div>
+          </div>
+          <div class="ct-row">
+            <div><div class="ct-label">&#128663; Car Hire &middot; Hertz XC90</div><div class="ct-sub">16 days &middot; 3 adults &middot; Harris 2/3 &middot; Bruce 1/3</div></div>
+            <div style="text-align:right">
+              <div class="ct-amt">&euro;1,289.57</div>
+              <div style="font-size:10px;color:var(--soft);margin-top:4px;">Harris &euro;859.72 &middot; Bruce &euro;429.86</div>
+            </div>
+          </div>
+
+          <!-- DIVIDER -->
+          <div style="height:1px;background:var(--border);margin:4px 0;"></div>
+
+          <!-- SUMMARY BOXES -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:14px 16px;">
+            <div style="background:var(--blue-light);border-radius:14px;padding:14px;text-align:center;">
+              <div style="font-size:10px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">&#127968; Harris</div>
+              <div style="font-size:20px;font-weight:900;color:var(--blue);">&euro;5,554</div>
+              <div style="font-size:10px;color:var(--soft);margin-top:4px;">~$5,816 &middot; ~&pound;4,761</div>
+              <div style="font-size:9px;color:var(--soft);margin-top:6px;">excl. flights</div>
+            </div>
+            <div style="background:#e6f9f0;border-radius:14px;padding:14px;text-align:center;">
+              <div style="font-size:10px;font-weight:700;color:#059669;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">&#128100; Bruce</div>
+              <div style="font-size:20px;font-weight:900;color:#059669;">&euro;1,899</div>
+              <div style="font-size:10px;color:var(--soft);margin-top:4px;">~$2,061 &middot; ~&pound;1,621</div>
+              <div style="font-size:9px;color:var(--soft);margin-top:6px;">excl. flights</div>
+            </div>
+          </div>
+
+          <!-- BRUCE OWES BOX -->
+          <div style="margin:0 16px 16px;background:#fff8e6;border:1.5px solid #f59e0b;border-radius:14px;padding:14px;">
+            <div style="font-size:11px;font-weight:700;color:#b45309;margin-bottom:8px;">&#9888;&#65039; Bruce owes Tara (tickets already paid)</div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+              <span style="font-size:12px;color:var(--text);">Universal Park-to-Park + Express</span>
+              <span style="font-size:12px;font-weight:700;">$508.99</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:10px;">
+              <span style="font-size:12px;color:var(--text);">Volcano Bay</span>
+              <span style="font-size:12px;font-weight:700;">$90.00</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;border-top:1px solid #f59e0b;padding-top:10px;">
+              <span style="font-size:13px;font-weight:800;color:#b45309;">Total owed to Tara</span>
+              <span style="font-size:16px;font-weight:900;color:#b45309;">$598.99</span>
+            </div>
+            <div style="font-size:10px;color:var(--soft);margin-top:6px;">~&euro;552 &middot; ~&pound;473</div>
+          </div>
+
+          <div class="ct-note">* Flights excluded — Harris paid separately, Bruce arranges own. Car hire pending confirmation.</div>
         </div>
       </div>
 
