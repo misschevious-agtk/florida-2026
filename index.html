@@ -290,6 +290,54 @@
   .bn-label { font-size: 9px; font-weight: 600; color: var(--soft); letter-spacing: 0.2px; transition: color 0.15s; }
   .bn-item.active .bn-icon { transform: scale(1.15); }
   .bn-item.active .bn-label { color: var(--blue); font-weight: 700; }
+
+  /* ── COST TRACKER ── */
+  .ct-toggle { display:flex; background:var(--bg); border:1px solid var(--border); border-radius:12px; padding:3px; margin-bottom:18px; }
+  .ct-tab { flex:1; text-align:center; padding:8px; font-size:12px; font-weight:700; border-radius:10px; cursor:pointer; color:var(--soft); transition:all .2s; }
+  .ct-tab.active { background:var(--blue); color:#fff; }
+  .ct-panel { display:none; }
+  .ct-panel.active { display:block; }
+  .ct-row { display:flex; justify-content:space-between; align-items:center; padding:12px 16px; border-bottom:1px solid var(--border); gap:12px; }
+  .ct-row:last-child { border-bottom:none; }
+  .ct-label { font-size:13px; color:var(--text); }
+  .ct-sub { font-size:10px; color:var(--soft); margin-top:2px; }
+  .ct-amt { font-size:14px; font-weight:800; color:var(--text); text-align:right; white-space:nowrap; }
+  .ct-conv { font-size:10px; color:var(--soft); text-align:right; margin-top:2px; }
+  .ct-total-row { display:flex; justify-content:space-between; align-items:center; padding:16px; background:var(--blue); border-radius:14px; margin-top:12px; }
+  .ct-total-label { font-size:12px; font-weight:700; color:rgba(255,255,255,0.8); max-width:140px; }
+  .ct-total-amt { font-size:22px; font-weight:900; color:#fff; }
+  .ct-total-conv { font-size:11px; color:rgba(255,255,255,0.7); text-align:right; margin-top:2px; }
+  .ct-note { font-size:11px; color:var(--soft); padding:10px 16px; font-style:italic; }
+  .ct-header { display:flex; align-items:center; gap:12px; padding:14px 16px; border-bottom:1px solid var(--border); }
+  .ct-avatar { width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+  .ct-avatar-blue { background:var(--blue-light); }
+  .ct-avatar-green { background:#e6f9f0; }
+  .ct-name { font-size:15px; font-weight:800; }
+  .ct-name-sub { font-size:11px; color:var(--soft); }
+
+  /* ── COST TRACKER ── */
+  .ct-toggle { display:flex; background:var(--bg); border:1px solid var(--border); border-radius:12px; padding:3px; margin-bottom:18px; }
+  .ct-tab { flex:1; text-align:center; padding:8px; font-size:12px; font-weight:700; border-radius:10px; cursor:pointer; color:var(--soft); transition:all .2s; }
+  .ct-tab.active { background:var(--blue); color:#fff; }
+  .ct-panel { display:none; }
+  .ct-panel.active { display:block; }
+  .ct-row { display:flex; justify-content:space-between; align-items:center; padding:12px 16px; border-bottom:1px solid var(--border); gap:12px; }
+  .ct-row:last-child { border-bottom:none; }
+  .ct-label { font-size:13px; color:var(--text); }
+  .ct-sub { font-size:10px; color:var(--soft); margin-top:2px; }
+  .ct-amt { font-size:14px; font-weight:800; color:var(--text); text-align:right; white-space:nowrap; }
+  .ct-conv { font-size:10px; color:var(--soft); text-align:right; margin-top:2px; }
+  .ct-total-row { display:flex; justify-content:space-between; align-items:center; padding:16px; background:var(--blue); border-radius:14px; margin-top:12px; }
+  .ct-total-label { font-size:12px; font-weight:700; color:rgba(255,255,255,0.8); max-width:140px; }
+  .ct-total-amt { font-size:22px; font-weight:900; color:#fff; }
+  .ct-total-conv { font-size:11px; color:rgba(255,255,255,0.7); text-align:right; margin-top:2px; }
+  .ct-note { font-size:11px; color:var(--soft); padding:10px 16px; font-style:italic; }
+  .ct-header { display:flex; align-items:center; gap:12px; padding:14px 16px; border-bottom:1px solid var(--border); }
+  .ct-avatar { width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+  .ct-avatar-blue { background:var(--blue-light); }
+  .ct-avatar-green { background:#e6f9f0; }
+  .ct-name { font-size:15px; font-weight:800; }
+  .ct-name-sub { font-size:11px; color:var(--soft); }
 </style>
 </head>
 <body>
@@ -576,12 +624,104 @@
 </div><!-- end #app -->
 
 <!-- BOTTOM NAV -->
+  <!-- COSTS PAGE -->
+  <div class="page" id="p-costs">
+  <div class="container">
+    <div class="section">
+      <div class="section-label">Cost Split</div>
+
+      <div class="ct-toggle">
+        <div class="ct-tab active" onclick="ctSwitch('harris',this)">&#127968; Harris Family</div>
+        <div class="ct-tab" onclick="ctSwitch('bruce',this)">&#128100; Bruce</div>
+      </div>
+
+      <div class="ct-panel active" id="ct-harris">
+        <div class="card">
+          <div class="ct-header">
+            <div class="ct-avatar ct-avatar-blue">&#127968;</div>
+            <div><div class="ct-name">Harris Family</div><div class="ct-name-sub">Tara &middot; Craig &middot; Sebastian &middot; Scarlett &middot; Isabella</div></div>
+          </div>
+          <div class="ct-row">
+            <div><div class="ct-label">&#9992;&#65039; Flights (KLM/Delta)</div><div class="ct-sub">5 passengers &middot; AMS &#8596; MCO &middot; Ref X9WL5R</div></div>
+            <div style="text-align:right"><div class="ct-amt" style="color:var(--soft)">TBC</div><div class="ct-conv">Paid &#10003;</div></div>
+          </div>
+          <div class="ct-row">
+            <div><div class="ct-label">&#127969; Airbnb Kissimmee</div><div class="ct-sub">3 of 4 rooms &middot; 1&ndash;17 Aug &middot; 16 nights</div></div>
+            <div style="text-align:right"><div class="ct-amt">&euro;1,784.80</div><div class="ct-conv">$1,938 &middot; &pound;1,527</div></div>
+          </div>
+          <div class="ct-row">
+            <div><div class="ct-label">&#127968; SLS LUX Brickell</div><div class="ct-sub">1 room &middot; Lux Studio King &middot; 6&ndash;7 Aug</div></div>
+            <div style="text-align:right"><div class="ct-amt">&euro;322.00</div><div class="ct-conv">$350 &middot; &pound;276</div></div>
+          </div>
+          <div class="ct-row">
+            <div><div class="ct-label">&#127904; Universal Park-to-Park</div><div class="ct-sub">5 tickets + Express Pass &middot; 11 Aug</div></div>
+            <div style="text-align:right"><div class="ct-amt" style="color:var(--soft)">TBC</div><div class="ct-conv">Each pays own</div></div>
+          </div>
+          <div class="ct-row">
+            <div><div class="ct-label">&#127754; Volcano Bay</div><div class="ct-sub">5 tickets &middot; 13 Aug</div></div>
+            <div style="text-align:right"><div class="ct-amt" style="color:var(--soft)">TBC</div><div class="ct-conv">Each pays own</div></div>
+          </div>
+          <div class="ct-row">
+            <div><div class="ct-label">&#128663; Car Hire &middot; Hertz XC90</div><div class="ct-sub">Tara + Craig &middot; 2 of 3 adults</div></div>
+            <div style="text-align:right"><div class="ct-amt">&euro;859.72</div><div class="ct-conv">$933 &middot; &pound;736</div></div>
+          </div>
+          <div class="ct-total-row">
+            <div class="ct-total-label">Harris Total<br/>(excl. flights &amp; tickets)</div>
+            <div style="text-align:right"><div class="ct-total-amt">&euro;2,966</div><div class="ct-total-conv">~$3,221 &middot; ~&pound;2,539</div></div>
+          </div>
+          <div class="ct-note">* Flights and theme park ticket costs TBC and paid individually</div>
+        </div>
+      </div>
+
+      <div class="ct-panel" id="ct-bruce">
+        <div class="card">
+          <div class="ct-header">
+            <div class="ct-avatar ct-avatar-green">&#128100;</div>
+            <div><div class="ct-name">Bruce Herholdt</div><div class="ct-name-sub">Travelling separately on flights</div></div>
+          </div>
+          <div class="ct-row">
+            <div><div class="ct-label">&#9992;&#65039; Flights</div><div class="ct-sub">Bruce arranges separately</div></div>
+            <div style="text-align:right"><div class="ct-amt" style="color:var(--soft)">&mdash;</div><div class="ct-conv">Separate booking</div></div>
+          </div>
+          <div class="ct-row">
+            <div><div class="ct-label">&#127969; Airbnb Kissimmee</div><div class="ct-sub">1 of 4 rooms &middot; 1&ndash;17 Aug &middot; 16 nights</div></div>
+            <div style="text-align:right"><div class="ct-amt">&euro;594.93</div><div class="ct-conv">$646 &middot; &pound;509</div></div>
+          </div>
+          <div class="ct-row">
+            <div><div class="ct-label">&#127968; SLS LUX Brickell</div><div class="ct-sub">1 room &middot; Lux Studio King &middot; 6&ndash;7 Aug</div></div>
+            <div style="text-align:right"><div class="ct-amt">&euro;322.00</div><div class="ct-conv">$350 &middot; &pound;276</div></div>
+          </div>
+          <div class="ct-row">
+            <div><div class="ct-label">&#127904; Universal Park-to-Park</div><div class="ct-sub">1 ticket + Express Pass &middot; 11 Aug</div></div>
+            <div style="text-align:right"><div class="ct-amt" style="color:var(--soft)">TBC</div><div class="ct-conv">Each pays own</div></div>
+          </div>
+          <div class="ct-row">
+            <div><div class="ct-label">&#127754; Volcano Bay</div><div class="ct-sub">1 ticket &middot; 13 Aug</div></div>
+            <div style="text-align:right"><div class="ct-amt" style="color:var(--soft)">TBC</div><div class="ct-conv">Each pays own</div></div>
+          </div>
+          <div class="ct-row">
+            <div><div class="ct-label">&#128663; Car Hire &middot; Hertz XC90</div><div class="ct-sub">1 of 3 adults</div></div>
+            <div style="text-align:right"><div class="ct-amt">&euro;429.86</div><div class="ct-conv">$467 &middot; &pound;368</div></div>
+          </div>
+          <div class="ct-total-row">
+            <div class="ct-total-label">Bruce Total<br/>(excl. flights &amp; tickets)</div>
+            <div style="text-align:right"><div class="ct-total-amt">&euro;1,347</div><div class="ct-total-conv">~$1,463 &middot; ~&pound;1,153</div></div>
+          </div>
+          <div class="ct-note">* Flights and theme park ticket costs TBC and paid individually</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  </div>
+
 <nav class="bottom-nav">
   <button class="bn-item active" onclick="nav('overview',this)"><span class="bn-icon">🗓</span><span class="bn-label">Overview</span></button>
   <button class="bn-item" onclick="nav('flights',this)"><span class="bn-icon">✈️</span><span class="bn-label">Flights</span></button>
   <button class="bn-item" onclick="nav('stays',this)"><span class="bn-icon">🏠</span><span class="bn-label">Stays</span></button>
   <button class="bn-item" onclick="nav('parks',this)"><span class="bn-icon">🎢</span><span class="bn-label">Parks</span></button>
   <button class="bn-item" onclick="nav('budget',this)"><span class="bn-icon">💰</span><span class="bn-label">Budget</span></button>
+  <button class="bn-item" onclick="nav('costs',this)"><span class="bn-icon">🧾</span><span class="bn-label">Costs</span></button>
   <button class="bn-item" onclick="nav('group',this)"><span class="bn-icon">👥</span><span class="bn-label">Group</span></button>
   <button class="bn-item" onclick="nav('photos',this)"><span class="bn-icon">📸</span><span class="bn-label">Photos</span></button>
 </nav>
@@ -603,6 +743,22 @@ function tick() {
   document.getElementById('cd-m').textContent = Math.floor((d%3600000)/60000);
 }
 tick(); setInterval(tick, 30000);
+
+
+function ctSwitch(id, el) {
+  document.querySelectorAll('.ct-panel').forEach(function(p){ p.classList.remove('active'); });
+  document.querySelectorAll('.ct-tab').forEach(function(t){ t.classList.remove('active'); });
+  document.getElementById('ct-' + id).classList.add('active');
+  el.classList.add('active');
+}
+
+
+function ctSwitch(id, el) {
+  document.querySelectorAll('.ct-panel').forEach(function(p){ p.classList.remove('active'); });
+  document.querySelectorAll('.ct-tab').forEach(function(t){ t.classList.remove('active'); });
+  document.getElementById('ct-' + id).classList.add('active');
+  el.classList.add('active');
+}
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js').catch(function(){});
