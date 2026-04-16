@@ -14,1094 +14,1228 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;0,9..40,900&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --blue: #0066FF;
-    --blue-light: #EBF2FF;
-    --dark: #0A0F1E;
-    --mid: #3D4560;
-    --soft: #8892A4;
-    --bg: #F5F7FA;
-    --white: #FFFFFF;
-    --green: #00C48C;
-    --amber: #FFAB00;
-    --red: #FF5252;
-    --border: rgba(0,0,0,0.07);
-    --radius: 20px;
-    --safe-bottom: env(safe-area-inset-bottom, 0px);
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; -webkit-font-smoothing: antialiased; }
-
-  html, body { height: 100%; overflow: hidden; -webkit-font-smoothing: antialiased; }
-
-  body {
-    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: var(--bg);
-    color: var(--dark);
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* ─── SCROLL CONTAINER ─── */
-  #app {
-    flex: 1;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: calc(70px + var(--safe-bottom));
-  }
-
-  /* ─── HERO ─── */
-  .hero {
-    background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=80') center center / cover no-repeat;
-    padding: 52px 24px 36px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.5) 100%);
-  }
-  .hero > * { position: relative; z-index: 1; }
-  .hero::before {
-    content: '';
-    position: absolute;
-    width: 350px; height: 350px;
-    background: radial-gradient(circle, rgba(0,102,255,0.35) 0%, transparent 70%);
-    top: -80px; right: -80px; border-radius: 50%;
-  }
-  .hero-emoji { display: none; }
-  .hero h1 { font-size: 28px; font-weight: 800; color: #0a1628; letter-spacing: -0.5px; position: relative; z-index: 1; margin-bottom: 4px; text-shadow: 0 1px 3px rgba(255,255,255,0.4); }
-  .hero-sub { color: rgba(0,0,0,0.7); font-size: 13px; position: relative; z-index: 1; margin-bottom: 20px; font-weight: 600; }
-  .hero-pills { display: flex; flex-wrap: wrap; gap: 7px; justify-content: center; position: relative; z-index: 1; }
-  .pill { background: rgba(255,255,255,0.55); border: 1px solid rgba(0,0,0,0.15); color: rgba(0,0,0,0.8); font-size: 11px; font-weight: 600; padding: 4px 11px; border-radius: 100px; }
-
-  /* ─── COUNTDOWN ─── */
-  .countdown { background: var(--blue); padding: 14px 24px; text-align: center; color: white; }
-  .cd-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.65; margin-bottom: 8px; }
-  .cd-nums { display: flex; gap: 20px; justify-content: center; }
-  .cd-unit { text-align: center; }
-  .cd-num { font-size: 30px; font-weight: 800; line-height: 1; }
-  .cd-name { font-size: 9px; opacity: 0.6; text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
-
-  /* ─── PAGES ─── */
-  .page { display: none; animation: fadeIn 0.18s ease; }
-  .page.active { display: block; }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-
-  .container { max-width: 560px; margin: 0 auto; padding: 20px 14px 8px; }
-
-  /* ─── SECTION ─── */
-  .section { margin-bottom: 28px; }
-  .section-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--soft); margin-bottom: 10px; padding: 0 2px; }
-
-  /* ─── CARD ─── */
-  .card { background: var(--white); border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; box-shadow: 0 4px 24px rgba(0,30,80,0.07); }
-  #p-costs .card { overflow: visible; }
-  #p-costs .container { padding-bottom: 100px; }
-  .card + .card { margin-top: 10px; }
-
-  /* ─── CARD TOP ─── */
-  .card-top { padding: 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
-  .ci { width: 44px; height: 44px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
-  .ci-blue { background: var(--blue-light); }
-  .ci-green { background: #E8FBF5; }
-  .ci-amber { background: #FFF8E6; }
-  .ci-purple { background: #F0EBFF; }
-  .ci-red { background: #FFF0F0; }
-  .card-h { font-size: 15px; font-weight: 700; }
-  .card-sh { font-size: 11px; color: var(--soft); margin-top: 2px; }
-
-  /* ─── ROWS ─── */
-  .rows { padding: 0 16px; }
-  .row { display: flex; align-items: flex-start; gap: 10px; padding: 11px 0; border-bottom: 1px solid var(--border); }
-  .row:last-child { border-bottom: none; }
-  .rl { font-size: 10px; font-weight: 600; color: var(--soft); text-transform: uppercase; letter-spacing: 0.5px; min-width: 88px; padding-top: 2px; flex-shrink: 0; }
-  .rv { font-size: 13px; font-weight: 500; flex: 1; line-height: 1.4; }
-
-  /* ─── BADGES ─── */
-  .b { display: inline-flex; align-items: center; font-size: 10px; font-weight: 700; border-radius: 100px; padding: 3px 9px; white-space: nowrap; }
-  .b-green { background: #E8FBF5; color: #00865A; }
-  .b-red { background: #FFF0F0; color: #CC3333; }
-  .b-amber { background: #FFF8E6; color: #996600; }
-  .b-blue { background: var(--blue-light); color: var(--blue); }
-  .b-grey { background: #F0F0F0; color: var(--soft); }
-
-  /* ─── MONO TAG ─── */
-  .tag { font-family: 'SF Mono', 'Fira Code', monospace; background: var(--bg); border: 1px solid var(--border); border-radius: 7px; padding: 2px 7px; font-size: 11px; font-weight: 600; letter-spacing: 1px; }
-
-  /* ─── CHIPS ─── */
-  .chips { display: flex; flex-wrap: wrap; gap: 5px; }
-  .chip { background: var(--blue-light); color: var(--blue); border-radius: 100px; padding: 3px 10px; font-size: 11px; font-weight: 500; }
-
-  /* ─── NOTE ─── */
-  .note { padding: 11px 13px; border-radius: 11px; font-size: 12px; font-weight: 500; display: flex; align-items: flex-start; gap: 7px; line-height: 1.4; margin: 0 16px 12px; }
-  .note:first-child { margin-top: 14px; }
-  .note-blue { background: var(--blue-light); color: #0044CC; }
-  .note-amber { background: #FFF8E6; color: #7A5000; }
-  .note-red { background: #FFF0F0; color: #990000; }
-  .note-green { background: #E8FBF5; color: #005C3E; }
-  .note-grey { background: #F5F7FA; color: var(--soft); }
-
-  /* ─── FLIGHT ─── */
-  .f-band { background: var(--blue); color: white; padding: 9px 16px; font-size: 11px; font-weight: 700; display: flex; justify-content: space-between; }
-  .f-leg { display: grid; grid-template-columns: 1fr 64px 1fr; align-items: center; padding: 14px 16px; border-bottom: 1px solid var(--border); }
-  .f-leg:last-child { border-bottom: none; }
-  .ac { font-size: 22px; font-weight: 800; letter-spacing: -1px; }
-  .an { font-size: 10px; color: var(--soft); margin-top: 1px; }
-  .at { font-size: 13px; font-weight: 700; margin-top: 3px; color: var(--blue); }
-  .fm { text-align: center; }
-  .fn { font-size: 10px; font-weight: 700; color: var(--blue); }
-  .fa { font-size: 16px; color: var(--soft); margin: 3px 0; }
-  .fo { font-size: 9px; color: var(--soft); }
-  .rt { text-align: right; }
-
-  /* ─── TIMELINE ─── */
-  .tl-item { display: flex; gap: 12px; }
-  .tl-l { display: flex; flex-direction: column; align-items: center; width: 36px; flex-shrink: 0; }
-  .tl-dot { width: 36px; height: 36px; border-radius: 11px; background: var(--blue-light); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
-  .tl-line { width: 2px; flex: 1; min-height: 16px; background: var(--border); margin: 3px 0; }
-  .tl-body { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 12px 14px; flex: 1; margin-bottom: 6px; box-shadow: 0 1px 8px rgba(0,0,0,0.03); }
-  .tl-date { font-size: 10px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
-  .tl-title { font-size: 14px; font-weight: 700; }
-  .tl-desc { font-size: 11px; color: var(--soft); margin-top: 3px; line-height: 1.4; }
-
-  /* ─── BUDGET ─── */
-  .totals { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-bottom: 12px; }
-  .tc { border-radius: 14px; padding: 14px 10px; text-align: center; color: white; }
-  .tc.eur { background: linear-gradient(135deg,#0066FF,#0040CC); }
-  .tc.usd { background: linear-gradient(135deg,#00C48C,#008060); }
-  .tc.gbp { background: linear-gradient(135deg,#8B5CF6,#5B21B6); }
-  .tc-flag { font-size: 18px; margin-bottom: 4px; }
-  .tc-amt { font-size: 19px; font-weight: 800; line-height: 1; }
-  .tc-lbl { font-size: 9px; opacity: 0.7; margin-top: 3px; text-transform: uppercase; letter-spacing: 1px; }
-
-  .bi { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-bottom: 1px solid var(--border); }
-  .bi:last-of-type { border-bottom: none; }
-  .bi-icon { font-size: 20px; width: 32px; text-align: center; flex-shrink: 0; }
-  .bi-info { flex: 1; min-width: 0; }
-  .bi-name { font-size: 13px; font-weight: 600; }
-  .bi-sub { font-size: 10px; color: var(--soft); margin-top: 1px; }
-  .bi-right { text-align: right; flex-shrink: 0; }
-  .bi-amt { font-size: 14px; font-weight: 800; }
-  .bi-conv { font-size: 9px; color: var(--soft); margin-top: 1px; }
-  .total-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; background: var(--blue-light); border-top: 1px solid rgba(0,102,255,0.12); }
-  .total-lbl { font-size: 13px; font-weight: 700; color: var(--blue); }
-  .total-amt { font-size: 17px; font-weight: 800; color: var(--blue); }
-
-  /* ─── PAYMENTS ─── */
-  .pi { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--border); }
-  .pi:last-child { border-bottom: none; }
-  .pi-title { font-size: 13px; font-weight: 600; }
-  .pi-date { font-size: 10px; color: var(--soft); margin-top: 2px; }
-  .pi-amt { font-size: 14px; font-weight: 800; margin-top: 3px; text-align: right; }
-
-  /* ─── TICKETS ─── */
-  .ti { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--border); }
-  .ti:last-child { border-bottom: none; }
-  .ti-em { font-size: 26px; width: 38px; text-align: center; flex-shrink: 0; }
-  .ti-info { flex: 1; }
-  .ti-title { font-size: 13px; font-weight: 700; }
-  .ti-sub { font-size: 11px; color: var(--soft); margin-top: 2px; }
-  .ti-date { background: var(--blue-light); color: var(--blue); font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 100px; white-space: nowrap; flex-shrink: 0; }
-  .ti-date-tbc { background: #F0F0F0; color: var(--soft); font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 100px; white-space: nowrap; flex-shrink: 0; }
-
-  /* ─── AIRBNB PAYS ─── */
-  .ap { display: flex; justify-content: space-between; align-items: center; padding: 11px 16px; border-bottom: 1px solid var(--border); }
-  .ap:last-child { border-bottom: none; }
-  .ap-title { font-size: 12px; font-weight: 600; }
-  .ap-date { font-size: 10px; color: var(--soft); margin-top: 1px; }
-  .ap-right { text-align: right; }
-  .ap-amt { font-size: 13px; font-weight: 800; margin-top: 3px; }
-
-  /* ─── CHECKLIST ─── */
-  .cli { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-bottom: 1px solid var(--border); font-size: 13px; }
-  .cli:last-child { border-bottom: none; }
-  .cli-icon { font-size: 16px; flex-shrink: 0; }
-
-  /* ─── GROUP ─── */
-  .group-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border); }
-  .gm { background: var(--white); padding: 18px 10px; text-align: center; }
-  .av { width: 44px; height: 44px; border-radius: 14px; background: linear-gradient(135deg,var(--blue),#00C48C); color: white; font-size: 18px; font-weight: 800; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px; }
-  .av-b { background: linear-gradient(135deg,#8B5CF6,#EC4899) !important; }
-  .gm-name { font-size: 11px; font-weight: 700; }
-  .gm-role { font-size: 9px; color: var(--soft); margin-top: 2px; }
-
-
-  /* ─── PLACE IMAGES ─── */
-  .place-img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    display: block;
-    background: #e0e8f0;
-  }
-  .place-img-wrap {
-    position: relative;
-    overflow: hidden;
-  }
-  .place-img-wrap .place-link {
-    position: absolute;
-    bottom: 10px; right: 10px;
-    background: rgba(0,0,0,0.55);
-    backdrop-filter: blur(6px);
-    color: white;
-    font-size: 11px;
-    font-weight: 700;
-    padding: 5px 12px;
-    border-radius: 100px;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-  .link-row {
-    display: flex;
-    align-items: center;
-    padding: 12px 16px;
-    border-top: 1px solid var(--border);
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--blue);
-    text-decoration: none;
-    gap: 6px;
-  }
-  .link-row:active { background: var(--blue-light); }
-  /* ─── PHOTOS ─── */
-  .ph-empty { padding: 50px 20px; text-align: center; color: var(--soft); }
-  .ph-icon { font-size: 44px; margin-bottom: 10px; }
-  .ph-text { font-size: 13px; line-height: 1.5; }
-
-  /* ─── BOTTOM NAV ─── */
-  .bottom-nav {
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    background: rgba(255,255,255,0.92);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-top: 1px solid var(--border);
-    display: flex;
-    padding-bottom: var(--safe-bottom);
-    z-index: 200;
-  }
-  .bn-item {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px 4px 8px;
-    cursor: pointer;
-    gap: 3px;
-    border: none;
-    background: none;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .bn-icon { font-size: 22px; line-height: 1; transition: transform 0.15s; }
-  .bn-label { font-size: 9px; font-weight: 600; color: var(--soft); letter-spacing: 0.2px; transition: color 0.15s; }
-  .bn-item.active .bn-icon { transform: scale(1.15); }
-  .bn-item.active .bn-label { color: var(--blue); font-weight: 700; }
-
-  /* ── COST TRACKER ── */
-  .ct-toggle { display:flex; background:var(--bg); border:1px solid var(--border); border-radius:12px; padding:3px; margin-bottom:18px; }
-  .ct-tab { flex:1; text-align:center; padding:8px; font-size:12px; font-weight:700; border-radius:10px; cursor:pointer; color:var(--soft); transition:all .2s; }
-  .ct-tab.active { background:var(--blue); color:#fff; }
-  .ct-panel { display:none; }
-  .ct-panel.active { display:block; }
-  .ct-row { display:flex; justify-content:space-between; align-items:center; padding:12px 16px; border-bottom:1px solid var(--border); gap:12px; }
-  .ct-row:last-child { border-bottom:none; }
-  .ct-label { font-size:13px; color:var(--text); }
-  .ct-sub { font-size:10px; color:var(--soft); margin-top:2px; }
-  .ct-amt { font-size:14px; font-weight:800; color:var(--text); text-align:right; white-space:nowrap; }
-  .ct-conv { font-size:10px; color:var(--soft); text-align:right; margin-top:2px; }
-  .ct-total-row { display:flex; justify-content:space-between; align-items:center; padding:16px; background:var(--blue); border-radius:14px; margin-top:12px; }
-  .ct-total-label { font-size:12px; font-weight:700; color:rgba(255,255,255,0.8); max-width:140px; }
-  .ct-total-amt { font-size:22px; font-weight:900; color:#fff; }
-  .ct-total-conv { font-size:11px; color:rgba(255,255,255,0.7); text-align:right; margin-top:2px; }
-  .ct-note { font-size:11px; color:var(--soft); padding:10px 16px; font-style:italic; }
-  .ct-header { display:flex; align-items:center; gap:12px; padding:14px 16px; border-bottom:1px solid var(--border); }
-  .ct-avatar { width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
-  .ct-avatar-blue { background:var(--blue-light); }
-  .ct-avatar-green { background:#e6f9f0; }
-  .ct-name { font-size:15px; font-weight:800; }
-  .ct-name-sub { font-size:11px; color:var(--soft); }
-
-  /* ── COST TRACKER ── */
-  .ct-toggle { display:flex; background:var(--bg); border:1px solid var(--border); border-radius:12px; padding:3px; margin-bottom:18px; }
-  .ct-tab { flex:1; text-align:center; padding:8px; font-size:12px; font-weight:700; border-radius:10px; cursor:pointer; color:var(--soft); transition:all .2s; }
-  .ct-tab.active { background:var(--blue); color:#fff; }
-  .ct-panel { display:none; }
-  .ct-panel.active { display:block; }
-  .ct-row { display:flex; justify-content:space-between; align-items:center; padding:12px 16px; border-bottom:1px solid var(--border); gap:12px; }
-  .ct-row:last-child { border-bottom:none; }
-  .ct-label { font-size:13px; color:var(--text); }
-  .ct-sub { font-size:10px; color:var(--soft); margin-top:2px; }
-  .ct-amt { font-size:14px; font-weight:800; color:var(--text); text-align:right; white-space:nowrap; }
-  .ct-conv { font-size:10px; color:var(--soft); text-align:right; margin-top:2px; }
-  .ct-total-row { display:flex; justify-content:space-between; align-items:center; padding:16px; background:var(--blue); border-radius:14px; margin-top:12px; }
-  .ct-total-label { font-size:12px; font-weight:700; color:rgba(255,255,255,0.8); max-width:140px; }
-  .ct-total-amt { font-size:22px; font-weight:900; color:#fff; }
-  .ct-total-conv { font-size:11px; color:rgba(255,255,255,0.7); text-align:right; margin-top:2px; }
-  .ct-note { font-size:11px; color:var(--soft); padding:10px 16px; font-style:italic; }
-  .ct-header { display:flex; align-items:center; gap:12px; padding:14px 16px; border-bottom:1px solid var(--border); }
-  .ct-avatar { width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
-  .ct-avatar-blue { background:var(--blue-light); }
-  .ct-avatar-green { background:#e6f9f0; }
-  .ct-name { font-size:15px; font-weight:800; }
-  .ct-name-sub { font-size:11px; color:var(--soft); }
+ :root {
+ --blue: #0066FF;
+ --blue-light: #EBF2FF;
+ --dark: #0A0F1E;
+ --mid: #3D4560;
+ --soft: #8892A4;
+ --bg: #F5F7FA;
+ --white: #FFFFFF;
+ --green: #00C48C;
+ --amber: #FFAB00;
+ --red: #FF5252;
+ --border: rgba(0,0,0,0.07);
+ --radius: 20px;
+ --safe-bottom: env(safe-area-inset-bottom, 0px);
+ }
+ * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; -webkit-font-smoothing: antialiased; }
+ html, body { height: 100%; overflow: hidden; -webkit-font-smoothing: antialiased; }
+ body {
+ font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+ background: var(--bg);
+ color: var(--dark);
+ display: flex;
+ flex-direction: column;
+ }
+ /* ─── SCROLL CONTAINER ─── */
+ #app {
+ flex: 1;
+ overflow-y: auto;
+ -webkit-overflow-scrolling: touch;
+ padding-bottom: calc(70px + var(--safe-bottom));
+ }
+ /* ─── HERO ─── */
+ .hero {
+ background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=80') center center / cover no-repeat;
+ padding: 52px 24px 36px;
+ text-align: center;
+ position: relative;
+ overflow: hidden;
+ }
+ .hero::before {
+ content: '';
+ position: absolute;
+ inset: 0;
+ background: linear-gradient(180deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.5) 100%);
+ }
+ .hero > * { position: relative; z-index: 1; }
+ .hero::before {
+ content: '';
+ position: absolute;
+ width: 350px; height: 350px;
+ background: radial-gradient(circle, rgba(0,102,255,0.35) 0%, transparent 70%);
+ top: -80px; right: -80px; border-radius: 50%;
+ }
+ .hero-emoji { display: none; }
+ .hero h1 { font-size: 28px; font-weight: 800; color: #0a1628; letter-spacing: -0.5px; position: relative; z-index: 1; margin-bottom: 4px; text-shadow: 0 1px 3px rgba(255,255,255,0.4); }
+ .hero-sub { color: rgba(0,0,0,0.7); font-size: 13px; position: relative; z-index: 1; margin-bottom: 20px; font-weight: 600; }
+ .hero-pills { display: flex; flex-wrap: wrap; gap: 7px; justify-content: center; position: relative; z-index: 1; }
+ .pill { background: rgba(255,255,255,0.55); border: 1px solid rgba(0,0,0,0.15); color: rgba(0,0,0,0.8); font-size: 11px; font-weight: 600; padding: 4px 11px; border-radius: 100px; }
+ /* ─── ITINERARY ─── */
+ .it-day { margin-bottom: 10px; border-radius: 16px; overflow: hidden; border: 1px solid var(--border); background: var(--white); box-shadow: 0 2px 12px rgba(0,30,80,0.05); }
+ .it-header { display: flex; align-items: center; gap: 12px; padding: 13px 16px; cursor: pointer; user-select: none; }
+ .it-date-badge { min-width: 46px; text-align: center; background: var(--blue-light); border-radius: 10px; padding: 6px 4px; }
+ .it-date-day { font-size: 18px; font-weight: 900; color: var(--blue); line-height: 1; }
+ .it-date-mon { font-size: 10px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: .5px; }
+ .it-title { flex: 1; }
+ .it-title-main { font-size: 14px; font-weight: 700; color: var(--text); }
+ .it-title-sub { font-size: 12px; color: var(--soft); margin-top: 2px; }
+ .it-emoji { font-size: 22px; }
+ .it-tag { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 20px; }
+ .it-tag-booked { background: #dcfce7; color: #166534; }
+ .it-tag-plan { background: #eff6ff; color: #1d4ed8; }
+ .it-tag-relax { background: #fef9c3; color: #854d0e; }
+ .it-tag-travel { background: #f3e8ff; color: #6b21a8; }
+ .it-body { padding: 0 16px 14px; border-top: 1px solid var(--border); display: none; }
+ .it-body.open { display: block; }
+ .it-detail { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+ .it-detail:last-child { border-bottom: none; }
+ .it-detail-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+ .it-detail-text { flex: 1; }
+ .it-detail-title { font-size: 13px; font-weight: 700; color: var(--text); }
+ .it-detail-desc { font-size: 12px; color: var(--soft); margin-top: 2px; line-height: 1.4; }
+ .it-chevron { font-size: 12px; color: var(--soft); transition: transform .2s; }
+ .it-chevron.open { transform: rotate(180deg); }
+ /* ─── COUNTDOWN ─── */
+ .countdown { background: var(--blue); padding: 14px 24px; text-align: center; color: white; }
+ .cd-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.65; margin-bottom: 8px; }
+ .cd-nums { display: flex; gap: 20px; justify-content: center; }
+ .cd-unit { text-align: center; }
+ .cd-num { font-size: 30px; font-weight: 800; line-height: 1; }
+ .cd-name { font-size: 9px; opacity: 0.6; text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+ /* ─── PAGES ─── */
+ .page { display: none; animation: fadeIn 0.18s ease; }
+ .page.active { display: block; }
+ @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+ .container { max-width: 560px; margin: 0 auto; padding: 20px 14px 8px; }
+ /* ─── SECTION ─── */
+ .section { margin-bottom: 28px; }
+ .section-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--soft); margin-bottom: 10px; padding: 0 2px; }
+ /* ─── CARD ─── */
+ .card { background: var(--white); border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; box-shadow: 0 4px 24px rgba(0,30,80,0.07); }
+ #p-costs .card { overflow: visible; }
+ #p-costs .container { padding-bottom: 100px; }
+ .card + .card { margin-top: 10px; }
+ /* ─── CARD TOP ─── */
+ .card-top { padding: 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
+ .ci { width: 44px; height: 44px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+ .ci-blue { background: var(--blue-light); }
+ .ci-green { background: #E8FBF5; }
+ .ci-amber { background: #FFF8E6; }
+ .ci-purple { background: #F0EBFF; }
+ .ci-red { background: #FFF0F0; }
+ .card-h { font-size: 15px; font-weight: 700; }
+ .card-sh { font-size: 11px; color: var(--soft); margin-top: 2px; }
+ /* ─── ROWS ─── */
+ .rows { padding: 0 16px; }
+ .row { display: flex; align-items: flex-start; gap: 10px; padding: 11px 0; border-bottom: 1px solid var(--border); }
+ .row:last-child { border-bottom: none; }
+ .rl { font-size: 10px; font-weight: 600; color: var(--soft); text-transform: uppercase; letter-spacing: 0.5px; min-width: 88px; padding-top: 2px; flex-shrink: 0; }
+ .rv { font-size: 13px; font-weight: 500; flex: 1; line-height: 1.4; }
+ /* ─── BADGES ─── */
+ .b { display: inline-flex; align-items: center; font-size: 10px; font-weight: 700; border-radius: 100px; padding: 3px 9px; white-space: nowrap; }
+ .b-green { background: #E8FBF5; color: #00865A; }
+ .b-red { background: #FFF0F0; color: #CC3333; }
+ .b-amber { background: #FFF8E6; color: #996600; }
+ .b-blue { background: var(--blue-light); color: var(--blue); }
+ .b-grey { background: #F0F0F0; color: var(--soft); }
+ /* ─── MONO TAG ─── */
+ .tag { font-family: 'SF Mono', 'Fira Code', monospace; background: var(--bg); border: 1px solid var(--border); border-radius: 7px; padding: 2px 7px; font-size: 11px; font-weight: 600; letter-spacing: 1px; }
+ /* ─── CHIPS ─── */
+ .chips { display: flex; flex-wrap: wrap; gap: 5px; }
+ .chip { background: var(--blue-light); color: var(--blue); border-radius: 100px; padding: 3px 10px; font-size: 11px; font-weight: 500; }
+ /* ─── NOTE ─── */
+ .note { padding: 11px 13px; border-radius: 11px; font-size: 12px; font-weight: 500; display: flex; align-items: flex-start; gap: 7px; line-height: 1.4; margin: 0 16px 12px; }
+ .note:first-child { margin-top: 14px; }
+ .note-blue { background: var(--blue-light); color: #0044CC; }
+ .note-amber { background: #FFF8E6; color: #7A5000; }
+ .note-red { background: #FFF0F0; color: #990000; }
+ .note-green { background: #E8FBF5; color: #005C3E; }
+ .note-grey { background: #F5F7FA; color: var(--soft); }
+ /* ─── FLIGHT ─── */
+ .f-band { background: var(--blue); color: white; padding: 9px 16px; font-size: 11px; font-weight: 700; display: flex; justify-content: space-between; }
+ .f-leg { display: grid; grid-template-columns: 1fr 64px 1fr; align-items: center; padding: 14px 16px; border-bottom: 1px solid var(--border); }
+ .f-leg:last-child { border-bottom: none; }
+ .ac { font-size: 22px; font-weight: 800; letter-spacing: -1px; }
+ .an { font-size: 10px; color: var(--soft); margin-top: 1px; }
+ .at { font-size: 13px; font-weight: 700; margin-top: 3px; color: var(--blue); }
+ .fm { text-align: center; }
+ .fn { font-size: 10px; font-weight: 700; color: var(--blue); }
+ .fa { font-size: 16px; color: var(--soft); margin: 3px 0; }
+ .fo { font-size: 9px; color: var(--soft); }
+ .rt { text-align: right; }
+ /* ─── TIMELINE ─── */
+ .tl-item { display: flex; gap: 12px; }
+ .tl-l { display: flex; flex-direction: column; align-items: center; width: 36px; flex-shrink: 0; }
+ .tl-dot { width: 36px; height: 36px; border-radius: 11px; background: var(--blue-light); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+ .tl-line { width: 2px; flex: 1; min-height: 16px; background: var(--border); margin: 3px 0; }
+ .tl-body { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 12px 14px; flex: 1; margin-bottom: 6px; box-shadow: 0 1px 8px rgba(0,0,0,0.03); }
+ .tl-date { font-size: 10px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
+ .tl-title { font-size: 14px; font-weight: 700; }
+ .tl-desc { font-size: 11px; color: var(--soft); margin-top: 3px; line-height: 1.4; }
+ /* ─── BUDGET ─── */
+ .totals { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-bottom: 12px; }
+ .tc { border-radius: 14px; padding: 14px 10px; text-align: center; color: white; }
+ .tc.eur { background: linear-gradient(135deg,#0066FF,#0040CC); }
+ .tc.usd { background: linear-gradient(135deg,#00C48C,#008060); }
+ .tc.gbp { background: linear-gradient(135deg,#8B5CF6,#5B21B6); }
+ .tc-flag { font-size: 18px; margin-bottom: 4px; }
+ .tc-amt { font-size: 19px; font-weight: 800; line-height: 1; }
+ .tc-lbl { font-size: 9px; opacity: 0.7; margin-top: 3px; text-transform: uppercase; letter-spacing: 1px; }
+ .bi { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+ .bi:last-of-type { border-bottom: none; }
+ .bi-icon { font-size: 20px; width: 32px; text-align: center; flex-shrink: 0; }
+ .bi-info { flex: 1; min-width: 0; }
+ .bi-name { font-size: 13px; font-weight: 600; }
+ .bi-sub { font-size: 10px; color: var(--soft); margin-top: 1px; }
+ .bi-right { text-align: right; flex-shrink: 0; }
+ .bi-amt { font-size: 14px; font-weight: 800; }
+ .bi-conv { font-size: 9px; color: var(--soft); margin-top: 1px; }
+ .total-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; background: var(--blue-light); border-top: 1px solid rgba(0,102,255,0.12); }
+ .total-lbl { font-size: 13px; font-weight: 700; color: var(--blue); }
+ .total-amt { font-size: 17px; font-weight: 800; color: var(--blue); }
+ /* ─── PAYMENTS ─── */
+ .pi { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+ .pi:last-child { border-bottom: none; }
+ .pi-title { font-size: 13px; font-weight: 600; }
+ .pi-date { font-size: 10px; color: var(--soft); margin-top: 2px; }
+ .pi-amt { font-size: 14px; font-weight: 800; margin-top: 3px; text-align: right; }
+ /* ─── TICKETS ─── */
+ .ti { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--border); }
+ .ti:last-child { border-bottom: none; }
+ .ti-em { font-size: 26px; width: 38px; text-align: center; flex-shrink: 0; }
+ .ti-info { flex: 1; }
+ .ti-title { font-size: 13px; font-weight: 700; }
+ .ti-sub { font-size: 11px; color: var(--soft); margin-top: 2px; }
+ .ti-date { background: var(--blue-light); color: var(--blue); font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 100px; white-space: nowrap; flex-shrink: 0; }
+ .ti-date-tbc { background: #F0F0F0; color: var(--soft); font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 100px; white-space: nowrap; flex-shrink: 0; }
+ /* ─── AIRBNB PAYS ─── */
+ .ap { display: flex; justify-content: space-between; align-items: center; padding: 11px 16px; border-bottom: 1px solid var(--border); }
+ .ap:last-child { border-bottom: none; }
+ .ap-title { font-size: 12px; font-weight: 600; }
+ .ap-date { font-size: 10px; color: var(--soft); margin-top: 1px; }
+ .ap-right { text-align: right; }
+ .ap-amt { font-size: 13px; font-weight: 800; margin-top: 3px; }
+ /* ─── CHECKLIST ─── */
+ .cli { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-bottom: 1px solid var(--border); font-size: 13px; }
+ .cli:last-child { border-bottom: none; }
+ .cli-icon { font-size: 16px; flex-shrink: 0; }
+ /* ─── GROUP ─── */
+ .group-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border); }
+ .gm { background: var(--white); padding: 18px 10px; text-align: center; }
+ .av { width: 44px; height: 44px; border-radius: 14px; background: linear-gradient(135deg,var(--blue),#00C48C); color: white; font-size: 18px; font-weight: 800; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px; }
+ .av-b { background: linear-gradient(135deg,#8B5CF6,#EC4899) !important; }
+ .gm-name { font-size: 11px; font-weight: 700; }
+ .gm-role { font-size: 9px; color: var(--soft); margin-top: 2px; }
+ /* ─── PLACE IMAGES ─── */
+ .place-img {
+ width: 100%;
+ height: 180px;
+ object-fit: cover;
+ display: block;
+ background: #e0e8f0;
+ }
+ .place-img-wrap {
+ position: relative;
+ overflow: hidden;
+ }
+ .place-img-wrap .place-link {
+ position: absolute;
+ bottom: 10px; right: 10px;
+ background: rgba(0,0,0,0.55);
+ backdrop-filter: blur(6px);
+ color: white;
+ font-size: 11px;
+ font-weight: 700;
+ padding: 5px 12px;
+ border-radius: 100px;
+ text-decoration: none;
+ display: flex;
+ align-items: center;
+ gap: 4px;
+ }
+ .link-row {
+ display: flex;
+ align-items: center;
+ padding: 12px 16px;
+ border-top: 1px solid var(--border);
+ font-size: 13px;
+ font-weight: 600;
+ color: var(--blue);
+ text-decoration: none;
+ gap: 6px;
+ }
+ .link-row:active { background: var(--blue-light); }
+ /* ─── PHOTOS ─── */
+ .ph-empty { padding: 50px 20px; text-align: center; color: var(--soft); }
+ .ph-icon { font-size: 44px; margin-bottom: 10px; }
+ .ph-text { font-size: 13px; line-height: 1.5; }
+ /* ─── BOTTOM NAV ─── */
+ .bottom-nav {
+ position: fixed;
+ bottom: 0; left: 0; right: 0;
+ background: rgba(255,255,255,0.92);
+ backdrop-filter: blur(20px);
+ -webkit-backdrop-filter: blur(20px);
+ border-top: 1px solid var(--border);
+ display: flex;
+ padding-bottom: var(--safe-bottom);
+ z-index: 200;
+ }
+ .bn-item {
+ flex: 1;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ padding: 10px 4px 8px;
+ cursor: pointer;
+ gap: 3px;
+ border: none;
+ background: none;
+ -webkit-tap-highlight-color: transparent;
+ }
+ .bn-icon { font-size: 22px; line-height: 1; transition: transform 0.15s; }
+ .bn-label { font-size: 9px; font-weight: 600; color: var(--soft); letter-spacing: 0.2px; transition: color 0.15s; }
+ .bn-item.active .bn-icon { transform: scale(1.15); }
+ .bn-item.active .bn-label { color: var(--blue); font-weight: 700; }
+ /* ── COST TRACKER ── */
+ .ct-toggle { display:flex; background:var(--bg); border:1px solid var(--border); border-radius:12px; padding:3px; margin-bottom:18px; }
+ .ct-tab { flex:1; text-align:center; padding:8px; font-size:12px; font-weight:700; border-radius:10px; cursor:pointer; color:var(--soft); transition:all .2s; }
+ .ct-tab.active { background:var(--blue); color:#fff; }
+ .ct-panel { display:none; }
+ .ct-panel.active { display:block; }
+ .ct-row { display:flex; justify-content:space-between; align-items:center; padding:12px 16px; border-bottom:1px solid var(--border); gap:12px; }
+ .ct-row:last-child { border-bottom:none; }
+ .ct-label { font-size:13px; color:var(--text); }
+ .ct-sub { font-size:10px; color:var(--soft); margin-top:2px; }
+ .ct-amt { font-size:14px; font-weight:800; color:var(--text); text-align:right; white-space:nowrap; }
+ .ct-conv { font-size:10px; color:var(--soft); text-align:right; margin-top:2px; }
+ .ct-total-row { display:flex; justify-content:space-between; align-items:center; padding:16px; background:var(--blue); border-radius:14px; margin-top:12px; }
+ .ct-total-label { font-size:12px; font-weight:700; color:rgba(255,255,255,0.8); max-width:140px; }
+ .ct-total-amt { font-size:22px; font-weight:900; color:#fff; }
+ .ct-total-conv { font-size:11px; color:rgba(255,255,255,0.7); text-align:right; margin-top:2px; }
+ .ct-note { font-size:11px; color:var(--soft); padding:10px 16px; font-style:italic; }
+ .ct-header { display:flex; align-items:center; gap:12px; padding:14px 16px; border-bottom:1px solid var(--border); }
+ .ct-avatar { width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+ .ct-avatar-blue { background:var(--blue-light); }
+ .ct-avatar-green { background:#e6f9f0; }
+ .ct-name { font-size:15px; font-weight:800; }
+ .ct-name-sub { font-size:11px; color:var(--soft); }
+ /* ── COST TRACKER ── */
+ .ct-toggle { display:flex; background:var(--bg); border:1px solid var(--border); border-radius:12px; padding:3px; margin-bottom:18px; }
+ .ct-tab { flex:1; text-align:center; padding:8px; font-size:12px; font-weight:700; border-radius:10px; cursor:pointer; color:var(--soft); transition:all .2s; }
+ .ct-tab.active { background:var(--blue); color:#fff; }
+ .ct-panel { display:none; }
+ .ct-panel.active { display:block; }
+ .ct-row { display:flex; justify-content:space-between; align-items:center; padding:12px 16px; border-bottom:1px solid var(--border); gap:12px; }
+ .ct-row:last-child { border-bottom:none; }
+ .ct-label { font-size:13px; color:var(--text); }
+ .ct-sub { font-size:10px; color:var(--soft); margin-top:2px; }
+ .ct-amt { font-size:14px; font-weight:800; color:var(--text); text-align:right; white-space:nowrap; }
+ .ct-conv { font-size:10px; color:var(--soft); text-align:right; margin-top:2px; }
+ .ct-total-row { display:flex; justify-content:space-between; align-items:center; padding:16px; background:var(--blue); border-radius:14px; margin-top:12px; }
+ .ct-total-label { font-size:12px; font-weight:700; color:rgba(255,255,255,0.8); max-width:140px; }
+ .ct-total-amt { font-size:22px; font-weight:900; color:#fff; }
+ .ct-total-conv { font-size:11px; color:rgba(255,255,255,0.7); text-align:right; margin-top:2px; }
+ .ct-note { font-size:11px; color:var(--soft); padding:10px 16px; font-style:italic; }
+ .ct-header { display:flex; align-items:center; gap:12px; padding:14px 16px; border-bottom:1px solid var(--border); }
+ .ct-avatar { width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+ .ct-avatar-blue { background:var(--blue-light); }
+ .ct-avatar-green { background:#e6f9f0; }
+ .ct-name { font-size:15px; font-weight:800; }
+ .ct-name-sub { font-size:11px; color:var(--soft); }
 </style>
 </head>
 <body>
-
 <div id="app">
-
-  <!-- HERO -->
-  <div class="hero">
-    <h1>Florida 2026</h1>
-    <p class="hero-sub">Harris Family · Aug 1–17 · 6 Travellers</p>
-    <div class="hero-pills">
-      <span class="pill">✈️ Amsterdam → Orlando</span>
-      <span class="pill">🏡 Kissimmee Villa</span>
-      <span class="pill">🌊 Miami</span>
-      <span class="pill">🎢 Universal</span>
-    </div>
-  </div>
-
-  <!-- COUNTDOWN -->
-  <div class="countdown">
-    <div class="cd-label">Departure countdown</div>
-    <div class="cd-nums">
-      <div class="cd-unit"><div class="cd-num" id="cd-d">--</div><div class="cd-name">days</div></div>
-      <div class="cd-unit"><div class="cd-num" id="cd-h">--</div><div class="cd-name">hrs</div></div>
-      <div class="cd-unit"><div class="cd-num" id="cd-m">--</div><div class="cd-name">min</div></div>
-    </div>
-  </div>
-
-  <!-- ══ OVERVIEW ══ -->
-  <div class="page active" id="p-overview">
-  <div class="container">
-    <div class="section">
-      <div class="section-label">Your Trip</div>
-      <div class="tl-item"><div class="tl-l"><div class="tl-dot">✈️</div><div class="tl-line"></div></div><div class="tl-body"><div class="tl-date">Sat 1 Aug 2026</div><div class="tl-title">Depart Amsterdam → Orlando</div><div class="tl-desc">AF 5596 · DL 47 · AMS → JFK → MCO</div></div></div>
-      <div class="tl-item"><div class="tl-l"><div class="tl-dot">🏡</div><div class="tl-line"></div></div><div class="tl-body"><div class="tl-date">1–17 Aug · 16 nights</div><div class="tl-title">Townhouse, Kissimmee</div><div class="tl-desc">Hosted by Lucas · Check-in 16:00</div></div></div>
-      <div class="tl-item"><div class="tl-l"><div class="tl-dot">🌊</div><div class="tl-line"></div></div><div class="tl-body"><div class="tl-date">Thu 6 → Fri 7 Aug · 1 night</div><div class="tl-title">Miami · SLS LUX Brickell</div><div class="tl-desc">Lux Queen (2 queens) + Lux Studio King · Check-in 15:00</div></div></div>
-      <div class="tl-item"><div class="tl-l"><div class="tl-dot">🎢</div><div class="tl-line"></div></div><div class="tl-body"><div class="tl-date">Tue 11 Aug</div><div class="tl-title">Universal Studios + Islands of Adventure</div><div class="tl-desc">Park-to-Park · Express Unlimited · All 6</div></div></div>
-      <div class="tl-item"><div class="tl-l"><div class="tl-dot">🌋</div><div class="tl-line"></div></div><div class="tl-body"><div class="tl-date">Thu 13 Aug</div><div class="tl-title">Volcano Bay Water Park</div><div class="tl-desc">1-Day admission · All 6</div></div></div>
-      <div class="tl-item"><div class="tl-l"><div class="tl-dot">✈️</div></div><div class="tl-body"><div class="tl-date">Mon 17 Aug 2026</div><div class="tl-title">Return to Amsterdam</div><div class="tl-desc">AF8630 → JFK → AF8451 · Check-out by 10:00</div></div></div>
-    </div>
-
-    <div class="section">
-      <div class="section-label">Reminders</div>
-      <div class="card">
-        <div class="note note-red">⚠️ <span><strong>Airbnb cancellation:</strong> free before 31 Jul 2026 at 16:00</span></div>
-        <div class="note note-amber">💳 <span><strong>SLS LUX Brickell:</strong> US$763.30 not yet paid — due before 6 Aug</span></div>
-        <div class="note note-amber" style="margin-bottom:14px">💳 <span><strong>Airbnb final payment:</strong> €1,903.78 due 23 Jul 2026</span></div>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-label">Checklist</div>
-      <div class="card">
-        <div class="cli"><span class="cli-icon">✅</span>Flights booked · KLM/Delta</div>
-        <div class="cli"><span class="cli-icon">✅</span>Airbnb Kissimmee · Aug 1–17</div>
-        <div class="cli"><span class="cli-icon">✅</span>SLS LUX Brickell · 6–7 Aug</div>
-        <div class="cli"><span class="cli-icon">✅</span>Universal tickets · 11 & 13 Aug</div>
-        <div class="cli"><span class="cli-icon">✅</span>Alamo Dodge Durango &middot; MCO</div>
-        <div class="cli"><span class="cli-icon">⏳</span>Travel insurance</div>
-        <div class="cli"><span class="cli-icon">⏳</span>Disney / other parks TBC</div>
-        <div class="cli"><span class="cli-icon">⏳</span>Restaurant reservations</div>
-      </div>
-    </div>
-  </div>
-  </div>
-
-  <!-- ══ FLIGHTS ══ -->
-  <div class="page" id="p-flights">
-  <div class="container">
-    <div class="section">
-      <div class="section-label">KLM / Air France · Delta</div>
-      <div class="card">
-        <div class="card-top">
-          <div class="ci ci-blue">✈️</div>
-          <div><div class="card-h">KLM / Delta</div><div class="card-sh">AMS &rarr; MCO via JFK</div></div>
-        </div>
-        <div class="f-band"><span>🛫 Outbound · Sat 1 Aug 2026</span><span>AMS → MCO</span></div>
-        <div class="f-leg">
-          <div><div class="ac">AMS</div><div class="an">Amsterdam Schiphol</div><div class="at">10:10</div></div>
-          <div class="fm"><div class="fn">AF 5596</div><div class="fa">→</div><div class="fo">DL 47</div></div>
-          <div class="rt"><div class="ac">JFK</div><div class="an">New York JFK</div><div class="at">13:25</div></div>
-        </div>
-        <div class="f-leg">
-          <div><div class="ac">JFK</div><div class="an">New York JFK</div><div class="at">15:00</div></div>
-          <div class="fm"><div class="fn">AF 5676</div><div class="fa">→</div></div>
-          <div class="rt"><div class="ac">MCO</div><div class="an">Orlando</div><div class="at">18:15</div></div>
-        </div>
-        <div class="f-band"><span>🛬 Return · Mon 17 Aug 2026</span><span>MCO → JFK → AMS</span></div>
-        <div class="f-leg">
-          <div><div class="ac">MCO</div><div class="an">Orlando</div><div class="at">15:50</div></div>
-          <div class="fm"><div class="fn">AF8630</div><div class="fa">→</div></div>
-          <div class="rt"><div class="ac">JFK</div><div class="an">New York JFK</div><div class="at">18:56</div></div>
-        </div>
-        <div class="f-leg">
-          <div><div class="ac">JFK</div><div class="an">New York JFK</div><div class="at">21:10</div></div>
-          <div class="fm"><div class="fn">AF8451</div><div class="fa">→</div></div>
-          <div class="rt"><div class="ac">AMS</div><div class="an">Amsterdam</div><div class="at">+1 10:30</div></div>
-        </div>
-        <div class="rows">
-          <div class="row">
-            <div class="rl">Passengers</div>
-            <div class="rv">
-              <div class="chips">
-                <span class="chip">Tara</span><span class="chip">Craig</span><span class="chip">Sebastian</span><span class="chip">Scarlett</span><span class="chip">Isabella</span>
-              </div>
-              <div style="font-size:10px; color:var(--soft); margin-top:6px">* Bruce travelling separately</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  </div>
-
-  <!-- ══ STAYS ══ -->
-  <div class="page" id="p-stays">
-  <div class="container">
-    <div class="section">
-      <div class="section-label">Airbnb · Kissimmee</div>
-      <div class="card">
-        <div class="card-top"><div class="ci ci-red">🏡</div><div><div class="card-h">4BD Townhouse, Kissimmee</div><div class="card-sh">Hosted by Lucas · Near Disney & Universal</div></div></div>
-        <div class="place-img-wrap">
-          <img class="place-img" src="https://raw.githubusercontent.com/misschevious-agtk/florida-2026/main/img/airbnb-townhouse.jpg" alt="Our Townhouse" style="object-position:center top"/>
-          
-        </div>
-        <div class="rows">
-          <div class="row"><div class="rl">Dates</div><div class="rv">1 Aug – 17 Aug 2026 <span class="b b-blue">16 nights</span></div></div>
-          <div class="row"><div class="rl">Check-in</div><div class="rv">After 16:00 on 1 Aug</div></div>
-          <div class="row"><div class="rl">Check-out</div><div class="rv">Before 10:00 on 17 Aug</div></div>
-          
-          <div class="row"><div class="rl">Total</div><div class="rv" style="font-weight:800; font-size:15px">€2,379.73</div></div>
-        </div>
-        <div class="note note-red">⚠️ Free cancellation until <strong>31 Jul 2026 at 16:00</strong></div>
-        <div style="padding: 0 16px 4px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:var(--soft); margin-top:4px">Payment Schedule</div>
-        <div class="ap"><div><div class="ap-title">Payment 1</div><div class="ap-date">27 Sep 2025</div></div><div class="ap-right"><span class="b b-green">✅ Paid</span><div class="ap-amt">€420.63</div></div></div>
-        <div class="ap"><div><div class="ap-title">Payment 2</div><div class="ap-date">28 Sep 2025</div></div><div class="ap-right"><span class="b b-green">✅ Paid</span><div class="ap-amt">€24.54</div></div></div>
-        <div class="ap"><div><div class="ap-title">Payment 3</div><div class="ap-date">27 Oct 2025</div></div><div class="ap-right"><span class="b b-green">✅ Paid</span><div class="ap-amt">€30.78</div></div></div>
-        <div class="ap"><div><div class="ap-title">Final Payment</div><div class="ap-date">Due 23 Jul 2026</div></div><div class="ap-right"><span class="b b-red">⏳ Due</span><div class="ap-amt">€1,903.78</div></div></div>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-label">Hotel · Miami</div>
-      <div class="card">
-        <div class="card-top"><div class="ci ci-purple">🏨</div><div><div class="card-h">SLS LUX Brickell</div><div class="card-sh">Brickell · Breakfast included</div></div></div>
-        <div class="place-img-wrap">
-          <img class="place-img" src="https://raw.githubusercontent.com/misschevious-agtk/florida-2026/main/img/hotel-indigo.jpg" alt="SLS LUX Brickell" onerror="this.style.display=&apos;none&apos;"/>
-          <a class="place-link" href="https://slshotels.com/lux-brickell/" target="_blank">🏨 View Hotel ↗</a>
-        </div>
-        <div class="rows">
-          <div class="row"><div class="rl">Address</div><div class="rv">145 SW 11th St, Brickell, Miami FL</div></div>
-          <div class="row"><div class="rl">Dates</div><div class="rv">6 Aug → 7 Aug 2026 <span class="b b-blue">1 night</span></div></div>
-          <div class="row"><div class="rl">Check-in</div><div class="rv">From 16:00</div></div>
-          <div class="row"><div class="rl">Check-out</div><div class="rv">By 11:00</div></div>
-          <div class="row"><div class="rl">Rooms</div><div class="rv">Lux Queen (2 queens) + Lux Studio King · Breakfast included</div></div>
-          
-          <div class="row"><div class="rl">Phone</div><div class="rv">+1 305-860-3874</div></div>
-          <div class="row"><div class="rl">Total</div><div class="rv" style="font-weight:800; font-size:15px">€703.54 <span style="font-size:11px; font-weight:400; color:var(--soft)">/ $763.30</span> <span class="b b-red">⏳ Unpaid</span></div></div>
-          <div class="row"><div class="rl">Deposit</div><div class="rv">$100 held on arrival · refunded in 7 days</div></div>
-          <div class="row"><div class="rl">Amenities</div><div class="rv">🏊 Pool · 🍽️ Restaurant · 🍹 Bar · 💪 Gym</div></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-label">Car Hire</div>
-      <div class="card">
-        <div class="card-top"><div class="ci ci-amber">🚗</div><div><div class="card-h">Alamo · Dodge Durango AWD</div><div class="card-sh">7 seats · Premium Crossover · MCO pickup</div></div></div>
-        <div class="rows">
-          <div class="row"><div class="rl">Pickup</div><div class="rv">Orlando MCO · 1 Aug 2026</div></div>
-          <div class="row"><div class="rl">Duration</div><div class="rv">16 days</div></div>
-          <div class="row"><div class="rl">Price</div><div class="rv" style="font-weight:700">€1,289.57 <span class="b b-amber">🔍 Comparing</span></div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-  </div>
-
-  <!-- ══ PARKS ══ -->
-  <div class="page" id="p-parks">
-  <div class="container">
-    <div class="section">
-      <div class="section-label">Universal Orlando Resort</div>
-      <div class="card">
-        <div class="card-top"><div class="ci ci-amber">🎢</div><div><div class="card-h">Universal Orlando Resort</div><div class="card-sh">Order #U13692737 · Mobile Tickets</div></div></div>
-        <div class="place-img-wrap">
-          <img class="place-img" src="https://raw.githubusercontent.com/misschevious-agtk/florida-2026/main/img/universal-orlando.jpg" alt="Universal Orlando" onerror="this.style.display=&apos;none&apos;"/>
-          <a class="place-link" href="https://www.universalorlando.com/web/en/gb" target="_blank">🎢 Universal Website ↗</a>
-        </div>
-        <div class="ti"><div class="ti-em">🎡</div><div class="ti-info"><div class="ti-title">1-Day Park-to-Park</div><div class="ti-sub">Universal Studios + Islands of Adventure · 6 tickets</div></div><div class="ti-date">11 Aug</div></div>
-        <div class="ti"><div class="ti-em">⚡</div><div class="ti-info"><div class="ti-title">2PK Express Unlimited</div><div class="ti-sub">Skip the queues all day · 6 tickets</div></div><div class="ti-date">11 Aug</div></div>
-        <div class="ti"><div class="ti-em">🌋</div><div class="ti-info"><div class="ti-title">1-Day Volcano Bay</div><div class="ti-sub">Water theme park · 6 tickets</div></div><div class="ti-date">13 Aug</div></div>
-        <div class="place-img-wrap" style="margin-top:0">
-          <img class="place-img" src="https://raw.githubusercontent.com/misschevious-agtk/florida-2026/main/img/volcano-bay.jpg" alt="Volcano Bay" onerror="this.style.display=&apos;none&apos;"/>
-          <a class="place-link" href="https://www.universalorlando.com/web/en/gb/theme-parks/volcano-bay" target="_blank">🌋 Volcano Bay ↗</a>
-        </div>
-        <div class="rows">
-          <div class="row"><div class="rl">Total</div><div class="rv" style="font-weight:800; font-size:15px">$3,252.48 <span style="font-size:10px; color:var(--soft); font-weight:400">incl. $198.54 tax</span></div></div>
-          <div class="row"><div class="rl">Status</div><div class="rv"><span class="b b-green">✅ Confirmed & Paid</span></div></div>
-          <div class="row"><div class="rl">Party</div><div class="rv"><div class="chips"><span class="chip">Tara</span><span class="chip">Craig</span><span class="chip">Sebastian</span><span class="chip">Scarlett</span><span class="chip">Isabella</span><span class="chip">Bruce</span></div></div></div>
-        </div>
-        <div class="note note-blue">🎟️ <strong>Mobile tickets</strong> — show confirmation email at gate. Cannot collect at Will Call.</div>
-        <div class="note note-grey" style="margin-bottom:14px">ℹ️ Bruce has a separate booking for the same dates.</div>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-label">More Parks — TBC</div>
-      <div class="card">
-        <div class="ti"><div class="ti-em">🏰</div><div class="ti-info"><div class="ti-title">Walt Disney World</div><div class="ti-sub">Magic Kingdom, EPCOT, Hollywood Studios, Animal Kingdom</div></div><div class="ti-date-tbc">TBC</div></div>
-        <div class="ti"><div class="ti-em">🦈</div><div class="ti-info"><div class="ti-title">SeaWorld Orlando</div><div class="ti-sub">Marine life, rides & shows</div></div><div class="ti-date-tbc">TBC</div></div>
-        <div class="ti"><div class="ti-em">🚀</div><div class="ti-info"><div class="ti-title">Kennedy Space Center</div><div class="ti-sub">~1 hour from Kissimmee</div></div><div class="ti-date-tbc">TBC</div></div>
-      </div>
-    </div>
-  </div>
-  </div>
-
-  <!-- ══ BUDGET ══ -->
-  <div class="page" id="p-budget">
-  <div class="container">
-    <div class="section">
-      <div class="section-label">Total Cost (excl. flights)</div>
-      <div class="totals">
-        <div class="tc eur"><div class="tc-flag">🇪🇺</div><div class="tc-amt">€7,431</div><div class="tc-lbl">Euro</div></div>
-        <div class="tc usd"><div class="tc-flag">🇺🇸</div><div class="tc-amt">$8,077</div><div class="tc-lbl">Dollar</div></div>
-        <div class="tc gbp"><div class="tc-flag">🇬🇧</div><div class="tc-amt">£6,370</div><div class="tc-lbl">Pound</div></div>
-      </div>
-      <div class="card">
-        <div class="bi"><div class="bi-icon">✈️</div><div class="bi-info"><div class="bi-name">Flights (KLM/Delta)</div><div class="bi-sub">5 pax · AMS ↔ MCO</div></div><div class="bi-right"><div class="bi-amt" style="color:var(--soft)">TBC</div><span class="b b-green">✅ Paid</span></div></div>
-        <div class="bi"><div class="bi-icon">🏡</div><div class="bi-info"><div class="bi-name">Airbnb Kissimmee</div><div class="bi-sub">16 nights · Aug 1–17</div></div><div class="bi-right"><div class="bi-amt">€2,379</div><div class="bi-conv">$2,587 · £2,043</div><span class="b b-amber">⚡ Partial</span></div></div>
-        <div class="bi"><div class="bi-icon">🏨</div><div class="bi-info"><div class="bi-name">SLS LUX Brickell</div><div class="bi-sub">1 night · 2 rooms</div></div><div class="bi-right"><div class="bi-amt">€703.54</div><div class="bi-conv">$763 · £403</div><span class="b b-red">⏳ Due</span></div></div>
-        <div class="bi"><div class="bi-icon">🎢</div><div class="bi-info"><div class="bi-name">Universal Tickets</div><div class="bi-sub">Park-to-Park + Express + Volcano Bay</div></div><div class="bi-right"><div class="bi-amt">€2,992</div><div class="bi-conv">$3,252 · £2,569</div><span class="b b-green">✅ Paid</span></div></div>
-        <div class="bi"><div class="bi-icon">🚗</div><div class="bi-info"><div class="bi-name">Car Hire · Alamo Durango</div><div class="bi-sub">16 days · MCO pickup</div></div><div class="bi-right"><div class="bi-amt">€1,245.66</div><div class="bi-conv">$1,352 · £1,065</div><span class="b b-green">&#10003; Paid</span></div></div>
-        <div class="total-row"><div class="total-lbl">Total excl. flights</div><div class="total-amt">€7,431</div></div>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-label">Upcoming Payments</div>
-      <div class="card">
-        <div class="pi"><div><div class="pi-title">🏨 SLS LUX Brickell</div><div class="pi-date">Due before 6 Aug 2026</div></div><div><span class="b b-red">⏳ Due</span><div class="pi-amt">€703.54 / $763</div></div></div>
-        <div class="pi"><div><div class="pi-title">🏡 Airbnb Final Payment</div><div class="pi-date">Due 23 Jul 2026</div></div><div><span class="b b-red">⏳ Due</span><div class="pi-amt">€1,903.78</div></div></div>
-      </div>
-      <div style="font-size:10px; color:var(--soft); padding:8px 4px">* Rates approximate (Apr 2026). Flights TBC.</div>
-    </div>
-  </div>
-  </div>
-
-  <!-- ══ GROUP ══ -->
-  <div class="page" id="p-group">
-  <div class="container">
-    <div class="section">
-      <div class="section-label">6 Travellers</div>
-      <div class="card">
-        <div class="group-grid">
-          <div class="gm"><div class="av">T</div><div class="gm-name">Tara Harris</div><div class="gm-role">Trip planner 🌟</div></div>
-          <div class="gm"><div class="av">C</div><div class="gm-name">Craig Harris</div><div class="gm-role"></div></div>
-          <div class="gm"><div class="av">S</div><div class="gm-name">Sebastian Harris</div><div class="gm-role"></div></div>
-          <div class="gm"><div class="av">S</div><div class="gm-name">Scarlett Harris</div><div class="gm-role"></div></div>
-          <div class="gm"><div class="av">I</div><div class="gm-name">Isabella Harris</div><div class="gm-role"></div></div>
-          <div class="gm"><div class="av av-b">B</div><div class="gm-name">Bruce Herholdt</div><div class="gm-role">Family friend</div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-  </div>
-
-  <!-- ══ PHOTOS ══ -->
-
-
-
-  <!-- CAR PAGE -->
-  <div class="page" id="p-car">
-  <div class="container">
-    <div class="section">
-      <div class="section-label">Car Hire</div>
-      <div class="card">
-        <div style="background:linear-gradient(135deg,#1e3a5f,#2563eb);padding:20px;border-radius:20px 20px 0 0;display:flex;align-items:center;gap:14px;">
-          <div style="font-size:40px;">🚗</div>
-          <div>
-            <div style="font-size:18px;font-weight:900;color:#fff;">Dodge Durango AWD</div>
-            <div style="font-size:13px;color:rgba(255,255,255,0.75);margin-top:2px;">Premium Crossover &nbsp;·&nbsp; or similar &nbsp;·&nbsp; 7 seats</div>
-          </div>
-        </div>
-        <div style="padding:14px 16px;">
-          <div class="row"><div class="rl">Company</div><div class="rv" style="font-weight:700;">Alamo</div></div>
-          <div class="row"><div class="rl">Pick-up</div><div class="rv">Sat 1 Aug &nbsp;·&nbsp; 18:00 &nbsp;·&nbsp; Orlando Airport (MCO)</div></div>
-          <div class="row"><div class="rl">Return</div><div class="rv">Mon 17 Aug &nbsp;·&nbsp; 12:00 &nbsp;·&nbsp; Orlando Airport (MCO)</div></div>
-          <div class="row"><div class="rl">Duration</div><div class="rv">16 days</div></div>
-          <div class="row"><div class="rl">Total</div><div class="rv" style="font-weight:800;font-size:15px;">&euro;1,245.66 &nbsp;<span class="b b-green">&#10003; Prepaid</span></div></div>
-          <div style="height:1px;background:var(--border);margin:10px 0;"></div>
-          <div class="row"><div class="rl">Harris</div><div class="rv">2/3 &nbsp;&rarr;&nbsp; <strong>&euro;830.44</strong></div></div>
-          <div class="row"><div class="rl">Bruce</div><div class="rv">1/3 &nbsp;&rarr;&nbsp; <strong>&euro;415.22</strong> (owes Tara)</div></div>
-        </div>
-      </div>
-
-      <div class="note note-blue" style="margin-top:14px;">&#128663; <span>Unlimited miles included. Pick up at MCO arrivals hall — look for Alamo desk.</span></div>
-    </div>
-  </div>
-  </div>
-
-<!-- COSTS PAGE -->
-  <div class="page" id="p-costs">
-  <div class="container">
-    <div class="section">
-      <div class="section-label">Cost Split</div>
-
-      <div class="ct-toggle">
-        <div class="ct-tab active" onclick="ctSwitch('harris',this)">&#127968; Harris</div>
-        <div class="ct-tab" onclick="ctSwitch('bruce',this)">&#128100; Bruce</div>
-        <div class="ct-tab" onclick="ctSwitch('total',this)">&#128200; Total</div>
-      </div>
-
-      <div class="ct-panel active" id="ct-harris">
-        <div class="card">
-          <div class="ct-header">
-            <div class="ct-avatar ct-avatar-blue">&#127968;</div>
-            <div><div class="ct-name">Harris Family</div><div class="ct-name-sub">Tara &middot; Craig &middot; Sebastian &middot; Scarlett &middot; Isabella</div></div>
-          </div>
-          <div class="ct-row">
-            <div><div class="ct-label">&#9992;&#65039; Flights (KLM/Delta)</div><div class="ct-sub">5 passengers &middot; AMS &#8596; MCO </div></div>
-            <div style="text-align:right"><div class="ct-amt" style="color:var(--soft)">TBC</div><div class="ct-conv">Paid &#10003;</div></div>
-          </div>
-          <div class="ct-row">
-            <div><div class="ct-label">&#127969; Airbnb Kissimmee</div><div class="ct-sub">3 of 4 rooms &middot; 1&ndash;17 Aug &middot; 16 nights</div></div>
-            <div style="text-align:right"><div class="ct-amt">&euro;1,784.80</div><div class="ct-conv">$1,938 &middot; &pound;1,527</div></div>
-          </div>
-          <div class="ct-row">
-            <div><div class="ct-label">&#127968; SLS LUX Brickell</div><div class="ct-sub">Lux Queen (2 queens) &middot; 6&ndash;7 Aug</div></div>
-            <div style="text-align:right"><div class="ct-amt">&euro;381.54</div><div class="ct-conv">$440 &middot; &pound;327</div></div>
-          </div>
-          <div class="ct-row">
-            <div><div class="ct-label">&#127904; Universal Park-to-Park + Express</div><div class="ct-sub">5 tickets &middot; 11 Aug &middot; Order U13692737</div></div>
-            <div style="text-align:right"><div class="ct-amt">$2,743.49</div><div class="ct-conv">&euro;2,527 &middot; &pound;2,224</div></div>
-          </div>
-          <div class="ct-row">
-            <div><div class="ct-label">&#127754; Volcano Bay</div><div class="ct-sub">5 tickets &middot; 13 Aug &middot; incl. above</div></div>
-            <div style="text-align:right"><div class="ct-amt" style="color:var(--soft)">Incl.</div><div class="ct-conv">In ticket total above</div></div>
-          </div>
-          <div class="ct-row">
-            <div><div class="ct-label">&#128663; Alamo &middot; Dodge Durango AWD</div><div class="ct-sub">Harris 2/3 &middot; 1 Aug 18:00 &rarr; 17 Aug 12:00 &middot; MCO</div></div>
-            <div style="text-align:right"><div class="ct-amt">&euro;830.44</div><div class="ct-conv">2/3 of &euro;1,245.66</div></div>
-          </div>
-          <div style="background:#f8faff;border-radius:12px;margin:12px 16px 0;padding:12px 14px;border:1px solid var(--border);">
-            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--soft);margin-bottom:10px;">Harris Family — Itemised Total</div>
-            <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px;"><span>Airbnb (3/4 rooms)</span><span style="font-weight:700;">&euro;1,784.80</span></div>
-            <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px;"><span>SLS LUX (1 room)</span><span style="font-weight:700;">&euro;381.54</span></div>
-            <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px;"><span>Universal + Volcano Bay (5 pax)</span><span style="font-weight:700;">$2,301.01</span></div>
-            <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px;"><span>Alamo Durango (2/3)</span><span style="font-weight:700;">&euro;830.44</span></div>
-            <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px;color:var(--soft)"><span>Flights</span><span>TBC (paid &#10003;)</span></div>
-            <div style="display:flex;justify-content:space-between;padding:10px 0 4px;"><span style="font-size:13px;font-weight:800;">TOTAL (excl. flights)</span><span style="font-size:18px;font-weight:900;color:var(--blue);">~&euro;5,554</span></div>
-            <div style="font-size:10px;color:var(--soft);text-align:right;">+ $2,743 tickets &middot; ~$5,816 total</div>
-          </div>
-          <div style="background:var(--blue);border-radius:16px;margin:14px 16px 16px;padding:18px 20px;display:flex;justify-content:space-between;align-items:center;">
-            <div>
-              <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;">Harris Grand Total</div>
-              <div style="font-size:11px;color:rgba(255,255,255,0.6);">excl. flights</div>
-            </div>
-            <div style="text-align:right;">
-              <div style="font-size:28px;font-weight:900;color:#fff;">~&#8364;2,997</div>
-              <div style="font-size:11px;color:rgba(255,255,255,0.7);margin-top:2px;">+ $2,301 tickets &middot; excl. flights</div>
-            </div>
-          </div>
-          <div class="ct-note">* Airbnb €475.95 paid, €1,903.78 due 23 Jul. Car: Alamo €1,245.66 prepaid (ref 2105084962).</div>
-        </div>
-      </div>
-
-      <div class="ct-panel" id="ct-bruce">
-        <div class="card">
-          <div class="ct-header">
-            <div class="ct-avatar ct-avatar-green">&#128100;</div>
-            <div><div class="ct-name">Bruce Herholdt</div><div class="ct-name-sub">Travelling separately on flights</div></div>
-          </div>
-          <div class="ct-row">
-            <div><div class="ct-label">&#9992;&#65039; Flights</div><div class="ct-sub">Bruce arranges separately</div></div>
-            <div style="text-align:right"><div class="ct-amt" style="color:var(--soft)">&mdash;</div><div class="ct-conv">Separate booking</div></div>
-          </div>
-          <div class="ct-row">
-            <div><div class="ct-label">&#127969; Airbnb Kissimmee</div><div class="ct-sub">1 of 4 rooms &middot; 1&ndash;17 Aug &middot; 16 nights</div></div>
-            <div style="text-align:right"><div class="ct-amt">&euro;594.93</div><div class="ct-conv">$646 &middot; &pound;509</div></div>
-          </div>
-          <div class="ct-row">
-            <div><div class="ct-label">&#127968; SLS LUX Brickell</div><div class="ct-sub">1 room &middot; Lux Studio King &middot; 6&ndash;7 Aug</div></div>
-            <div style="text-align:right"><div class="ct-amt">&euro;322.00</div><div class="ct-conv">$350 &middot; &pound;276</div></div>
-          </div>
-          <div class="ct-row" style="background:#fff8e6; border-radius:10px; margin:8px;">
-            <div><div class="ct-label" style="color:#b45309;">&#9888;&#65039; Universal Park-to-Park + Express</div><div class="ct-sub">1 ticket (Craig Harris order) &middot; 11 Aug</div></div>
-            <div style="text-align:right"><div class="ct-amt" style="color:#b45309;">$508.99</div><div class="ct-conv">Owes Tara &middot; &euro;469</div></div>
-          </div>
-          <div class="ct-row" style="background:#fff8e6; border-radius:10px; margin:8px;">
-            <div><div class="ct-label" style="color:#b45309;">&#9888;&#65039; Volcano Bay</div><div class="ct-sub">1 ticket (Craig Harris order) &middot; 13 Aug</div></div>
-            <div style="text-align:right"><div class="ct-amt" style="color:#b45309;">$90.00</div><div class="ct-conv">Owes Tara &middot; &euro;83</div></div>
-          </div>
-          <div class="ct-row">
-            <div><div class="ct-label" style="color:#b45309;">&#9888;&#65039; Alamo &middot; Dodge Durango AWD</div><div class="ct-sub">Bruce 1/3 &middot; 1 Aug &rarr; 17 Aug &middot; MCO</div></div>
-            <div style="text-align:right"><div class="ct-amt">&euro;429.86</div><div class="ct-conv">$467 &middot; &pound;368</div></div>
-          </div>
-          <div style="background:#fff8e6;border-radius:12px;margin:12px 16px 0;padding:12px 14px;border:1.5px solid #f59e0b;">
-            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#b45309;margin-bottom:10px;">&#9888;&#65039; Bruce — Everything Owed to Tara</div>
-            <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #fde68a;font-size:12px;color:#b45309;"><span>Airbnb (1/4 rooms)</span><span style="font-weight:700;">&euro;594.93</span></div>
-            <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #fde68a;font-size:12px;color:#b45309;"><span>SLS LUX (1 room)</span><span style="font-weight:700;">&euro;322.00</span></div>
-            <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #fde68a;font-size:12px;color:#b45309;"><span>Alamo Durango (1/3)</span><span style="font-weight:700;">&euro;415.22</span></div>
-            <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #fde68a;font-size:12px;color:#b45309;"><span>Universal + Express &#10003;</span><span style="font-weight:700;color:#059669;">$508.99 paid</span></div>
-            <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #fde68a;font-size:12px;color:#b45309;"><span>Volcano Bay &#10003;</span><span style="font-weight:700;color:#059669;">$90.00 paid</span></div>
-            <div style="display:flex;justify-content:space-between;padding:5px 0;font-size:12px;color:var(--soft);"><span>Flights</span><span>Arranges separately</span></div>
-          </div>
-          <div style="background:#dc2626;border-radius:16px;margin:14px 16px 16px;padding:18px 20px;display:flex;justify-content:space-between;align-items:center;">
-            <div>
-              <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.8);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;">Bruce Owes Tara</div>
-              <div style="font-size:11px;color:rgba(255,255,255,0.65);">Tickets paid &#10003; &middot; car TBC &middot; excl. flights</div>
-            </div>
-            <div style="text-align:right;">
-              <div style="font-size:28px;font-weight:900;color:#fff;">~&#8364;917</div>
-              <div style="font-size:11px;color:rgba(255,255,255,0.7);margin-top:2px;">tickets paid &#10003; &middot; car TBC</div>
-            </div>
-          </div>
-          <div class="ct-note">* Alamo ref 2105084962 &middot; Dodge Durango or similar &middot; €1,245.66 prepaid total.</div>
-        </div>
-      </div>
-
-      <!-- TOTAL PANEL -->
-      <div class="ct-panel" id="ct-total">
-        <div class="card">
-          <div class="ct-header">
-            <div class="ct-avatar" style="background:#f0f4ff;">&#128200;</div>
-            <div><div class="ct-name">Full Trip Summary</div><div class="ct-name-sub">Harris Family + Bruce &middot; Aug 1&ndash;17 2026</div></div>
-          </div>
-
-          <!-- CATEGORY ROWS -->
-          <div class="ct-row">
-            <div><div class="ct-label">&#9992;&#65039; Flights</div><div class="ct-sub">Harris: 5 pax KLM/Delta &middot; Bruce: separate</div></div>
-            <div style="text-align:right"><div class="ct-amt" style="color:var(--soft)">TBC</div><div class="ct-conv">Harris paid &#10003;</div></div>
-          </div>
-          <div class="ct-row">
-            <div><div class="ct-label">&#127969; Airbnb Kissimmee</div><div class="ct-sub">4 rooms &middot; 16 nights &middot; Harris 3/4 &middot; Bruce 1/4</div></div>
-            <div style="text-align:right">
-              <div class="ct-amt">&euro;2,379.73</div>
-              <div style="font-size:10px;color:var(--soft);margin-top:4px;">Harris &euro;1,784.80 &middot; Bruce &euro;594.93</div>
-            </div>
-          </div>
-          <div class="ct-row">
-            <div><div class="ct-label">&#127968; SLS LUX Brickell</div><div class="ct-sub">2 rooms &middot; 1 night &middot; Harris &euro;381.54 &middot; Bruce &euro;322</div></div>
-            <div style="text-align:right">
-              <div class="ct-amt">&euro;703.54</div>
-              <div style="font-size:10px;color:var(--soft);margin-top:4px;">Harris &euro;381.54 &middot; Bruce &euro;322.00</div>
-            </div>
-          </div>
-          <div class="ct-row">
-            <div><div class="ct-label">&#127904; Universal + Volcano Bay</div><div class="ct-sub">All 6 guests &middot; Orders U13692737 + TBC</div></div>
-            <div style="text-align:right">
-              <div class="ct-amt">$3,252.48</div>
-              <div style="font-size:10px;color:var(--soft);margin-top:4px;">Harris $2,743 &middot; Bruce $509 owes Tara</div>
-            </div>
-          </div>
-          <div class="ct-row">
-            <div><div class="ct-label">&#128663; Alamo &middot; Dodge Durango AWD</div><div class="ct-sub">Alamo &middot; 16 days &middot; Harris 2/3 (&euro;830) &middot; Bruce 1/3 (&euro;415)</div></div>
-            <div style="text-align:right">
-              <div class="ct-amt">&euro;1,289.57</div>
-              <div style="font-size:10px;color:var(--soft);margin-top:4px;">Harris &euro;859.72 &middot; Bruce &euro;429.86</div>
-            </div>
-          </div>
-
-          <!-- DIVIDER -->
-          <div style="height:1px;background:var(--border);margin:4px 0;"></div>
-
-          <!-- SUMMARY BOXES -->
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:14px 16px;">
-            <div style="background:var(--blue-light);border-radius:14px;padding:14px;text-align:center;">
-              <div style="font-size:10px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">&#127968; Harris</div>
-              <div style="font-size:20px;font-weight:900;color:var(--blue);">&euro;5,554</div>
-              <div style="font-size:10px;color:var(--soft);margin-top:4px;">~$5,816 &middot; ~&pound;4,761</div>
-              <div style="font-size:9px;color:var(--soft);margin-top:6px;">excl. flights</div>
-            </div>
-            <div style="background:#e6f9f0;border-radius:14px;padding:14px;text-align:center;">
-              <div style="font-size:10px;font-weight:700;color:#059669;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">&#128100; Bruce</div>
-              <div style="font-size:20px;font-weight:900;color:#059669;">&euro;1,899</div>
-              <div style="font-size:10px;color:var(--soft);margin-top:4px;">~$2,061 &middot; ~&pound;1,621</div>
-              <div style="font-size:9px;color:var(--soft);margin-top:6px;">excl. flights</div>
-            </div>
-          </div>
-
-          <!-- BRUCE OWES BOX -->
-          <div style="margin:0 16px 16px;background:#fff8e6;border:1.5px solid #f59e0b;border-radius:14px;padding:14px;">
-            <div style="font-size:11px;font-weight:700;color:#b45309;margin-bottom:8px;">&#9888;&#65039; Bruce owes Tara (tickets already paid)</div>
-            <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
-              <span style="font-size:12px;color:var(--text);">Universal Park-to-Park + Express</span>
-              <span style="font-size:12px;font-weight:700;">$508.99</span>
-            </div>
-            <div style="display:flex;justify-content:space-between;margin-bottom:10px;">
-              <span style="font-size:12px;color:var(--text);">Volcano Bay</span>
-              <span style="font-size:12px;font-weight:700;">$90.00</span>
-            </div>
-            <div style="display:flex;justify-content:space-between;border-top:1px solid #f59e0b;padding-top:10px;">
-              <span style="font-size:13px;font-weight:800;color:#b45309;">Total owed to Tara</span>
-              <span style="font-size:16px;font-weight:900;color:#b45309;">$598.99</span>
-            </div>
-            <div style="font-size:10px;color:var(--soft);margin-top:6px;">~&euro;552 &middot; ~&pound;473</div>
-          </div>
-
-          <div class="ct-note">* Alamo ref 2105084962 &middot; Dodge Durango AWD &middot; &euro;1,245.66 prepaid. Flights paid separately.</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-  </div>
-
-</div><!-- end #app -->
-
-<!-- BOTTOM NAV -->
-  <!-- COSTS PAGE -->
-  <div class="page" id="p-costs">
-  <div class="container">
-    <div class="section">
-      <div class="section-label">Cost Split</div>
-
-      <div class="ct-toggle">
-        <div class="ct-tab active" onclick="ctSwitch('harris',this)">&#127968; Harris</div>
-        <div class="ct-tab" onclick="ctSwitch('bruce',this)">&#128100; Bruce</div>
-        <div class="ct-tab" onclick="ctSwitch('total',this)">&#128200; Total</div>
-      </div>
-
-      <div class="ct-panel active" id="ct-harris">
-        <div class="card">
-          <div class="ct-header">
-            <div class="ct-avatar ct-avatar-blue">&#127968;</div>
-            <div><div class="ct-name">Harris Family</div><div class="ct-name-sub">Tara &middot; Craig &middot; Sebastian &middot; Scarlett &middot; Isabella</div></div>
-          </div>
-          <div class="ct-row">
-            <div><div class="ct-label">&#9992;&#65039; Flights (KLM/Delta)</div><div class="ct-sub">5 passengers &middot; AMS &#8596; MCO </div></div>
-            <div style="text-align:right"><div class="ct-amt" style="color:var(--soft)">TBC</div><div class="ct-conv">Paid &#10003;</div></div>
-          </div>
-          <div class="ct-row">
-            <div><div class="ct-label">&#127969; Airbnb Kissimmee</div><div class="ct-sub">3 of 4 rooms &middot; 1&ndash;17 Aug &middot; 16 nights</div></div>
-            <div style="text-align:right"><div class="ct-amt">&euro;1,784.80</div><div class="ct-conv">$1,938 &middot; &pound;1,527</div></div>
-          </div>
-          <div class="ct-row">
-            <div><div class="ct-label">&#127968; SLS LUX Brickell</div><div class="ct-sub">Lux Queen (2 queens) &middot; 6&ndash;7 Aug</div></div>
-            <div style="text-align:right"><div class="ct-amt">&euro;381.54</div><div class="ct-conv">$440 &middot; &pound;327</div></div>
-          </div>
-          <div class="ct-row">
-            <div><div class="ct-label">&#127904; Universal Park-to-Park + Express</div><div class="ct-sub">5 tickets &middot; 11 Aug &middot; Order U13692737</div></div>
-            <div style="text-align:right"><div class="ct-amt">$2,743.49</div><div class="ct-conv">&euro;2,527 &middot; &pound;2,224</div></div>
-          </div>
-          <div class="ct-row">
-            <div><div class="ct-label">&#127754; Volcano Bay</div><div class="ct-sub">5 tickets &middot; 13 Aug &middot; incl. above</div></div>
-            <div style="text-align:right"><div class="ct-amt" style="color:var(--soft)">Incl.</div><div class="ct-conv">In ticket total above</div></div>
-          </div>
-          <div class="ct-row">
-            <div><div class="ct-label">&#128663; Alamo &middot; Dodge Durango AWD</div><div class="ct-sub">Harris 2/3 &middot; 1 Aug 18:00 &rarr; 17 Aug 12:00 &middot; MCO</div></div>
-            <div style="text-align:right"><div class="ct-amt">&euro;830.44</div><div class="ct-conv">2/3 of &euro;1,245.66</div></div>
-          </div>
-          <div style="background:#f8faff;border-radius:12px;margin:12px 16px 0;padding:12px 14px;border:1px solid var(--border);">
-            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--soft);margin-bottom:10px;">Harris Family — Itemised Total</div>
-            <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px;"><span>Airbnb (3/4 rooms)</span><span style="font-weight:700;">&euro;1,784.80</span></div>
-            <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px;"><span>SLS LUX (1 room)</span><span style="font-weight:700;">&euro;381.54</span></div>
-            <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px;"><span>Universal + Volcano Bay (5 pax)</span><span style="font-weight:700;">$2,301.01</span></div>
-            <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px;"><span>Alamo Durango (2/3)</span><span style="font-weight:700;">&euro;830.44</span></div>
-            <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px;color:var(--soft)"><span>Flights</span><span>TBC (paid &#10003;)</span></div>
-            <div style="display:flex;justify-content:space-between;padding:10px 0 4px;"><span style="font-size:13px;font-weight:800;">TOTAL (excl. flights)</span><span style="font-size:18px;font-weight:900;color:var(--blue);">~&euro;5,554</span></div>
-            <div style="font-size:10px;color:var(--soft);text-align:right;">+ $2,743 tickets &middot; ~$5,816 total</div>
-          </div>
-          <div class="ct-note">* Flights paid separately. Ticket total approx. based on order U13692737.</div>
-        </div>
-      </div>
-
-      <div class="ct-panel" id="ct-bruce">
-        <div class="card">
-          <div class="ct-header">
-            <div class="ct-avatar ct-avatar-green">&#128100;</div>
-            <div><div class="ct-name">Bruce Herholdt</div><div class="ct-name-sub">Travelling separately on flights</div></div>
-          </div>
-          <div class="ct-row">
-            <div><div class="ct-label">&#9992;&#65039; Flights</div><div class="ct-sub">Bruce arranges separately</div></div>
-            <div style="text-align:right"><div class="ct-amt" style="color:var(--soft)">&mdash;</div><div class="ct-conv">Separate booking</div></div>
-          </div>
-          <div class="ct-row">
-            <div><div class="ct-label">&#127969; Airbnb Kissimmee</div><div class="ct-sub">1 of 4 rooms &middot; 1&ndash;17 Aug &middot; 16 nights</div></div>
-            <div style="text-align:right"><div class="ct-amt">&euro;594.93</div><div class="ct-conv">$646 &middot; &pound;509</div></div>
-          </div>
-          <div class="ct-row">
-            <div><div class="ct-label">&#127968; SLS LUX Brickell</div><div class="ct-sub">1 room &middot; Lux Studio King &middot; 6&ndash;7 Aug</div></div>
-            <div style="text-align:right"><div class="ct-amt">&euro;322.00</div><div class="ct-conv">$350 &middot; &pound;276</div></div>
-          </div>
-          <div class="ct-row" style="background:#fff8e6; border-radius:10px; margin:8px;">
-            <div><div class="ct-label" style="color:#b45309;">&#9888;&#65039; Universal Park-to-Park + Express</div><div class="ct-sub">1 ticket (Craig Harris order) &middot; 11 Aug</div></div>
-            <div style="text-align:right"><div class="ct-amt" style="color:#b45309;">$508.99</div><div class="ct-conv">Owes Tara &middot; &euro;469</div></div>
-          </div>
-          <div class="ct-row" style="background:#fff8e6; border-radius:10px; margin:8px;">
-            <div><div class="ct-label" style="color:#b45309;">&#9888;&#65039; Volcano Bay</div><div class="ct-sub">1 ticket (Craig Harris order) &middot; 13 Aug</div></div>
-            <div style="text-align:right"><div class="ct-amt" style="color:#b45309;">$90.00</div><div class="ct-conv">Owes Tara &middot; &euro;83</div></div>
-          </div>
-          <div class="ct-row">
-            <div><div class="ct-label" style="color:#b45309;">&#9888;&#65039; Alamo &middot; Dodge Durango AWD</div><div class="ct-sub">Bruce 1/3 &middot; 1 Aug &rarr; 17 Aug &middot; MCO</div></div>
-            <div style="text-align:right"><div class="ct-amt">&euro;429.86</div><div class="ct-conv">$467 &middot; &pound;368</div></div>
-          </div>
-          <div style="background:#fff8e6;border-radius:12px;margin:12px 16px 0;padding:12px 14px;border:1.5px solid #f59e0b;">
-            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#b45309;margin-bottom:10px;">&#9888;&#65039; Bruce — Everything Owed to Tara</div>
-            <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #fde68a;font-size:12px;color:#b45309;"><span>Airbnb (1/4 rooms)</span><span style="font-weight:700;">&euro;594.93</span></div>
-            <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #fde68a;font-size:12px;color:#b45309;"><span>SLS LUX (1 room)</span><span style="font-weight:700;">&euro;322.00</span></div>
-            <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #fde68a;font-size:12px;color:#b45309;"><span>Alamo Durango (1/3)</span><span style="font-weight:700;">&euro;415.22</span></div>
-            <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #fde68a;font-size:12px;color:#b45309;"><span>Universal + Express &#10003;</span><span style="font-weight:700;color:#059669;">$508.99 paid</span></div>
-            <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #fde68a;font-size:12px;color:#b45309;"><span>Volcano Bay &#10003;</span><span style="font-weight:700;color:#059669;">$90.00 paid</span></div>
-            <div style="display:flex;justify-content:space-between;padding:5px 0;font-size:12px;color:var(--soft);"><span>Flights</span><span>Arranges separately</span></div>
-          </div>
-          <div style="background:#dc2626;border-radius:16px;margin:14px 16px 16px;padding:18px 20px;display:flex;justify-content:space-between;align-items:center;">
-            <div>
-              <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.8);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;">Bruce Owes Tara</div>
-              <div style="font-size:11px;color:rgba(255,255,255,0.65);">Tickets paid &#10003; &middot; car TBC &middot; excl. flights</div>
-            </div>
-            <div style="text-align:right;">
-              <div style="font-size:28px;font-weight:900;color:#fff;">~&#8364;917</div>
-              <div style="font-size:11px;color:rgba(255,255,255,0.7);margin-top:2px;">tickets paid &#10003; &middot; car TBC</div>
-            </div>
-          </div>
-          <div class="ct-note">* Alamo ref 2105084962 &middot; Dodge Durango or similar &middot; €1,245.66 prepaid total.</div>
-        </div>
-      </div>
-
-      <!-- TOTAL PANEL -->
-      <div class="ct-panel" id="ct-total">
-        <div class="card">
-          <div class="ct-header">
-            <div class="ct-avatar" style="background:#f0f4ff;">&#128200;</div>
-            <div><div class="ct-name">Full Trip Summary</div><div class="ct-name-sub">Harris Family + Bruce &middot; Aug 1&ndash;17 2026</div></div>
-          </div>
-
-          <!-- CATEGORY ROWS -->
-          <div class="ct-row">
-            <div><div class="ct-label">&#9992;&#65039; Flights</div><div class="ct-sub">Harris: 5 pax KLM/Delta &middot; Bruce: separate</div></div>
-            <div style="text-align:right"><div class="ct-amt" style="color:var(--soft)">TBC</div><div class="ct-conv">Harris paid &#10003;</div></div>
-          </div>
-          <div class="ct-row">
-            <div><div class="ct-label">&#127969; Airbnb Kissimmee</div><div class="ct-sub">4 rooms &middot; 16 nights &middot; Harris 3/4 &middot; Bruce 1/4</div></div>
-            <div style="text-align:right">
-              <div class="ct-amt">&euro;2,379.73</div>
-              <div style="font-size:10px;color:var(--soft);margin-top:4px;">Harris &euro;1,784.80 &middot; Bruce &euro;594.93</div>
-            </div>
-          </div>
-          <div class="ct-row">
-            <div><div class="ct-label">&#127968; SLS LUX Brickell</div><div class="ct-sub">2 rooms &middot; 1 night &middot; Harris &euro;381.54 &middot; Bruce &euro;322</div></div>
-            <div style="text-align:right">
-              <div class="ct-amt">&euro;703.54</div>
-              <div style="font-size:10px;color:var(--soft);margin-top:4px;">Harris &euro;381.54 &middot; Bruce &euro;322.00</div>
-            </div>
-          </div>
-          <div class="ct-row">
-            <div><div class="ct-label">&#127904; Universal + Volcano Bay</div><div class="ct-sub">All 6 guests &middot; Orders U13692737 + TBC</div></div>
-            <div style="text-align:right">
-              <div class="ct-amt">$3,252.48</div>
-              <div style="font-size:10px;color:var(--soft);margin-top:4px;">Harris $2,743 &middot; Bruce $509 owes Tara</div>
-            </div>
-          </div>
-          <div class="ct-row">
-            <div><div class="ct-label">&#128663; Alamo &middot; Dodge Durango AWD</div><div class="ct-sub">Alamo &middot; 16 days &middot; Harris 2/3 (&euro;830) &middot; Bruce 1/3 (&euro;415)</div></div>
-            <div style="text-align:right">
-              <div class="ct-amt">&euro;1,289.57</div>
-              <div style="font-size:10px;color:var(--soft);margin-top:4px;">Harris &euro;859.72 &middot; Bruce &euro;429.86</div>
-            </div>
-          </div>
-
-          <!-- DIVIDER -->
-          <div style="height:1px;background:var(--border);margin:4px 0;"></div>
-
-          <!-- SUMMARY BOXES -->
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:14px 16px;">
-            <div style="background:var(--blue-light);border-radius:14px;padding:14px;text-align:center;">
-              <div style="font-size:10px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">&#127968; Harris</div>
-              <div style="font-size:20px;font-weight:900;color:var(--blue);">&euro;5,554</div>
-              <div style="font-size:10px;color:var(--soft);margin-top:4px;">~$5,816 &middot; ~&pound;4,761</div>
-              <div style="font-size:9px;color:var(--soft);margin-top:6px;">excl. flights</div>
-            </div>
-            <div style="background:#e6f9f0;border-radius:14px;padding:14px;text-align:center;">
-              <div style="font-size:10px;font-weight:700;color:#059669;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">&#128100; Bruce</div>
-              <div style="font-size:20px;font-weight:900;color:#059669;">&euro;1,899</div>
-              <div style="font-size:10px;color:var(--soft);margin-top:4px;">~$2,061 &middot; ~&pound;1,621</div>
-              <div style="font-size:9px;color:var(--soft);margin-top:6px;">excl. flights</div>
-            </div>
-          </div>
-
-          <!-- BRUCE OWES BOX -->
-          <div style="margin:0 16px 16px;background:#fff8e6;border:1.5px solid #f59e0b;border-radius:14px;padding:14px;">
-            <div style="font-size:11px;font-weight:700;color:#b45309;margin-bottom:8px;">&#9888;&#65039; Bruce owes Tara (tickets already paid)</div>
-            <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
-              <span style="font-size:12px;color:var(--text);">Universal Park-to-Park + Express</span>
-              <span style="font-size:12px;font-weight:700;">$508.99</span>
-            </div>
-            <div style="display:flex;justify-content:space-between;margin-bottom:10px;">
-              <span style="font-size:12px;color:var(--text);">Volcano Bay</span>
-              <span style="font-size:12px;font-weight:700;">$90.00</span>
-            </div>
-            <div style="display:flex;justify-content:space-between;border-top:1px solid #f59e0b;padding-top:10px;">
-              <span style="font-size:13px;font-weight:800;color:#b45309;">Total owed to Tara</span>
-              <span style="font-size:16px;font-weight:900;color:#b45309;">$598.99</span>
-            </div>
-            <div style="font-size:10px;color:var(--soft);margin-top:6px;">~&euro;552 &middot; ~&pound;473</div>
-          </div>
-
-          <div class="ct-note">* Alamo ref 2105084962 &middot; Dodge Durango AWD &middot; &euro;1,245.66 prepaid. Flights paid separately.</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-  </div>
-
+ <div class="hero">
+ <h1>Florida 2026</h1>
+ <p class="hero-sub">Harris Family · Aug 1–17 · 6 Travellers</p>
+ <div class="hero-pills">
+ <span class="pill">✈️ Amsterdam → Orlando</span>
+ <span class="pill">🏡 Kissimmee Villa</span>
+ <span class="pill">🌊 Miami</span>
+ <span class="pill">🎢 Universal</span>
+ </div>
+ </div>
+ <div class="countdown">
+ <div class="cd-label">Departure countdown</div>
+ <div class="cd-nums">
+ <div class="cd-unit"><div class="cd-num" id="cd-d">--</div><div class="cd-name">days</div></div>
+ <div class="cd-unit"><div class="cd-num" id="cd-h">--</div><div class="cd-name">hrs</div></div>
+ <div class="cd-unit"><div class="cd-num" id="cd-m">--</div><div class="cd-name">min</div></div>
+ </div>
+ </div>
+ <div class="page active" id="p-overview">
+ <div class="container">
+ <div class="section">
+ <div class="section-label">Your Trip</div>
+ <div class="tl-item"><div class="tl-l"><div class="tl-dot">✈️</div><div class="tl-line"></div></div><div class="tl-body"><div class="tl-date">Sat 1 Aug 2026</div><div class="tl-title">Depart Amsterdam → Orlando</div><div class="tl-desc">AF 5596 · DL 47 · AMS → JFK → MCO</div></div></div>
+ <div class="tl-item"><div class="tl-l"><div class="tl-dot">🏡</div><div class="tl-line"></div></div><div class="tl-body"><div class="tl-date">1–17 Aug · 16 nights</div><div class="tl-title">Townhouse, Kissimmee</div><div class="tl-desc">Hosted by Lucas · Check-in 16:00</div></div></div>
+ <div class="tl-item"><div class="tl-l"><div class="tl-dot">🌊</div><div class="tl-line"></div></div><div class="tl-body"><div class="tl-date">Thu 6 → Fri 7 Aug · 1 night</div><div class="tl-title">Miami · SLS LUX Brickell</div><div class="tl-desc">Lux Queen (2 queens) + Lux Studio King · Check-in 15:00</div></div></div>
+ <div class="tl-item"><div class="tl-l"><div class="tl-dot">🎢</div><div class="tl-line"></div></div><div class="tl-body"><div class="tl-date">Tue 11 Aug</div><div class="tl-title">Universal Studios + Islands of Adventure</div><div class="tl-desc">Park-to-Park · Express Unlimited · All 6</div></div></div>
+ <div class="tl-item"><div class="tl-l"><div class="tl-dot">🌋</div><div class="tl-line"></div></div><div class="tl-body"><div class="tl-date">Thu 13 Aug</div><div class="tl-title">Volcano Bay Water Park</div><div class="tl-desc">1-Day admission · All 6</div></div></div>
+ <div class="tl-item"><div class="tl-l"><div class="tl-dot">✈️</div></div><div class="tl-body"><div class="tl-date">Mon 17 Aug 2026</div><div class="tl-title">Return to Amsterdam</div><div class="tl-desc">AF8630 → JFK → AF8451 · Check-out by 10:00</div></div></div>
+ </div>
+ <div class="section">
+ <div class="section-label">Reminders</div>
+ <div class="card">
+ <div class="note note-red">⚠️ <span><strong>Airbnb cancellation:</strong> free before 31 Jul 2026 at 16:00</span></div>
+ <div class="note note-amber">💳 <span><strong>SLS LUX Brickell:</strong> US$763.30 not yet paid — due before 6 Aug</span></div>
+ <div class="note note-amber" style="margin-bottom:14px">💳 <span><strong>Airbnb final payment:</strong> €1,903.78 due 23 Jul 2026</span></div>
+ </div>
+ </div>
+ <div class="section">
+ <div class="section-label">Checklist</div>
+ <div class="card">
+ <div class="cli"><span class="cli-icon">✅</span>Flights booked · KLM/Delta</div>
+ <div class="cli"><span class="cli-icon">✅</span>Airbnb Kissimmee · Aug 1–17</div>
+ <div class="cli"><span class="cli-icon">✅</span>SLS LUX Brickell · 6–7 Aug</div>
+ <div class="cli"><span class="cli-icon">✅</span>Universal tickets · 11 & 13 Aug</div>
+ <div class="cli"><span class="cli-icon">✅</span>Alamo Dodge Durango &middot; MCO</div>
+ <div class="cli"><span class="cli-icon">⏳</span>Travel insurance</div>
+ <div class="cli"><span class="cli-icon">⏳</span>Disney / other parks TBC</div>
+ <div class="cli"><span class="cli-icon">⏳</span>Restaurant reservations</div>
+ </div>
+ </div>
+ </div>
+ </div>
+ <div class="page" id="p-flights">
+ <div class="container">
+ <div class="section">
+ <div class="section-label">KLM / Air France · Delta</div>
+ <div class="card">
+ <div class="card-top">
+ <div class="ci ci-blue">✈️</div>
+ <div><div class="card-h">KLM / Delta</div><div class="card-sh">AMS &rarr; MCO via JFK</div></div>
+ </div>
+ <div class="f-band"><span>🛫 Outbound · Sat 1 Aug 2026</span><span>AMS → MCO</span></div>
+ <div class="f-leg">
+ <div><div class="ac">AMS</div><div class="an">Amsterdam Schiphol</div><div class="at">10:10</div></div>
+ <div class="fm"><div class="fn">AF 5596</div><div class="fa">→</div><div class="fo">DL 47</div></div>
+ <div class="rt"><div class="ac">JFK</div><div class="an">New York JFK</div><div class="at">13:25</div></div>
+ </div>
+ <div class="f-leg">
+ <div><div class="ac">JFK</div><div class="an">New York JFK</div><div class="at">15:00</div></div>
+ <div class="fm"><div class="fn">AF 5676</div><div class="fa">→</div></div>
+ <div class="rt"><div class="ac">MCO</div><div class="an">Orlando</div><div class="at">18:15</div></div>
+ </div>
+ <div class="f-band"><span>🛬 Return · Mon 17 Aug 2026</span><span>MCO → JFK → AMS</span></div>
+ <div class="f-leg">
+ <div><div class="ac">MCO</div><div class="an">Orlando</div><div class="at">15:50</div></div>
+ <div class="fm"><div class="fn">AF8630</div><div class="fa">→</div></div>
+ <div class="rt"><div class="ac">JFK</div><div class="an">New York JFK</div><div class="at">18:56</div></div>
+ </div>
+ <div class="f-leg">
+ <div><div class="ac">JFK</div><div class="an">New York JFK</div><div class="at">21:10</div></div>
+ <div class="fm"><div class="fn">AF8451</div><div class="fa">→</div></div>
+ <div class="rt"><div class="ac">AMS</div><div class="an">Amsterdam</div><div class="at">+1 10:30</div></div>
+ </div>
+ <div class="rows">
+ <div class="row">
+ <div class="rl">Passengers</div>
+ <div class="rv">
+ <div class="chips">
+ <span class="chip">Tara</span><span class="chip">Craig</span><span class="chip">Sebastian</span><span class="chip">Scarlett</span><span class="chip">Isabella</span>
+ </div>
+ <div style="font-size:10px; color:var(--soft); margin-top:6px">* Bruce travelling separately</div>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+ <div class="page" id="p-stays">
+ <div class="container">
+ <div class="section">
+ <div class="section-label">Airbnb · Kissimmee</div>
+ <div class="card">
+ <div class="card-top"><div class="ci ci-red">🏡</div><div><div class="card-h">4BD Townhouse, Kissimmee</div><div class="card-sh">Hosted by Lucas · Near Disney & Universal</div></div></div>
+ <div class="place-img-wrap">
+ <img class="place-img" src="https://raw.githubusercontent.com/misschevious-agtk/florida-2026/main/img/airbnb-townhouse.jpg" alt="Our Townhouse" style="object-position:center top"/>
+ </div>
+ <div class="rows">
+ <div class="row"><div class="rl">Dates</div><div class="rv">1 Aug – 17 Aug 2026 <span class="b b-blue">16 nights</span></div></div>
+ <div class="row"><div class="rl">Check-in</div><div class="rv">After 16:00 on 1 Aug</div></div>
+ <div class="row"><div class="rl">Check-out</div><div class="rv">Before 10:00 on 17 Aug</div></div>
+ <div class="row"><div class="rl">Total</div><div class="rv" style="font-weight:800; font-size:15px">€2,379.73</div></div>
+ </div>
+ <div class="note note-red">⚠️ Free cancellation until <strong>31 Jul 2026 at 16:00</strong></div>
+ <div style="padding: 0 16px 4px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:var(--soft); margin-top:4px">Payment Schedule</div>
+ <div class="ap"><div><div class="ap-title">Payment 1</div><div class="ap-date">27 Sep 2025</div></div><div class="ap-right"><span class="b b-green">✅ Paid</span><div class="ap-amt">€420.63</div></div></div>
+ <div class="ap"><div><div class="ap-title">Payment 2</div><div class="ap-date">28 Sep 2025</div></div><div class="ap-right"><span class="b b-green">✅ Paid</span><div class="ap-amt">€24.54</div></div></div>
+ <div class="ap"><div><div class="ap-title">Payment 3</div><div class="ap-date">27 Oct 2025</div></div><div class="ap-right"><span class="b b-green">✅ Paid</span><div class="ap-amt">€30.78</div></div></div>
+ <div class="ap"><div><div class="ap-title">Final Payment</div><div class="ap-date">Due 23 Jul 2026</div></div><div class="ap-right"><span class="b b-red">⏳ Due</span><div class="ap-amt">€1,903.78</div></div></div>
+ </div>
+ </div>
+ <div class="section">
+ <div class="section-label">Hotel · Miami</div>
+ <div class="card">
+ <div class="card-top"><div class="ci ci-purple">🏨</div><div><div class="card-h">SLS LUX Brickell</div><div class="card-sh">Brickell · Breakfast included</div></div></div>
+ <div class="place-img-wrap">
+ <img class="place-img" src="https://raw.githubusercontent.com/misschevious-agtk/florida-2026/main/img/hotel-indigo.jpg" alt="SLS LUX Brickell" onerror="this.style.display=&apos;none&apos;"/>
+ <a class="place-link" href="https://slshotels.com/lux-brickell/" target="_blank">🏨 View Hotel ↗</a>
+ </div>
+ <div class="rows">
+ <div class="row"><div class="rl">Address</div><div class="rv">145 SW 11th St, Brickell, Miami FL</div></div>
+ <div class="row"><div class="rl">Dates</div><div class="rv">6 Aug → 7 Aug 2026 <span class="b b-blue">1 night</span></div></div>
+ <div class="row"><div class="rl">Check-in</div><div class="rv">From 16:00</div></div>
+ <div class="row"><div class="rl">Check-out</div><div class="rv">By 11:00</div></div>
+ <div class="row"><div class="rl">Rooms</div><div class="rv">Lux Queen (2 queens) + Lux Studio King · Breakfast included</div></div>
+ <div class="row"><div class="rl">Phone</div><div class="rv">+1 305-860-3874</div></div>
+ <div class="row"><div class="rl">Total</div><div class="rv" style="font-weight:800; font-size:15px">€703.54 <span style="font-size:11px; font-weight:400; color:var(--soft)">/ $763.30</span> <span class="b b-red">⏳ Unpaid</span></div></div>
+ <div class="row"><div class="rl">Deposit</div><div class="rv">$100 held on arrival · refunded in 7 days</div></div>
+ <div class="row"><div class="rl">Amenities</div><div class="rv">🏊 Pool · 🍽️ Restaurant · 🍹 Bar · 💪 Gym</div></div>
+ </div>
+ </div>
+ </div>
+ <div class="section">
+ <div class="section-label">Car Hire</div>
+ <div class="card">
+ <div class="card-top"><div class="ci ci-amber">🚗</div><div><div class="card-h">Alamo · Dodge Durango AWD</div><div class="card-sh">7 seats · Premium Crossover · MCO pickup</div></div></div>
+ <div class="rows">
+ <div class="row"><div class="rl">Pickup</div><div class="rv">Orlando MCO · 1 Aug 2026</div></div>
+ <div class="row"><div class="rl">Duration</div><div class="rv">16 days</div></div>
+ <div class="row"><div class="rl">Price</div><div class="rv" style="font-weight:700">€1,289.57 <span class="b b-amber">🔍 Comparing</span></div></div>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+ <div class="page" id="p-parks">
+ <div class="container">
+ <div class="section">
+ <div class="section-label">Universal Orlando Resort</div>
+ <div class="card">
+ <div class="card-top"><div class="ci ci-amber">🎢</div><div><div class="card-h">Universal Orlando Resort</div><div class="card-sh">Order #U13692737 · Mobile Tickets</div></div></div>
+ <div class="place-img-wrap">
+ <img class="place-img" src="https://raw.githubusercontent.com/misschevious-agtk/florida-2026/main/img/universal-orlando.jpg" alt="Universal Orlando" onerror="this.style.display=&apos;none&apos;"/>
+ <a class="place-link" href="https://www.universalorlando.com/web/en/gb" target="_blank">🎢 Universal Website ↗</a>
+ </div>
+ <div class="ti"><div class="ti-em">🎡</div><div class="ti-info"><div class="ti-title">1-Day Park-to-Park</div><div class="ti-sub">Universal Studios + Islands of Adventure · 6 tickets</div></div><div class="ti-date">11 Aug</div></div>
+ <div class="ti"><div class="ti-em">⚡</div><div class="ti-info"><div class="ti-title">2PK Express Unlimited</div><div class="ti-sub">Skip the queues all day · 6 tickets</div></div><div class="ti-date">11 Aug</div></div>
+ <div class="ti"><div class="ti-em">🌋</div><div class="ti-info"><div class="ti-title">1-Day Volcano Bay</div><div class="ti-sub">Water theme park · 6 tickets</div></div><div class="ti-date">13 Aug</div></div>
+ <div class="place-img-wrap" style="margin-top:0">
+ <img class="place-img" src="https://raw.githubusercontent.com/misschevious-agtk/florida-2026/main/img/volcano-bay.jpg" alt="Volcano Bay" onerror="this.style.display=&apos;none&apos;"/>
+ <a class="place-link" href="https://www.universalorlando.com/web/en/gb/theme-parks/volcano-bay" target="_blank">🌋 Volcano Bay ↗</a>
+ </div>
+ <div class="rows">
+ <div class="row"><div class="rl">Total</div><div class="rv" style="font-weight:800; font-size:15px">$3,252.48 <span style="font-size:10px; color:var(--soft); font-weight:400">incl. $198.54 tax</span></div></div>
+ <div class="row"><div class="rl">Status</div><div class="rv"><span class="b b-green">✅ Confirmed & Paid</span></div></div>
+ <div class="row"><div class="rl">Party</div><div class="rv"><div class="chips"><span class="chip">Tara</span><span class="chip">Craig</span><span class="chip">Sebastian</span><span class="chip">Scarlett</span><span class="chip">Isabella</span><span class="chip">Bruce</span></div></div></div>
+ </div>
+ <div class="note note-blue">🎟️ <strong>Mobile tickets</strong> — show confirmation email at gate. Cannot collect at Will Call.</div>
+ <div class="note note-grey" style="margin-bottom:14px">ℹ️ Bruce has a separate booking for the same dates.</div>
+ </div>
+ </div>
+ <div class="section">
+ <div class="section-label">More Parks — TBC</div>
+ <div class="card">
+ <div class="ti"><div class="ti-em">🏰</div><div class="ti-info"><div class="ti-title">Walt Disney World</div><div class="ti-sub">Magic Kingdom, EPCOT, Hollywood Studios, Animal Kingdom</div></div><div class="ti-date-tbc">TBC</div></div>
+ <div class="ti"><div class="ti-em">🦈</div><div class="ti-info"><div class="ti-title">SeaWorld Orlando</div><div class="ti-sub">Marine life, rides & shows</div></div><div class="ti-date-tbc">TBC</div></div>
+ <div class="ti"><div class="ti-em">🚀</div><div class="ti-info"><div class="ti-title">Kennedy Space Center</div><div class="ti-sub">~1 hour from Kissimmee</div></div><div class="ti-date-tbc">TBC</div></div>
+ </div>
+ </div>
+ </div>
+ </div>
+ <div class="page" id="p-budget">
+ <div class="container">
+ <div class="section">
+ <div class="section-label">Total Cost (excl. flights)</div>
+ <div class="totals">
+ <div class="tc eur"><div class="tc-flag">🇪🇺</div><div class="tc-amt">€7,431</div><div class="tc-lbl">Euro</div></div>
+ <div class="tc usd"><div class="tc-flag">🇺🇸</div><div class="tc-amt">$8,077</div><div class="tc-lbl">Dollar</div></div>
+ <div class="tc gbp"><div class="tc-flag">🇬🇧</div><div class="tc-amt">£6,370</div><div class="tc-lbl">Pound</div></div>
+ </div>
+ <div class="card">
+ <div class="bi"><div class="bi-icon">✈️</div><div class="bi-info"><div class="bi-name">Flights (KLM/Delta)</div><div class="bi-sub">5 pax · AMS ↔ MCO</div></div><div class="bi-right"><div class="bi-amt" style="color:var(--soft)">TBC</div><span class="b b-green">✅ Paid</span></div></div>
+ <div class="bi"><div class="bi-icon">🏡</div><div class="bi-info"><div class="bi-name">Airbnb Kissimmee</div><div class="bi-sub">16 nights · Aug 1–17</div></div><div class="bi-right"><div class="bi-amt">€2,379</div><div class="bi-conv">$2,587 · £2,043</div><span class="b b-amber">⚡ Partial</span></div></div>
+ <div class="bi"><div class="bi-icon">🏨</div><div class="bi-info"><div class="bi-name">SLS LUX Brickell</div><div class="bi-sub">1 night · 2 rooms</div></div><div class="bi-right"><div class="bi-amt">€703.54</div><div class="bi-conv">$763 · £403</div><span class="b b-red">⏳ Due</span></div></div>
+ <div class="bi"><div class="bi-icon">🎢</div><div class="bi-info"><div class="bi-name">Universal Tickets</div><div class="bi-sub">Park-to-Park + Express + Volcano Bay</div></div><div class="bi-right"><div class="bi-amt">€2,992</div><div class="bi-conv">$3,252 · £2,569</div><span class="b b-green">✅ Paid</span></div></div>
+ <div class="bi"><div class="bi-icon">🚗</div><div class="bi-info"><div class="bi-name">Car Hire · Alamo Durango</div><div class="bi-sub">16 days · MCO pickup</div></div><div class="bi-right"><div class="bi-amt">€1,245.66</div><div class="bi-conv">$1,352 · £1,065</div><span class="b b-green">&#10003; Paid</span></div></div>
+ <div class="total-row"><div class="total-lbl">Total excl. flights</div><div class="total-amt">€7,431</div></div>
+ </div>
+ </div>
+ <div class="section">
+ <div class="section-label">Upcoming Payments</div>
+ <div class="card">
+ <div class="pi"><div><div class="pi-title">🏨 SLS LUX Brickell</div><div class="pi-date">Due before 6 Aug 2026</div></div><div><span class="b b-red">⏳ Due</span><div class="pi-amt">€703.54 / $763</div></div></div>
+ <div class="pi"><div><div class="pi-title">🏡 Airbnb Final Payment</div><div class="pi-date">Due 23 Jul 2026</div></div><div><span class="b b-red">⏳ Due</span><div class="pi-amt">€1,903.78</div></div></div>
+ </div>
+ <div style="font-size:10px; color:var(--soft); padding:8px 4px">* Rates approximate (Apr 2026). Flights TBC.</div>
+ </div>
+ </div>
+ </div>
+ <div class="page" id="p-group">
+ <div class="container">
+ <div class="section">
+ <div class="section-label">6 Travellers</div>
+ <div class="card">
+ <div class="group-grid">
+ <div class="gm"><div class="av">T</div><div class="gm-name">Tara Harris</div><div class="gm-role">Trip planner 🌟</div></div>
+ <div class="gm"><div class="av">C</div><div class="gm-name">Craig Harris</div><div class="gm-role"></div></div>
+ <div class="gm"><div class="av">S</div><div class="gm-name">Sebastian Harris</div><div class="gm-role"></div></div>
+ <div class="gm"><div class="av">S</div><div class="gm-name">Scarlett Harris</div><div class="gm-role"></div></div>
+ <div class="gm"><div class="av">I</div><div class="gm-name">Isabella Harris</div><div class="gm-role"></div></div>
+ <div class="gm"><div class="av av-b">B</div><div class="gm-name">Bruce Herholdt</div><div class="gm-role">Family friend</div></div>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+ <div class="page" id="p-car">
+ <div class="container">
+ <div class="section">
+ <div class="section-label">Car Hire</div>
+ <div class="card">
+ <div style="background:linear-gradient(135deg,#1e3a5f,#2563eb);padding:20px;border-radius:20px 20px 0 0;display:flex;align-items:center;gap:14px;">
+ <div style="font-size:40px;">🚗</div>
+ <div>
+ <div style="font-size:18px;font-weight:900;color:#fff;">Dodge Durango AWD</div>
+ <div style="font-size:13px;color:rgba(255,255,255,0.75);margin-top:2px;">Premium Crossover &nbsp;·&nbsp; or similar &nbsp;·&nbsp; 7 seats</div>
+ </div>
+ </div>
+ <div style="padding:14px 16px;">
+ <div class="row"><div class="rl">Company</div><div class="rv" style="font-weight:700;">Alamo</div></div>
+ <div class="row"><div class="rl">Pick-up</div><div class="rv">Sat 1 Aug &nbsp;·&nbsp; 18:00 &nbsp;·&nbsp; Orlando Airport (MCO)</div></div>
+ <div class="row"><div class="rl">Return</div><div class="rv">Mon 17 Aug &nbsp;·&nbsp; 12:00 &nbsp;·&nbsp; Orlando Airport (MCO)</div></div>
+ <div class="row"><div class="rl">Duration</div><div class="rv">16 days</div></div>
+ <div class="row"><div class="rl">Total</div><div class="rv" style="font-weight:800;font-size:15px;">&euro;1,245.66 &nbsp;<span class="b b-green">&#10003; Prepaid</span></div></div>
+ <div style="height:1px;background:var(--border);margin:10px 0;"></div>
+ <div class="row"><div class="rl">Harris</div><div class="rv">2/3 &nbsp;&rarr;&nbsp; <strong>&euro;830.44</strong></div></div>
+ <div class="row"><div class="rl">Bruce</div><div class="rv">1/3 &nbsp;&rarr;&nbsp; <strong>&euro;415.22</strong> (owes Tara)</div></div>
+ </div>
+ </div>
+ <div class="note note-blue" style="margin-top:14px;">&#128663; <span>Unlimited miles included. Pick up at MCO arrivals hall — look for Alamo desk.</span></div>
+ </div>
+ </div>
+ </div>
+ <div class="page" id="p-itinerary">
+ <div class="container">
+ <div class="section">
+ <div class="section-label">Day by Day · Aug 2026</div>
+ <div class="it-day">
+ <div class="it-header" onclick="itToggle(this)">
+ <div class="it-date-badge"><div class="it-date-day">1</div><div class="it-date-mon">Aug</div></div>
+ <div class="it-title"><div class="it-title-main">Arrive in Orlando ✈️</div><div class="it-title-sub">Saturday · MCO pickup 18:00</div></div>
+ <span class="it-tag it-tag-travel">Travel</span>
+ <span class="it-chevron">▼</span>
+ </div>
+ <div class="it-body">
+ <div class="it-detail"><div class="it-detail-icon">🚗</div><div class="it-detail-text"><div class="it-detail-title">Pick up Alamo Dodge Durango</div><div class="it-detail-desc">MCO arrivals hall · Alamo desk · 18:00</div></div></div>
+ <div class="it-detail"><div class="it-detail-icon">🏡</div><div class="it-detail-text"><div class="it-detail-title">Head to Kissimmee villa</div><div class="it-detail-desc">~25 min drive from MCO · check in, unpack, settle</div></div></div>
+ <div class="it-detail"><div class="it-detail-icon">🛒</div><div class="it-detail-text"><div class="it-detail-title">Grocery run</div><div class="it-detail-desc">Publix or Walmart nearby · stock up for the villa</div></div></div>
+ <div class="it-detail"><div class="it-detail-icon">🍕</div><div class="it-detail-text"><div class="it-detail-title">Easy dinner</div><div class="it-detail-desc">Local takeout or casual restaurant near Kissimmee</div></div></div>
+ </div>
+ </div>
+ <div class="it-day">
+ <div class="it-header" onclick="itToggle(this)">
+ <div class="it-date-badge"><div class="it-date-day">2</div><div class="it-date-mon">Aug</div></div>
+ <div class="it-title"><div class="it-title-main">Recovery Day 😴</div><div class="it-title-sub">Sunday · Pool &amp; Kissimmee explore</div></div>
+ <span class="it-tag it-tag-relax">Relax</span>
+ <span class="it-chevron">▼</span>
+ </div>
+ <div class="it-body">
+ <div class="it-detail"><div class="it-detail-icon">🏊</div><div class="it-detail-text"><div class="it-detail-title">Pool morning</div><div class="it-detail-desc">Sleep in, relax, recover from the flight</div></div></div>
+ <div class="it-detail"><div class="it-detail-icon">🚶</div><div class="it-detail-text"><div class="it-detail-title">Explore Kissimmee</div><div class="it-detail-desc">Old Town Kissimmee, lakefront walk, local shops</div></div></div>
+ <div class="it-detail"><div class="it-detail-icon">🍽️</div><div class="it-detail-text"><div class="it-detail-title">Dinner out</div><div class="it-detail-desc">Lots of great options on US-192 near the villa</div></div></div>
+ </div>
+ </div>
+ <div class="it-day">
+ <div class="it-header" onclick="itToggle(this)">
+ <div class="it-date-badge"><div class="it-date-day">3</div><div class="it-date-mon">Aug</div></div>
+ <div class="it-title"><div class="it-title-main">Kennedy Space Center 🚀</div><div class="it-title-sub">Monday · Day trip · 1hr drive</div></div>
+ <span class="it-tag it-tag-plan">Day Trip</span>
+ <span class="it-chevron">▼</span>
+ </div>
+ <div class="it-body">
+ <div class="it-detail"><div class="it-detail-icon">🚀</div><div class="it-detail-text"><div class="it-detail-title">Kennedy Space Center Visitor Complex</div><div class="it-detail-desc">Full day · Shuttle Atlantis, Saturn V, Rocket Garden · ~$75pp · Leave early to beat crowds</div></div></div>
+ <div class="it-detail"><div class="it-detail-icon">🌊</div><div class="it-detail-text"><div class="it-detail-title">Quick stop: Cocoa Beach</div><div class="it-detail-desc">5 min from KSC · dip your feet in the Atlantic on the way back</div></div></div>
+ <div class="it-detail"><div class="it-detail-icon">🏄</div><div class="it-detail-text"><div class="it-detail-title">Ron Jon Surf Shop</div><div class="it-detail-desc">Open 24/7 · iconic Florida surf shop · great for gifts &amp; souvenirs</div></div></div>
+ </div>
+ </div>
+ <div class="it-day">
+ <div class="it-header" onclick="itToggle(this)">
+ <div class="it-date-badge"><div class="it-date-day">4</div><div class="it-date-mon">Aug</div></div>
+ <div class="it-title"><div class="it-title-main">Cocoa Beach 🏖️</div><div class="it-title-sub">Tuesday · Atlantic coast · 1hr drive</div></div>
+ <span class="it-tag it-tag-relax">Beach</span>
+ <span class="it-chevron">▼</span>
+ </div>
+ <div class="it-body">
+ <div class="it-detail"><div class="it-detail-icon">🏖️</div><div class="it-detail-text"><div class="it-detail-title">Cocoa Beach</div><div class="it-detail-desc">Closest Atlantic beach to Orlando · great swimming · calm waters in August</div></div></div>
+ <div class="it-detail"><div class="it-detail-icon">🦀</div><div class="it-detail-text"><div class="it-detail-title">Lunch by the beach</div><div class="it-detail-desc">Coconuts on the Beach or The Fat Snook · fresh seafood</div></div></div>
+ <div class="it-detail"><div class="it-detail-icon">🌅</div><div class="it-detail-text"><div class="it-detail-title">Evening back at villa</div><div class="it-detail-desc">BBQ night, pool, unwind</div></div></div>
+ </div>
+ </div>
+ <div class="it-day">
+ <div class="it-header" onclick="itToggle(this)">
+ <div class="it-date-badge"><div class="it-date-day">5</div><div class="it-date-mon">Aug</div></div>
+ <div class="it-title"><div class="it-title-main">Shopping Day 🛍️</div><div class="it-title-sub">Wednesday · Outlets &amp; Disney Springs</div></div>
+ <span class="it-tag it-tag-plan">Shopping</span>
+ <span class="it-chevron">▼</span>
+ </div>
+ <div class="it-body">
+ <div class="it-detail"><div class="it-detail-icon">🛍️</div><div class="it-detail-text"><div class="it-detail-title">Orlando International Premium Outlets</div><div class="it-detail-desc">180+ stores · Nike, Burberry, Coach, Saks Off 5th, Michael Kors, Prada · International Drive</div></div></div>
+ <div class="it-detail"><div class="it-detail-icon">🛍️</div><div class="it-detail-text"><div class="it-detail-title">Orlando Vineland Premium Outlets</div><div class="it-detail-desc">Near Disney · great for designer bargains</div></div></div>
+ <div class="it-detail"><div class="it-detail-icon">🎡</div><div class="it-detail-text"><div class="it-detail-title">Disney Springs (evening)</div><div class="it-detail-desc">Free entry · great restaurants, bars, shops · World of Disney store</div></div></div>
+ </div>
+ </div>
+ <div class="it-day">
+ <div class="it-header" onclick="itToggle(this)">
+ <div class="it-date-badge"><div class="it-date-day">6–7</div><div class="it-date-mon">Aug</div></div>
+ <div class="it-title"><div class="it-title-main">Miami 🌊</div><div class="it-title-sub">Thu–Fri · SLS LUX Brickell</div></div>
+ <span class="it-tag it-tag-plan">Miami</span>
+ <span class="it-chevron">▼</span>
+ </div>
+ <div class="it-body">
+ <div class="it-detail"><div class="it-detail-icon">🏨</div><div class="it-detail-text"><div class="it-detail-title">Check in SLS LUX Brickell</div><div class="it-detail-desc">Rooftop pool · stunning Biscayne Bay views · check in 15:00</div></div></div>
+ <div class="it-detail"><div class="it-detail-icon">🎨</div><div class="it-detail-text"><div class="it-detail-title">Wynwood Walls</div><div class="it-detail-desc">World-famous street art district · great for photos · tons of bars &amp; restaurants</div></div></div>
+ <div class="it-detail"><div class="it-detail-icon">🏖️</div><div class="it-detail-text"><div class="it-detail-title">South Beach</div><div class="it-detail-desc">Ocean Drive · Art Deco architecture · people watching · swim in the Atlantic</div></div></div>
+ <div class="it-detail"><div class="it-detail-icon">🥂</div><div class="it-detail-text"><div class="it-detail-title">Brickell City Centre</div><div class="it-detail-desc">Upscale shopping mall 5 min walk from SLS · great for evening drinks &amp; dinner</div></div></div>
+ <div class="it-detail"><div class="it-detail-icon">🌮</div><div class="it-detail-text"><div class="it-detail-title">Little Havana</div><div class="it-detail-desc">Calle Ocho · Cuban coffee, cigars, amazing food · authentic Miami experience</div></div></div>
+ </div>
+ </div>
+ <div class="it-day">
+ <div class="it-header" onclick="itToggle(this)">
+ <div class="it-date-badge"><div class="it-date-day">8</div><div class="it-date-mon">Aug</div></div>
+ <div class="it-title"><div class="it-title-main">Universal Studios 🎢</div><div class="it-title-sub">Saturday · Booked</div></div>
+ <span class="it-tag it-tag-booked">Booked ✓</span>
+ <span class="it-chevron">▼</span>
+ </div>
+ <div class="it-body">
+ <div class="it-detail"><div class="it-detail-icon">🎢</div><div class="it-detail-text"><div class="it-detail-title">Universal Studios Florida</div><div class="it-detail-desc">Park-to-Park + Express Pass · Hollywood, Springfield, Minion Land</div></div></div>
+ <div class="it-detail"><div class="it-detail-icon">⚡</div><div class="it-detail-text"><div class="it-detail-title">Express Pass tip</div><div class="it-detail-desc">Use Express on the big rides first thing · Hagrid's, Velocicoaster, Hollywood Rip Ride Rockit</div></div></div>
+ </div>
+ </div>
+ <div class="it-day">
+ <div class="it-header" onclick="itToggle(this)">
+ <div class="it-date-badge"><div class="it-date-day">9</div><div class="it-date-mon">Aug</div></div>
+ <div class="it-title"><div class="it-title-main">Villa Day 🏊</div><div class="it-title-sub">Sunday · Rest &amp; recharge</div></div>
+ <span class="it-tag it-tag-relax">Relax</span>
+ <span class="it-chevron">▼</span>
+ </div>
+ <div class="it-body">
+ <div class="it-detail"><div class="it-detail-icon">🏊</div><div class="it-detail-text"><div class="it-detail-title">Pool day</div><div class="it-detail-desc">Rest those theme park legs · lazy morning · sunbathe</div></div></div>
+ <div class="it-detail"><div class="it-detail-icon">🔥</div><div class="it-detail-text"><div class="it-detail-title">BBQ at the villa</div><div class="it-detail-desc">Big group BBQ · grab supplies from Publix the day before</div></div></div>
+ </div>
+ </div>
+ <div class="it-day">
+ <div class="it-header" onclick="itToggle(this)">
+ <div class="it-date-badge"><div class="it-date-day">10</div><div class="it-date-mon">Aug</div></div>
+ <div class="it-title"><div class="it-title-main">Clearwater Beach 🌴</div><div class="it-title-sub">Monday · Gulf Coast · 90 min drive</div></div>
+ <span class="it-tag it-tag-relax">Beach</span>
+ <span class="it-chevron">▼</span>
+ </div>
+ <div class="it-body">
+ <div class="it-detail"><div class="it-detail-icon">🏖️</div><div class="it-detail-text"><div class="it-detail-title">Clearwater Beach</div><div class="it-detail-desc">One of the best beaches in the USA · white powder sand · warm Gulf water · stunning sunsets</div></div></div>
+ <div class="it-detail"><div class="it-detail-icon">⛵</div><div class="it-detail-text"><div class="it-detail-title">Optional: dolphin boat tour</div><div class="it-detail-desc">Multiple operators on the pier · ~$25pp · dolphins almost guaranteed in August</div></div></div>
+ <div class="it-detail"><div class="it-detail-icon">🦞</div><div class="it-detail-text"><div class="it-detail-title">Lunch / dinner on the beach</div><div class="it-detail-desc">Frenchy's Rockaway Grill · legendary beach bar &amp; seafood</div></div></div>
+ </div>
+ </div>
+ <div class="it-day">
+ <div class="it-header" onclick="itToggle(this)">
+ <div class="it-date-badge"><div class="it-date-day">11</div><div class="it-date-mon">Aug</div></div>
+ <div class="it-title"><div class="it-title-main">Islands of Adventure 🧙</div><div class="it-title-sub">Tuesday · Booked</div></div>
+ <span class="it-tag it-tag-booked">Booked ✓</span>
+ <span class="it-chevron">▼</span>
+ </div>
+ <div class="it-body">
+ <div class="it-detail"><div class="it-detail-icon">🧙</div><div class="it-detail-text"><div class="it-detail-title">Wizarding World of Harry Potter</div><div class="it-detail-desc">Hogsmeade · Forbidden Journey · Hagrid's Motorbike · Butterbeer!</div></div></div>
+ <div class="it-detail"><div class="it-detail-icon">🦕</div><div class="it-detail-text"><div class="it-detail-title">Jurassic World &amp; Marvel</div><div class="it-detail-desc">Velocicoaster · Jurassic World Raptor Encounter · Spider-Man</div></div></div>
+ <div class="it-detail"><div class="it-detail-icon">⚡</div><div class="it-detail-text"><div class="it-detail-title">Express Pass tip</div><div class="it-detail-desc">Hagrid&apos;s has longest waits · use Express early on popular rides</div></div></div>
+ </div>
+ </div>
+ <div class="it-day">
+ <div class="it-header" onclick="itToggle(this)">
+ <div class="it-date-badge"><div class="it-date-day">12</div><div class="it-date-mon">Aug</div></div>
+ <div class="it-title"><div class="it-title-main">Lazy Day 😎</div><div class="it-title-sub">Wednesday · Villa &amp; local dinner</div></div>
+ <span class="it-tag it-tag-relax">Relax</span>
+ <span class="it-chevron">▼</span>
+ </div>
+ <div class="it-body">
+ <div class="it-detail"><div class="it-detail-icon">🏊</div><div class="it-detail-text"><div class="it-detail-title">Villa pool day</div><div class="it-detail-desc">Recharge after two big park days</div></div></div>
+ <div class="it-detail"><div class="it-detail-icon">🍽️</div><div class="it-detail-text"><div class="it-detail-title">Dinner at I-Drive</div><div class="it-detail-desc">International Drive has tons of great options · The Toothsome Chocolate Emporium, Bahama Breeze</div></div></div>
+ </div>
+ </div>
+ <div class="it-day">
+ <div class="it-header" onclick="itToggle(this)">
+ <div class="it-date-badge"><div class="it-date-day">13</div><div class="it-date-mon">Aug</div></div>
+ <div class="it-title"><div class="it-title-main">Volcano Bay 🌋</div><div class="it-title-sub">Thursday · Booked</div></div>
+ <span class="it-tag it-tag-booked">Booked ✓</span>
+ <span class="it-chevron">▼</span>
+ </div>
+ <div class="it-body">
+ <div class="it-detail"><div class="it-detail-icon">🌋</div><div class="it-detail-text"><div class="it-detail-title">Universal&apos;s Volcano Bay</div><div class="it-detail-desc">Water theme park · TapuTapu wristband · no queuing in line · arrive early for best experience</div></div></div>
+ <div class="it-detail"><div class="it-detail-icon">💡</div><div class="it-detail-text"><div class="it-detail-title">Tip</div><div class="it-detail-desc">Bring waterproof sunscreen · lockers available · slides are incredible</div></div></div>
+ </div>
+ </div>
+ <div class="it-day">
+ <div class="it-header" onclick="itToggle(this)">
+ <div class="it-date-badge"><div class="it-date-day">14</div><div class="it-date-mon">Aug</div></div>
+ <div class="it-title"><div class="it-title-main">Outlet Shopping 🛍️</div><div class="it-title-sub">Friday · Vineland Premium Outlets</div></div>
+ <span class="it-tag it-tag-plan">Shopping</span>
+ <span class="it-chevron">▼</span>
+ </div>
+ <div class="it-body">
+ <div class="it-detail"><div class="it-detail-icon">🛍️</div><div class="it-detail-text"><div class="it-detail-title">Orlando Vineland Premium Outlets</div><div class="it-detail-desc">Near Disney · Prada, Gucci, Versace, Saint Laurent, Burberry · great for last-minute gifts</div></div></div>
+ <div class="it-detail"><div class="it-detail-icon">🎡</div><div class="it-detail-text"><div class="it-detail-title">Disney Springs</div><div class="it-detail-desc">Free entry · shopping, restaurants, LEGO store, AMC cinema · lovely evening walk</div></div></div>
+ </div>
+ </div>
+ <div class="it-day">
+ <div class="it-header" onclick="itToggle(this)">
+ <div class="it-date-badge"><div class="it-date-day">15</div><div class="it-date-mon">Aug</div></div>
+ <div class="it-title"><div class="it-title-main">Everglades 🐊</div><div class="it-title-sub">Saturday · Day trip</div></div>
+ <span class="it-tag it-tag-plan">Day Trip</span>
+ <span class="it-chevron">▼</span>
+ </div>
+ <div class="it-body">
+ <div class="it-detail"><div class="it-detail-icon">🐊</div><div class="it-detail-text"><div class="it-detail-title">Everglades Airboat Tour</div><div class="it-detail-desc">~2hr drive south · Wild Florida or Boggy Creek airboat tours near Kissimmee · spot gators, eagles, manatees</div></div></div>
+ <div class="it-detail"><div class="it-detail-icon">💡</div><div class="it-detail-text"><div class="it-detail-title">Alternative: St Augustine</div><div class="it-detail-desc">Oldest city in the US · stunning Spanish architecture · 90 min drive north · worth it</div></div></div>
+ </div>
+ </div>
+ <div class="it-day">
+ <div class="it-header" onclick="itToggle(this)">
+ <div class="it-date-badge"><div class="it-date-day">16</div><div class="it-date-mon">Aug</div></div>
+ <div class="it-title"><div class="it-title-main">Last Day 🥹</div><div class="it-title-sub">Sunday · Pack &amp; farewell dinner</div></div>
+ <span class="it-tag it-tag-relax">Relax</span>
+ <span class="it-chevron">▼</span>
+ </div>
+ <div class="it-body">
+ <div class="it-detail"><div class="it-detail-icon">🏊</div><div class="it-detail-text"><div class="it-detail-title">Final pool morning</div><div class="it-detail-desc">Soak it all in · last Florida sun · pack after lunch</div></div></div>
+ <div class="it-detail"><div class="it-detail-icon">🍽️</div><div class="it-detail-text"><div class="it-detail-title">Farewell dinner</div><div class="it-detail-desc">Make it a good one! The Capital Grille or Capa at Four Seasons · or a classic Florida steakhouse</div></div></div>
+ </div>
+ </div>
+ <div class="it-day">
+ <div class="it-header" onclick="itToggle(this)">
+ <div class="it-date-badge"><div class="it-date-day">17</div><div class="it-date-mon">Aug</div></div>
+ <div class="it-title"><div class="it-title-main">Fly Home ✈️</div><div class="it-title-sub">Monday · MCO drop-off 12:00</div></div>
+ <span class="it-tag it-tag-travel">Travel</span>
+ <span class="it-chevron">▼</span>
+ </div>
+ <div class="it-body">
+ <div class="it-detail"><div class="it-detail-icon">🚗</div><div class="it-detail-text"><div class="it-detail-title">Return car to Alamo MCO</div><div class="it-detail-desc">Drop-off by 12:00 · allow extra time for check-in</div></div></div>
+ <div class="it-detail"><div class="it-detail-icon">✈️</div><div class="it-detail-text"><div class="it-detail-title">MCO → AMS via JFK</div><div class="it-detail-desc">KLM/Delta · see you on the other side!</div></div></div>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+ <div class="page" id="p-costs">
+ <div class="container">
+ <div class="section">
+ <div class="section-label">Cost Split</div>
+ <div class="ct-toggle">
+ <div class="ct-tab active" onclick="ctSwitch('harris',this)">&#127968; Harris</div>
+ <div class="ct-tab" onclick="ctSwitch('bruce',this)">&#128100; Bruce</div>
+ <div class="ct-tab" onclick="ctSwitch('total',this)">&#128200; Total</div>
+ </div>
+ <div class="ct-panel active" id="ct-harris">
+ <div class="card">
+ <div class="ct-header">
+ <div class="ct-avatar ct-avatar-blue">&#127968;</div>
+ <div><div class="ct-name">Harris Family</div><div class="ct-name-sub">Tara &middot; Craig &middot; Sebastian &middot; Scarlett &middot; Isabella</div></div>
+ </div>
+ <div class="ct-row">
+ <div><div class="ct-label">&#9992;&#65039; Flights (KLM/Delta)</div><div class="ct-sub">5 passengers &middot; AMS &#8596; MCO </div></div>
+ <div style="text-align:right"><div class="ct-amt" style="color:var(--soft)">TBC</div><div class="ct-conv">Paid &#10003;</div></div>
+ </div>
+ <div class="ct-row">
+ <div><div class="ct-label">&#127969; Airbnb Kissimmee</div><div class="ct-sub">3 of 4 rooms &middot; 1&ndash;17 Aug &middot; 16 nights</div></div>
+ <div style="text-align:right"><div class="ct-amt">&euro;1,784.80</div><div class="ct-conv">$1,938 &middot; &pound;1,527</div></div>
+ </div>
+ <div class="ct-row">
+ <div><div class="ct-label">&#127968; SLS LUX Brickell</div><div class="ct-sub">Lux Queen (2 queens) &middot; 6&ndash;7 Aug</div></div>
+ <div style="text-align:right"><div class="ct-amt">&euro;381.54</div><div class="ct-conv">$440 &middot; &pound;327</div></div>
+ </div>
+ <div class="ct-row">
+ <div><div class="ct-label">&#127904; Universal Park-to-Park + Express</div><div class="ct-sub">5 tickets &middot; 11 Aug &middot; Order U13692737</div></div>
+ <div style="text-align:right"><div class="ct-amt">$2,743.49</div><div class="ct-conv">&euro;2,527 &middot; &pound;2,224</div></div>
+ </div>
+ <div class="ct-row">
+ <div><div class="ct-label">&#127754; Volcano Bay</div><div class="ct-sub">5 tickets &middot; 13 Aug &middot; incl. above</div></div>
+ <div style="text-align:right"><div class="ct-amt" style="color:var(--soft)">Incl.</div><div class="ct-conv">In ticket total above</div></div>
+ </div>
+ <div class="ct-row">
+ <div><div class="ct-label">&#128663; Alamo &middot; Dodge Durango AWD</div><div class="ct-sub">Harris 2/3 &middot; 1 Aug 18:00 &rarr; 17 Aug 12:00 &middot; MCO</div></div>
+ <div style="text-align:right"><div class="ct-amt">&euro;830.44</div><div class="ct-conv">2/3 of &euro;1,245.66</div></div>
+ </div>
+ <div style="background:#f8faff;border-radius:12px;margin:12px 16px 0;padding:12px 14px;border:1px solid var(--border);">
+ <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--soft);margin-bottom:10px;">Harris Family — Itemised Total</div>
+ <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px;"><span>Airbnb (3/4 rooms)</span><span style="font-weight:700;">&euro;1,784.80</span></div>
+ <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px;"><span>SLS LUX (1 room)</span><span style="font-weight:700;">&euro;381.54</span></div>
+ <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px;"><span>Universal + Volcano Bay (5 pax)</span><span style="font-weight:700;">$2,301.01</span></div>
+ <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px;"><span>Alamo Durango (2/3)</span><span style="font-weight:700;">&euro;830.44</span></div>
+ <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px;color:var(--soft)"><span>Flights</span><span>TBC (paid &#10003;)</span></div>
+ <div style="display:flex;justify-content:space-between;padding:10px 0 4px;"><span style="font-size:13px;font-weight:800;">TOTAL (excl. flights)</span><span style="font-size:18px;font-weight:900;color:var(--blue);">~&euro;5,554</span></div>
+ <div style="font-size:10px;color:var(--soft);text-align:right;">+ $2,743 tickets &middot; ~$5,816 total</div>
+ </div>
+ <div style="background:var(--blue);border-radius:16px;margin:14px 16px 16px;padding:18px 20px;display:flex;justify-content:space-between;align-items:center;">
+ <div>
+ <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;">Harris Grand Total</div>
+ <div style="font-size:11px;color:rgba(255,255,255,0.6);">excl. flights</div>
+ </div>
+ <div style="text-align:right;">
+ <div style="font-size:28px;font-weight:900;color:#fff;">~&#8364;2,997</div>
+ <div style="font-size:11px;color:rgba(255,255,255,0.7);margin-top:2px;">+ $2,301 tickets &middot; excl. flights</div>
+ </div>
+ </div>
+ <div class="ct-note">* Airbnb €475.95 paid, €1,903.78 due 23 Jul. Car: Alamo €1,245.66 prepaid (ref 2105084962).</div>
+ </div>
+ </div>
+ <div class="ct-panel" id="ct-bruce">
+ <div class="card">
+ <div class="ct-header">
+ <div class="ct-avatar ct-avatar-green">&#128100;</div>
+ <div><div class="ct-name">Bruce Herholdt</div><div class="ct-name-sub">Travelling separately on flights</div></div>
+ </div>
+ <div class="ct-row">
+ <div><div class="ct-label">&#9992;&#65039; Flights</div><div class="ct-sub">Bruce arranges separately</div></div>
+ <div style="text-align:right"><div class="ct-amt" style="color:var(--soft)">&mdash;</div><div class="ct-conv">Separate booking</div></div>
+ </div>
+ <div class="ct-row">
+ <div><div class="ct-label">&#127969; Airbnb Kissimmee</div><div class="ct-sub">1 of 4 rooms &middot; 1&ndash;17 Aug &middot; 16 nights</div></div>
+ <div style="text-align:right"><div class="ct-amt">&euro;594.93</div><div class="ct-conv">$646 &middot; &pound;509</div></div>
+ </div>
+ <div class="ct-row">
+ <div><div class="ct-label">&#127968; SLS LUX Brickell</div><div class="ct-sub">1 room &middot; Lux Studio King &middot; 6&ndash;7 Aug</div></div>
+ <div style="text-align:right"><div class="ct-amt">&euro;322.00</div><div class="ct-conv">$350 &middot; &pound;276</div></div>
+ </div>
+ <div class="ct-row" style="background:#fff8e6; border-radius:10px; margin:8px;">
+ <div><div class="ct-label" style="color:#b45309;">&#9888;&#65039; Universal Park-to-Park + Express</div><div class="ct-sub">1 ticket (Craig Harris order) &middot; 11 Aug</div></div>
+ <div style="text-align:right"><div class="ct-amt" style="color:#b45309;">$508.99</div><div class="ct-conv">Owes Tara &middot; &euro;469</div></div>
+ </div>
+ <div class="ct-row" style="background:#fff8e6; border-radius:10px; margin:8px;">
+ <div><div class="ct-label" style="color:#b45309;">&#9888;&#65039; Volcano Bay</div><div class="ct-sub">1 ticket (Craig Harris order) &middot; 13 Aug</div></div>
+ <div style="text-align:right"><div class="ct-amt" style="color:#b45309;">$90.00</div><div class="ct-conv">Owes Tara &middot; &euro;83</div></div>
+ </div>
+ <div class="ct-row">
+ <div><div class="ct-label" style="color:#b45309;">&#9888;&#65039; Alamo &middot; Dodge Durango AWD</div><div class="ct-sub">Bruce 1/3 &middot; 1 Aug &rarr; 17 Aug &middot; MCO</div></div>
+ <div style="text-align:right"><div class="ct-amt">&euro;429.86</div><div class="ct-conv">$467 &middot; &pound;368</div></div>
+ </div>
+ <div style="background:#fff8e6;border-radius:12px;margin:12px 16px 0;padding:12px 14px;border:1.5px solid #f59e0b;">
+ <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#b45309;margin-bottom:10px;">&#9888;&#65039; Bruce — Everything Owed to Tara</div>
+ <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #fde68a;font-size:12px;color:#b45309;"><span>Airbnb (1/4 rooms)</span><span style="font-weight:700;">&euro;594.93</span></div>
+ <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #fde68a;font-size:12px;color:#b45309;"><span>SLS LUX (1 room)</span><span style="font-weight:700;">&euro;322.00</span></div>
+ <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #fde68a;font-size:12px;color:#b45309;"><span>Alamo Durango (1/3)</span><span style="font-weight:700;">&euro;415.22</span></div>
+ <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #fde68a;font-size:12px;color:#b45309;"><span>Universal + Express &#10003;</span><span style="font-weight:700;color:#059669;">$508.99 paid</span></div>
+ <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #fde68a;font-size:12px;color:#b45309;"><span>Volcano Bay &#10003;</span><span style="font-weight:700;color:#059669;">$90.00 paid</span></div>
+ <div style="display:flex;justify-content:space-between;padding:5px 0;font-size:12px;color:var(--soft);"><span>Flights</span><span>Arranges separately</span></div>
+ </div>
+ <div style="background:#dc2626;border-radius:16px;margin:14px 16px 16px;padding:18px 20px;display:flex;justify-content:space-between;align-items:center;">
+ <div>
+ <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.8);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;">Bruce Owes Tara</div>
+ <div style="font-size:11px;color:rgba(255,255,255,0.65);">Tickets paid &#10003; &middot; car TBC &middot; excl. flights</div>
+ </div>
+ <div style="text-align:right;">
+ <div style="font-size:28px;font-weight:900;color:#fff;">~&#8364;917</div>
+ <div style="font-size:11px;color:rgba(255,255,255,0.7);margin-top:2px;">tickets paid &#10003; &middot; car TBC</div>
+ </div>
+ </div>
+ <div class="ct-note">* Alamo ref 2105084962 &middot; Dodge Durango or similar &middot; €1,245.66 prepaid total.</div>
+ </div>
+ </div>
+ <div class="ct-panel" id="ct-total">
+ <div class="card">
+ <div class="ct-header">
+ <div class="ct-avatar" style="background:#f0f4ff;">&#128200;</div>
+ <div><div class="ct-name">Full Trip Summary</div><div class="ct-name-sub">Harris Family + Bruce &middot; Aug 1&ndash;17 2026</div></div>
+ </div>
+ <div class="ct-row">
+ <div><div class="ct-label">&#9992;&#65039; Flights</div><div class="ct-sub">Harris: 5 pax KLM/Delta &middot; Bruce: separate</div></div>
+ <div style="text-align:right"><div class="ct-amt" style="color:var(--soft)">TBC</div><div class="ct-conv">Harris paid &#10003;</div></div>
+ </div>
+ <div class="ct-row">
+ <div><div class="ct-label">&#127969; Airbnb Kissimmee</div><div class="ct-sub">4 rooms &middot; 16 nights &middot; Harris 3/4 &middot; Bruce 1/4</div></div>
+ <div style="text-align:right">
+ <div class="ct-amt">&euro;2,379.73</div>
+ <div style="font-size:10px;color:var(--soft);margin-top:4px;">Harris &euro;1,784.80 &middot; Bruce &euro;594.93</div>
+ </div>
+ </div>
+ <div class="ct-row">
+ <div><div class="ct-label">&#127968; SLS LUX Brickell</div><div class="ct-sub">2 rooms &middot; 1 night &middot; Harris &euro;381.54 &middot; Bruce &euro;322</div></div>
+ <div style="text-align:right">
+ <div class="ct-amt">&euro;703.54</div>
+ <div style="font-size:10px;color:var(--soft);margin-top:4px;">Harris &euro;381.54 &middot; Bruce &euro;322.00</div>
+ </div>
+ </div>
+ <div class="ct-row">
+ <div><div class="ct-label">&#127904; Universal + Volcano Bay</div><div class="ct-sub">All 6 guests &middot; Orders U13692737 + TBC</div></div>
+ <div style="text-align:right">
+ <div class="ct-amt">$3,252.48</div>
+ <div style="font-size:10px;color:var(--soft);margin-top:4px;">Harris $2,743 &middot; Bruce $509 owes Tara</div>
+ </div>
+ </div>
+ <div class="ct-row">
+ <div><div class="ct-label">&#128663; Alamo &middot; Dodge Durango AWD</div><div class="ct-sub">Alamo &middot; 16 days &middot; Harris 2/3 (&euro;830) &middot; Bruce 1/3 (&euro;415)</div></div>
+ <div style="text-align:right">
+ <div class="ct-amt">&euro;1,289.57</div>
+ <div style="font-size:10px;color:var(--soft);margin-top:4px;">Harris &euro;859.72 &middot; Bruce &euro;429.86</div>
+ </div>
+ </div>
+ <div style="height:1px;background:var(--border);margin:4px 0;"></div>
+ <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:14px 16px;">
+ <div style="background:var(--blue-light);border-radius:14px;padding:14px;text-align:center;">
+ <div style="font-size:10px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">&#127968; Harris</div>
+ <div style="font-size:20px;font-weight:900;color:var(--blue);">&euro;5,554</div>
+ <div style="font-size:10px;color:var(--soft);margin-top:4px;">~$5,816 &middot; ~&pound;4,761</div>
+ <div style="font-size:9px;color:var(--soft);margin-top:6px;">excl. flights</div>
+ </div>
+ <div style="background:#e6f9f0;border-radius:14px;padding:14px;text-align:center;">
+ <div style="font-size:10px;font-weight:700;color:#059669;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">&#128100; Bruce</div>
+ <div style="font-size:20px;font-weight:900;color:#059669;">&euro;1,899</div>
+ <div style="font-size:10px;color:var(--soft);margin-top:4px;">~$2,061 &middot; ~&pound;1,621</div>
+ <div style="font-size:9px;color:var(--soft);margin-top:6px;">excl. flights</div>
+ </div>
+ </div>
+ <div style="margin:0 16px 16px;background:#fff8e6;border:1.5px solid #f59e0b;border-radius:14px;padding:14px;">
+ <div style="font-size:11px;font-weight:700;color:#b45309;margin-bottom:8px;">&#9888;&#65039; Bruce owes Tara (tickets already paid)</div>
+ <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+ <span style="font-size:12px;color:var(--text);">Universal Park-to-Park + Express</span>
+ <span style="font-size:12px;font-weight:700;">$508.99</span>
+ </div>
+ <div style="display:flex;justify-content:space-between;margin-bottom:10px;">
+ <span style="font-size:12px;color:var(--text);">Volcano Bay</span>
+ <span style="font-size:12px;font-weight:700;">$90.00</span>
+ </div>
+ <div style="display:flex;justify-content:space-between;border-top:1px solid #f59e0b;padding-top:10px;">
+ <span style="font-size:13px;font-weight:800;color:#b45309;">Total owed to Tara</span>
+ <span style="font-size:16px;font-weight:900;color:#b45309;">$598.99</span>
+ </div>
+ <div style="font-size:10px;color:var(--soft);margin-top:6px;">~&euro;552 &middot; ~&pound;473</div>
+ </div>
+ <div class="ct-note">* Alamo ref 2105084962 &middot; Dodge Durango AWD &middot; &euro;1,245.66 prepaid. Flights paid separately.</div>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+</div>
+ <div class="page" id="p-costs">
+ <div class="container">
+ <div class="section">
+ <div class="section-label">Cost Split</div>
+ <div class="ct-toggle">
+ <div class="ct-tab active" onclick="ctSwitch('harris',this)">&#127968; Harris</div>
+ <div class="ct-tab" onclick="ctSwitch('bruce',this)">&#128100; Bruce</div>
+ <div class="ct-tab" onclick="ctSwitch('total',this)">&#128200; Total</div>
+ </div>
+ <div class="ct-panel active" id="ct-harris">
+ <div class="card">
+ <div class="ct-header">
+ <div class="ct-avatar ct-avatar-blue">&#127968;</div>
+ <div><div class="ct-name">Harris Family</div><div class="ct-name-sub">Tara &middot; Craig &middot; Sebastian &middot; Scarlett &middot; Isabella</div></div>
+ </div>
+ <div class="ct-row">
+ <div><div class="ct-label">&#9992;&#65039; Flights (KLM/Delta)</div><div class="ct-sub">5 passengers &middot; AMS &#8596; MCO </div></div>
+ <div style="text-align:right"><div class="ct-amt" style="color:var(--soft)">TBC</div><div class="ct-conv">Paid &#10003;</div></div>
+ </div>
+ <div class="ct-row">
+ <div><div class="ct-label">&#127969; Airbnb Kissimmee</div><div class="ct-sub">3 of 4 rooms &middot; 1&ndash;17 Aug &middot; 16 nights</div></div>
+ <div style="text-align:right"><div class="ct-amt">&euro;1,784.80</div><div class="ct-conv">$1,938 &middot; &pound;1,527</div></div>
+ </div>
+ <div class="ct-row">
+ <div><div class="ct-label">&#127968; SLS LUX Brickell</div><div class="ct-sub">Lux Queen (2 queens) &middot; 6&ndash;7 Aug</div></div>
+ <div style="text-align:right"><div class="ct-amt">&euro;381.54</div><div class="ct-conv">$440 &middot; &pound;327</div></div>
+ </div>
+ <div class="ct-row">
+ <div><div class="ct-label">&#127904; Universal Park-to-Park + Express</div><div class="ct-sub">5 tickets &middot; 11 Aug &middot; Order U13692737</div></div>
+ <div style="text-align:right"><div class="ct-amt">$2,743.49</div><div class="ct-conv">&euro;2,527 &middot; &pound;2,224</div></div>
+ </div>
+ <div class="ct-row">
+ <div><div class="ct-label">&#127754; Volcano Bay</div><div class="ct-sub">5 tickets &middot; 13 Aug &middot; incl. above</div></div>
+ <div style="text-align:right"><div class="ct-amt" style="color:var(--soft)">Incl.</div><div class="ct-conv">In ticket total above</div></div>
+ </div>
+ <div class="ct-row">
+ <div><div class="ct-label">&#128663; Alamo &middot; Dodge Durango AWD</div><div class="ct-sub">Harris 2/3 &middot; 1 Aug 18:00 &rarr; 17 Aug 12:00 &middot; MCO</div></div>
+ <div style="text-align:right"><div class="ct-amt">&euro;830.44</div><div class="ct-conv">2/3 of &euro;1,245.66</div></div>
+ </div>
+ <div style="background:#f8faff;border-radius:12px;margin:12px 16px 0;padding:12px 14px;border:1px solid var(--border);">
+ <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--soft);margin-bottom:10px;">Harris Family — Itemised Total</div>
+ <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px;"><span>Airbnb (3/4 rooms)</span><span style="font-weight:700;">&euro;1,784.80</span></div>
+ <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px;"><span>SLS LUX (1 room)</span><span style="font-weight:700;">&euro;381.54</span></div>
+ <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px;"><span>Universal + Volcano Bay (5 pax)</span><span style="font-weight:700;">$2,301.01</span></div>
+ <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px;"><span>Alamo Durango (2/3)</span><span style="font-weight:700;">&euro;830.44</span></div>
+ <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px;color:var(--soft)"><span>Flights</span><span>TBC (paid &#10003;)</span></div>
+ <div style="display:flex;justify-content:space-between;padding:10px 0 4px;"><span style="font-size:13px;font-weight:800;">TOTAL (excl. flights)</span><span style="font-size:18px;font-weight:900;color:var(--blue);">~&euro;5,554</span></div>
+ <div style="font-size:10px;color:var(--soft);text-align:right;">+ $2,743 tickets &middot; ~$5,816 total</div>
+ </div>
+ <div class="ct-note">* Flights paid separately. Ticket total approx. based on order U13692737.</div>
+ </div>
+ </div>
+ <div class="ct-panel" id="ct-bruce">
+ <div class="card">
+ <div class="ct-header">
+ <div class="ct-avatar ct-avatar-green">&#128100;</div>
+ <div><div class="ct-name">Bruce Herholdt</div><div class="ct-name-sub">Travelling separately on flights</div></div>
+ </div>
+ <div class="ct-row">
+ <div><div class="ct-label">&#9992;&#65039; Flights</div><div class="ct-sub">Bruce arranges separately</div></div>
+ <div style="text-align:right"><div class="ct-amt" style="color:var(--soft)">&mdash;</div><div class="ct-conv">Separate booking</div></div>
+ </div>
+ <div class="ct-row">
+ <div><div class="ct-label">&#127969; Airbnb Kissimmee</div><div class="ct-sub">1 of 4 rooms &middot; 1&ndash;17 Aug &middot; 16 nights</div></div>
+ <div style="text-align:right"><div class="ct-amt">&euro;594.93</div><div class="ct-conv">$646 &middot; &pound;509</div></div>
+ </div>
+ <div class="ct-row">
+ <div><div class="ct-label">&#127968; SLS LUX Brickell</div><div class="ct-sub">1 room &middot; Lux Studio King &middot; 6&ndash;7 Aug</div></div>
+ <div style="text-align:right"><div class="ct-amt">&euro;322.00</div><div class="ct-conv">$350 &middot; &pound;276</div></div>
+ </div>
+ <div class="ct-row" style="background:#fff8e6; border-radius:10px; margin:8px;">
+ <div><div class="ct-label" style="color:#b45309;">&#9888;&#65039; Universal Park-to-Park + Express</div><div class="ct-sub">1 ticket (Craig Harris order) &middot; 11 Aug</div></div>
+ <div style="text-align:right"><div class="ct-amt" style="color:#b45309;">$508.99</div><div class="ct-conv">Owes Tara &middot; &euro;469</div></div>
+ </div>
+ <div class="ct-row" style="background:#fff8e6; border-radius:10px; margin:8px;">
+ <div><div class="ct-label" style="color:#b45309;">&#9888;&#65039; Volcano Bay</div><div class="ct-sub">1 ticket (Craig Harris order) &middot; 13 Aug</div></div>
+ <div style="text-align:right"><div class="ct-amt" style="color:#b45309;">$90.00</div><div class="ct-conv">Owes Tara &middot; &euro;83</div></div>
+ </div>
+ <div class="ct-row">
+ <div><div class="ct-label" style="color:#b45309;">&#9888;&#65039; Alamo &middot; Dodge Durango AWD</div><div class="ct-sub">Bruce 1/3 &middot; 1 Aug &rarr; 17 Aug &middot; MCO</div></div>
+ <div style="text-align:right"><div class="ct-amt">&euro;429.86</div><div class="ct-conv">$467 &middot; &pound;368</div></div>
+ </div>
+ <div style="background:#fff8e6;border-radius:12px;margin:12px 16px 0;padding:12px 14px;border:1.5px solid #f59e0b;">
+ <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#b45309;margin-bottom:10px;">&#9888;&#65039; Bruce — Everything Owed to Tara</div>
+ <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #fde68a;font-size:12px;color:#b45309;"><span>Airbnb (1/4 rooms)</span><span style="font-weight:700;">&euro;594.93</span></div>
+ <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #fde68a;font-size:12px;color:#b45309;"><span>SLS LUX (1 room)</span><span style="font-weight:700;">&euro;322.00</span></div>
+ <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #fde68a;font-size:12px;color:#b45309;"><span>Alamo Durango (1/3)</span><span style="font-weight:700;">&euro;415.22</span></div>
+ <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #fde68a;font-size:12px;color:#b45309;"><span>Universal + Express &#10003;</span><span style="font-weight:700;color:#059669;">$508.99 paid</span></div>
+ <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #fde68a;font-size:12px;color:#b45309;"><span>Volcano Bay &#10003;</span><span style="font-weight:700;color:#059669;">$90.00 paid</span></div>
+ <div style="display:flex;justify-content:space-between;padding:5px 0;font-size:12px;color:var(--soft);"><span>Flights</span><span>Arranges separately</span></div>
+ </div>
+ <div style="background:#dc2626;border-radius:16px;margin:14px 16px 16px;padding:18px 20px;display:flex;justify-content:space-between;align-items:center;">
+ <div>
+ <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.8);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;">Bruce Owes Tara</div>
+ <div style="font-size:11px;color:rgba(255,255,255,0.65);">Tickets paid &#10003; &middot; car TBC &middot; excl. flights</div>
+ </div>
+ <div style="text-align:right;">
+ <div style="font-size:28px;font-weight:900;color:#fff;">~&#8364;917</div>
+ <div style="font-size:11px;color:rgba(255,255,255,0.7);margin-top:2px;">tickets paid &#10003; &middot; car TBC</div>
+ </div>
+ </div>
+ <div class="ct-note">* Alamo ref 2105084962 &middot; Dodge Durango or similar &middot; €1,245.66 prepaid total.</div>
+ </div>
+ </div>
+ <div class="ct-panel" id="ct-total">
+ <div class="card">
+ <div class="ct-header">
+ <div class="ct-avatar" style="background:#f0f4ff;">&#128200;</div>
+ <div><div class="ct-name">Full Trip Summary</div><div class="ct-name-sub">Harris Family + Bruce &middot; Aug 1&ndash;17 2026</div></div>
+ </div>
+ <div class="ct-row">
+ <div><div class="ct-label">&#9992;&#65039; Flights</div><div class="ct-sub">Harris: 5 pax KLM/Delta &middot; Bruce: separate</div></div>
+ <div style="text-align:right"><div class="ct-amt" style="color:var(--soft)">TBC</div><div class="ct-conv">Harris paid &#10003;</div></div>
+ </div>
+ <div class="ct-row">
+ <div><div class="ct-label">&#127969; Airbnb Kissimmee</div><div class="ct-sub">4 rooms &middot; 16 nights &middot; Harris 3/4 &middot; Bruce 1/4</div></div>
+ <div style="text-align:right">
+ <div class="ct-amt">&euro;2,379.73</div>
+ <div style="font-size:10px;color:var(--soft);margin-top:4px;">Harris &euro;1,784.80 &middot; Bruce &euro;594.93</div>
+ </div>
+ </div>
+ <div class="ct-row">
+ <div><div class="ct-label">&#127968; SLS LUX Brickell</div><div class="ct-sub">2 rooms &middot; 1 night &middot; Harris &euro;381.54 &middot; Bruce &euro;322</div></div>
+ <div style="text-align:right">
+ <div class="ct-amt">&euro;703.54</div>
+ <div style="font-size:10px;color:var(--soft);margin-top:4px;">Harris &euro;381.54 &middot; Bruce &euro;322.00</div>
+ </div>
+ </div>
+ <div class="ct-row">
+ <div><div class="ct-label">&#127904; Universal + Volcano Bay</div><div class="ct-sub">All 6 guests &middot; Orders U13692737 + TBC</div></div>
+ <div style="text-align:right">
+ <div class="ct-amt">$3,252.48</div>
+ <div style="font-size:10px;color:var(--soft);margin-top:4px;">Harris $2,743 &middot; Bruce $509 owes Tara</div>
+ </div>
+ </div>
+ <div class="ct-row">
+ <div><div class="ct-label">&#128663; Alamo &middot; Dodge Durango AWD</div><div class="ct-sub">Alamo &middot; 16 days &middot; Harris 2/3 (&euro;830) &middot; Bruce 1/3 (&euro;415)</div></div>
+ <div style="text-align:right">
+ <div class="ct-amt">&euro;1,289.57</div>
+ <div style="font-size:10px;color:var(--soft);margin-top:4px;">Harris &euro;859.72 &middot; Bruce &euro;429.86</div>
+ </div>
+ </div>
+ <div style="height:1px;background:var(--border);margin:4px 0;"></div>
+ <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:14px 16px;">
+ <div style="background:var(--blue-light);border-radius:14px;padding:14px;text-align:center;">
+ <div style="font-size:10px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">&#127968; Harris</div>
+ <div style="font-size:20px;font-weight:900;color:var(--blue);">&euro;5,554</div>
+ <div style="font-size:10px;color:var(--soft);margin-top:4px;">~$5,816 &middot; ~&pound;4,761</div>
+ <div style="font-size:9px;color:var(--soft);margin-top:6px;">excl. flights</div>
+ </div>
+ <div style="background:#e6f9f0;border-radius:14px;padding:14px;text-align:center;">
+ <div style="font-size:10px;font-weight:700;color:#059669;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">&#128100; Bruce</div>
+ <div style="font-size:20px;font-weight:900;color:#059669;">&euro;1,899</div>
+ <div style="font-size:10px;color:var(--soft);margin-top:4px;">~$2,061 &middot; ~&pound;1,621</div>
+ <div style="font-size:9px;color:var(--soft);margin-top:6px;">excl. flights</div>
+ </div>
+ </div>
+ <div style="margin:0 16px 16px;background:#fff8e6;border:1.5px solid #f59e0b;border-radius:14px;padding:14px;">
+ <div style="font-size:11px;font-weight:700;color:#b45309;margin-bottom:8px;">&#9888;&#65039; Bruce owes Tara (tickets already paid)</div>
+ <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+ <span style="font-size:12px;color:var(--text);">Universal Park-to-Park + Express</span>
+ <span style="font-size:12px;font-weight:700;">$508.99</span>
+ </div>
+ <div style="display:flex;justify-content:space-between;margin-bottom:10px;">
+ <span style="font-size:12px;color:var(--text);">Volcano Bay</span>
+ <span style="font-size:12px;font-weight:700;">$90.00</span>
+ </div>
+ <div style="display:flex;justify-content:space-between;border-top:1px solid #f59e0b;padding-top:10px;">
+ <span style="font-size:13px;font-weight:800;color:#b45309;">Total owed to Tara</span>
+ <span style="font-size:16px;font-weight:900;color:#b45309;">$598.99</span>
+ </div>
+ <div style="font-size:10px;color:var(--soft);margin-top:6px;">~&euro;552 &middot; ~&pound;473</div>
+ </div>
+ <div class="ct-note">* Alamo ref 2105084962 &middot; Dodge Durango AWD &middot; &euro;1,245.66 prepaid. Flights paid separately.</div>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
 <nav class="bottom-nav">
-  <button class="bn-item active" onclick="nav('overview',this)"><span class="bn-icon">🗓</span><span class="bn-label">Overview</span></button>
-  <button class="bn-item" onclick="nav('flights',this)"><span class="bn-icon">✈️</span><span class="bn-label">Flights</span></button>
-  <button class="bn-item" onclick="nav('stays',this)"><span class="bn-icon">🏠</span><span class="bn-label">Stays</span></button>
-  <button class="bn-item" onclick="nav('car',this)"><span class="bn-icon">🚗</span><span class="bn-label">Car</span></button>
-  <button class="bn-item" onclick="nav('parks',this)"><span class="bn-icon">🎢</span><span class="bn-label">Parks</span></button>
-  <button class="bn-item" onclick="nav('budget',this)"><span class="bn-icon">💰</span><span class="bn-label">Budget</span></button>
-  <button class="bn-item" onclick="nav('costs',this)"><span class="bn-icon">🧾</span><span class="bn-label">Costs</span></button>
+ <button class="bn-item active" onclick="nav('overview',this)"><span class="bn-icon">🗓</span><span class="bn-label">Overview</span></button>
+ <button class="bn-item" onclick="nav('flights',this)"><span class="bn-icon">✈️</span><span class="bn-label">Flights</span></button>
+ <button class="bn-item" onclick="nav('stays',this)"><span class="bn-icon">🏠</span><span class="bn-label">Stays</span></button>
+ <button class="bn-item" onclick="nav('car',this)"><span class="bn-icon">🚗</span><span class="bn-label">Car</span></button>
+ <button class="bn-item" onclick="nav('parks',this)"><span class="bn-icon">🎢</span><span class="bn-label">Parks</span></button>
+ <button class="bn-item" onclick="nav('itinerary',this)"><span class="bn-icon">📅</span><span class="bn-label">Plan</span></button>
+ <button class="bn-item" onclick="nav('costs',this)"><span class="bn-icon">🧾</span><span class="bn-label">Costs</span></button>
 </nav>
-
 <script>
-function nav(id, el) {
-  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
-  document.querySelectorAll('.bn-item').forEach(function(b){ b.classList.remove('active'); });
-  document.getElementById('p-' + id).classList.add('active');
-  el.classList.add('active');
-  document.getElementById('app').scrollTo({top: 0, behavior: 'smooth'});
+function itToggle(header) {
+ var body = header.nextElementSibling;
+ var chevron = header.querySelector('.it-chevron');
+ body.classList.toggle('open');
+ chevron.classList.toggle('open');
 }
-
+function nav(id, el) {
+ document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+ document.querySelectorAll('.bn-item').forEach(function(b){ b.classList.remove('active'); });
+ document.getElementById('p-' + id).classList.add('active');
+ el.classList.add('active');
+ document.getElementById('app').scrollTo({top: 0, behavior: 'smooth'});
+}
 function tick() {
-  var t = new Date('2026-08-01T00:00:00'), n = new Date(), d = t - n;
-  if (d < 0) { document.querySelector('.countdown').innerHTML = '<div style="font-size:18px;font-weight:800;color:white;padding:16px;text-align:center">🌴 Trip has started!</div>'; return; }
-  document.getElementById('cd-d').textContent = Math.floor(d/86400000);
-  document.getElementById('cd-h').textContent = Math.floor((d%86400000)/3600000);
-  document.getElementById('cd-m').textContent = Math.floor((d%3600000)/60000);
+ var t = new Date('2026-08-01T00:00:00'), n = new Date(), d = t - n;
+ if (d < 0) { document.querySelector('.countdown').innerHTML = '<div style="font-size:18px;font-weight:800;color:white;padding:16px;text-align:center">🌴 Trip has started!</div>'; return; }
+ document.getElementById('cd-d').textContent = Math.floor(d/86400000);
+ document.getElementById('cd-h').textContent = Math.floor((d%86400000)/3600000);
+ document.getElementById('cd-m').textContent = Math.floor((d%3600000)/60000);
 }
 tick(); setInterval(tick, 30000);
-
-
 function ctSwitch(id, el) {
-  document.querySelectorAll('.ct-panel').forEach(function(p){ p.classList.remove('active'); });
-  document.querySelectorAll('.ct-tab').forEach(function(t){ t.classList.remove('active'); });
-  document.getElementById('ct-' + id).classList.add('active');
-  el.classList.add('active');
+ document.querySelectorAll('.ct-panel').forEach(function(p){ p.classList.remove('active'); });
+ document.querySelectorAll('.ct-tab').forEach(function(t){ t.classList.remove('active'); });
+ document.getElementById('ct-' + id).classList.add('active');
+ el.classList.add('active');
 }
-
-
 function ctSwitch(id, el) {
-  document.querySelectorAll('.ct-panel').forEach(function(p){ p.classList.remove('active'); });
-  document.querySelectorAll('.ct-tab').forEach(function(t){ t.classList.remove('active'); });
-  document.getElementById('ct-' + id).classList.add('active');
-  el.classList.add('active');
+ document.querySelectorAll('.ct-panel').forEach(function(p){ p.classList.remove('active'); });
+ document.querySelectorAll('.ct-tab').forEach(function(t){ t.classList.remove('active'); });
+ document.getElementById('ct-' + id).classList.add('active');
+ el.classList.add('active');
 }
-
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js').catch(function(){});
+ navigator.serviceWorker.register('sw.js').catch(function(){});
 }
 </script>
 </body>
