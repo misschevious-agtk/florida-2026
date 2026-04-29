@@ -43,7 +43,7 @@
  flex: 1;
  overflow-y: auto;
  -webkit-overflow-scrolling: touch;
- padding-bottom: calc(70px + var(--safe-bottom));
+ padding-bottom: calc(90px + max(var(--safe-bottom), 16px));
  }
  /* ─── HERO ─── */
  .hero {
@@ -280,8 +280,8 @@
  -webkit-backdrop-filter: blur(20px);
  border-top: 1px solid var(--border);
  display: flex;
- padding-bottom: var(--safe-bottom);
- z-index: 200;
+ padding-bottom: max(var(--safe-bottom), 16px);
+ z-index: 1000;
  }
  .bn-item {
  flex: 1;
