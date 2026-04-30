@@ -43,7 +43,7 @@
  flex: 1;
  overflow-y: auto;
  -webkit-overflow-scrolling: touch;
- padding-bottom: calc(90px + max(var(--safe-bottom), 16px));
+ padding-bottom: 40px;
  }
  /* ─── HERO ─── */
  .hero {
@@ -273,34 +273,38 @@
  .ph-text { font-size: 13px; line-height: 1.5; }
  /* ─── BOTTOM NAV ─── */
  .bottom-nav {
- position: fixed;
- bottom: 0; left: 0; right: 0;
+ position: sticky;
+ top: 0;
+ left: 0; right: 0;
  background: rgba(255,255,255,0.97);
- backdrop-filter: blur(20px);
- -webkit-backdrop-filter: blur(20px);
- border-top: 1px solid var(--border);
- display: flex !important;
- padding-bottom: env(safe-area-inset-bottom, 8px);
+ backdrop-filter: blur(12px);
+ -webkit-backdrop-filter: blur(12px);
+ border-bottom: 1px solid var(--border);
+ display: flex;
  z-index: 9999;
- min-height: 60px;
- visibility: visible !important;
- opacity: 1 !important;
+ overflow-x: auto;
+ -webkit-overflow-scrolling: touch;
+ scrollbar-width: none;
  }
+ .bottom-nav::-webkit-scrollbar { display: none; }
  .bn-item {
- flex: 1;
+ flex: 0 0 auto;
  display: flex;
  flex-direction: column;
  align-items: center;
- padding: 10px 4px 8px;
+ padding: 8px 16px 6px;
  cursor: pointer;
- gap: 3px;
+ gap: 2px;
  border: none;
+ border-bottom: 3px solid transparent;
  background: none;
  -webkit-tap-highlight-color: transparent;
+ white-space: nowrap;
+ transition: border-color 0.15s;
  }
- .bn-icon { font-size: 22px; line-height: 1; transition: transform 0.15s; }
- .bn-label { font-size: 9px; font-weight: 600; color: var(--soft); letter-spacing: 0.2px; transition: color 0.15s; }
- .bn-item.active .bn-icon { transform: scale(1.15); }
+ .bn-icon { font-size: 18px; line-height: 1; }
+ .bn-label { font-size: 10px; font-weight: 600; color: var(--soft); letter-spacing: 0.2px; }
+ .bn-item.active { border-bottom-color: var(--blue); }
  .bn-item.active .bn-label { color: var(--blue); font-weight: 700; }
  /* ── COST TRACKER ── */
  .ct-toggle { display:flex; background:var(--bg); border:1px solid var(--border); border-radius:12px; padding:3px; margin-bottom:18px; }
@@ -352,6 +356,15 @@
 </head>
 <body>
 <div id="app">
+<nav class="bottom-nav">
+ <button class="bn-item active" onclick="nav('overview',this)"><span class="bn-icon">🗓</span><span class="bn-label">Overview</span></button>
+ <button class="bn-item" onclick="nav('flights',this)"><span class="bn-icon">✈️</span><span class="bn-label">Flights</span></button>
+ <button class="bn-item" onclick="nav('stays',this)"><span class="bn-icon">🏠</span><span class="bn-label">Stays</span></button>
+ <button class="bn-item" onclick="nav('car',this)"><span class="bn-icon">🚗</span><span class="bn-label">Car</span></button>
+ <button class="bn-item" onclick="nav('parks',this)"><span class="bn-icon">🎢</span><span class="bn-label">Parks</span></button>
+ <button class="bn-item" onclick="nav('itinerary',this)"><span class="bn-icon">📅</span><span class="bn-label">Plan</span></button>
+ <button class="bn-item" onclick="nav('costs',this)"><span class="bn-icon">🧾</span><span class="bn-label">Costs</span></button>
+</nav>
  <div class="hero">
  <h1>Florida 2026</h1>
  <p class="hero-sub">Harris Family · Aug 1–17 · 6 Travellers</p>
@@ -1194,15 +1207,7 @@
  </div>
  </div>
  </div>
-<nav class="bottom-nav">
- <button class="bn-item active" onclick="nav('overview',this)"><span class="bn-icon">🗓</span><span class="bn-label">Overview</span></button>
- <button class="bn-item" onclick="nav('flights',this)"><span class="bn-icon">✈️</span><span class="bn-label">Flights</span></button>
- <button class="bn-item" onclick="nav('stays',this)"><span class="bn-icon">🏠</span><span class="bn-label">Stays</span></button>
- <button class="bn-item" onclick="nav('car',this)"><span class="bn-icon">🚗</span><span class="bn-label">Car</span></button>
- <button class="bn-item" onclick="nav('parks',this)"><span class="bn-icon">🎢</span><span class="bn-label">Parks</span></button>
- <button class="bn-item" onclick="nav('itinerary',this)"><span class="bn-icon">📅</span><span class="bn-label">Plan</span></button>
- <button class="bn-item" onclick="nav('costs',this)"><span class="bn-icon">🧾</span><span class="bn-label">Costs</span></button>
-</nav>
+
 <script>
 function itToggle(header) {
  var body = header.nextElementSibling;
