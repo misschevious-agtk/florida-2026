@@ -355,75 +355,6 @@
  .ct-name-sub { font-size:11px; color:var(--soft); }
 #p-overview .hero, #p-overview .countdown { display: block; }
 .page:not(#p-overview) .hero, .page:not(#p-overview) .countdown { display: none; }
-
- /* ── KIDS ALLOWANCE APP ── */
- .allowance-hero { background: linear-gradient(135deg,#101828 0%,#224b72 55%,#1c8b73 100%); color:#fff; padding:28px 18px 24px; position:relative; overflow:hidden; }
- .allowance-hero:after { content:'✦'; position:absolute; right:22px; top:10px; font-size:92px; color:rgba(255,255,255,.10); transform:rotate(18deg); }
- .allowance-kicker { font-size:10px; letter-spacing:2px; text-transform:uppercase; opacity:.72; font-weight:700; }
- .allowance-title { font-size:27px; font-weight:900; letter-spacing:-.8px; margin-top:4px; }
- .allowance-sub { font-size:12px; opacity:.78; margin-top:5px; }
- .allowance-actions { display:flex; gap:8px; margin:14px 0 16px; }
- .am-btn { border:0; border-radius:12px; padding:11px 13px; font:700 12px inherit; cursor:pointer; transition:transform .15s, box-shadow .15s; }
- .am-btn:active { transform:scale(.97); }
- .am-primary { background:#111; color:#fff; box-shadow:0 5px 14px rgba(0,0,0,.16); }
- .am-secondary { background:#fff; color:#111; border:1px solid var(--border); }
- .am-danger { background:#c0392b; color:#fff; }
- .am-muted { background:#f2f4f7; color:#444; }
- .allowance-kpis { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:-16px; position:relative; z-index:2; }
- .am-kpi { background:#fff; border:1px solid var(--border); border-radius:14px; padding:12px 8px; text-align:center; box-shadow:0 7px 18px rgba(16,24,40,.10); }
- .am-kpi-value { font-size:17px; font-weight:900; color:#101828; }
- .am-kpi-label { font-size:9px; color:var(--soft); text-transform:uppercase; letter-spacing:.7px; margin-top:3px; }
- .allowance-tabs { display:flex; background:#eef1f5; border-radius:12px; padding:3px; margin-bottom:14px; }
- .am-tab { flex:1; border:0; background:transparent; padding:9px 5px; border-radius:9px; color:var(--soft); font:700 11px inherit; cursor:pointer; }
- .am-tab.active { background:#fff; color:#111; box-shadow:0 2px 7px rgba(0,0,0,.08); }
- .kid-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:18px; }
- .kid-card { border:1px solid var(--border); background:#fff; border-radius:15px; padding:13px 9px; text-align:left; cursor:pointer; transition:transform .18s, box-shadow .18s, border-color .18s; }
- .kid-card:hover { transform:translateY(-2px); box-shadow:0 7px 16px rgba(0,0,0,.10); border-color:#7aa9c5; }
- .kid-avatar { width:34px; height:34px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:18px; margin-bottom:8px; background:#e7f1f7; }
- .kid-name { font-size:13px; font-weight:800; }
- .kid-spent { font-size:11px; color:var(--soft); margin-top:2px; }
- .progress-track { height:7px; background:#edf0f2; border-radius:99px; overflow:hidden; margin-top:8px; }
- .progress-fill { height:100%; border-radius:99px; background:linear-gradient(90deg,#1d8b73,#4c9dd1); transition:width .5s ease; }
- .purchase-card { background:#fff; border:1px solid var(--border); border-radius:15px; padding:13px; margin-bottom:9px; animation:amSlide .22s ease both; }
- @keyframes amSlide { from { opacity:0; transform:translateY(7px); } to { opacity:1; transform:none; } }
- .purchase-top { display:flex; align-items:flex-start; gap:10px; }
- .purchase-icon { width:36px; height:36px; border-radius:11px; background:#eff7f4; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
- .purchase-main { flex:1; min-width:0; }
- .purchase-name { font-size:13px; font-weight:800; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
- .purchase-meta { font-size:10px; color:var(--soft); margin-top:3px; }
- .purchase-amount { font-size:16px; font-weight:900; white-space:nowrap; }
- .purchase-foot { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:11px; padding-top:9px; border-top:1px solid var(--border); }
- .purchase-tags { display:flex; flex-wrap:wrap; gap:5px; }
- .am-tag { border-radius:99px; padding:3px 8px; font-size:9px; font-weight:700; background:#f1f3f5; color:#667085; }
- .am-tag.active { background:#e5f7ee; color:#087443; }
- .am-tag.deleted { background:#fde9e7; color:#b42318; text-decoration:line-through; }
- .am-delete { border:0; background:transparent; color:#b42318; font:700 10px inherit; cursor:pointer; padding:4px; }
- .am-restore { border:0; background:#edf7f4; color:#087443; border-radius:8px; font:700 10px inherit; cursor:pointer; padding:6px 8px; }
- .am-empty { background:#fff; border:1px dashed #c8d0d8; border-radius:15px; padding:30px 18px; text-align:center; color:var(--soft); }
- .am-empty-icon { font-size:34px; margin-bottom:7px; }
- .am-empty-title { font-size:13px; font-weight:800; color:#344054; }
- .am-empty-sub { font-size:11px; margin-top:4px; line-height:1.45; }
- .am-log-note { font-size:10px; color:var(--soft); line-height:1.4; margin:9px 2px 0; }
- .am-modal { position:fixed; inset:0; z-index:20000; background:rgba(16,24,40,.58); display:none; align-items:flex-end; justify-content:center; padding:12px; }
- .am-modal.open { display:flex; animation:amFade .18s ease; }
- @keyframes amFade { from { opacity:0; } to { opacity:1; } }
- .am-dialog { background:#fff; width:min(560px,100%); border-radius:20px 20px 14px 14px; padding:18px; box-shadow:0 -10px 40px rgba(0,0,0,.18); animation:amUp .2s ease; max-height:90vh; overflow:auto; }
- @keyframes amUp { from { transform:translateY(18px); opacity:.7; } to { transform:none; opacity:1; } }
- .am-dialog-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
- .am-dialog-title { font-size:17px; font-weight:900; }
- .am-close { border:0; background:#f2f4f7; border-radius:50%; width:30px; height:30px; cursor:pointer; font-size:18px; color:#667085; }
- .am-form-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
- .am-field { display:flex; flex-direction:column; gap:5px; }
- .am-field.full { grid-column:1/-1; }
- .am-field label { font-size:10px; font-weight:800; text-transform:uppercase; color:#667085; letter-spacing:.4px; }
- .am-field input, .am-field select, .am-field textarea { width:100%; border:1px solid #d0d5dd; border-radius:10px; padding:10px; background:#fff; color:#101828; font:500 13px inherit; outline:none; }
- .am-field input:focus, .am-field select:focus, .am-field textarea:focus { border-color:#4c9dd1; box-shadow:0 0 0 3px rgba(76,157,209,.12); }
- .am-field textarea { min-height:68px; resize:vertical; }
- .am-dialog-actions { display:flex; justify-content:flex-end; gap:8px; margin-top:15px; }
- .am-warning { background:#fff7e6; border:1px solid #f1c46a; color:#825b00; border-radius:11px; padding:11px; font-size:12px; line-height:1.45; margin-bottom:12px; }
- .am-confirm-input { text-transform:uppercase; letter-spacing:2px; font-weight:800 !important; text-align:center; }
- @media (max-width:390px) { .kid-grid { grid-template-columns:1fr; } .allowance-kpis { gap:5px; } .am-kpi-value { font-size:15px; } .am-form-grid { grid-template-columns:1fr; } }
-
 </style>
 </head>
 <body>
@@ -436,7 +367,6 @@
  <button class="bn-item" onclick="nav('parks',this)"><span class="bn-icon">🎢</span><span class="bn-label">Parks</span></button>
  <button class="bn-item" onclick="nav('itinerary',this)"><span class="bn-icon">📅</span><span class="bn-label">Plan</span></button>
  <button class="bn-item" onclick="nav('costs',this)"><span class="bn-icon">🧾</span><span class="bn-label">Costs</span></button>
- <button class="bn-item" onclick="nav('allowance',this)"><span class="bn-icon">💳</span><span class="bn-label">Kids</span></button>
 </nav>
  <div class="page active" id="p-overview">
  <div class="hero">
@@ -930,55 +860,6 @@
  </div>
  </div>
  </div>
-
- <div class="page" id="p-allowance">
-  <div class="allowance-hero">
-   <div class="allowance-kicker">Florida 2026 · Shopping only</div>
-   <div class="allowance-title">Kids' allowance 💳</div>
-   <div class="allowance-sub">Track purchases, keep the history and make every dollar count.</div>
-  </div>
-  <div class="container">
-   <div class="allowance-kpis" id="allowanceKpis"></div>
-   <div class="allowance-actions">
-    <button class="am-btn am-primary" type="button" onclick="openAllowanceModal()">＋ Add purchase</button>
-    <button class="am-btn am-secondary" type="button" onclick="downloadAllowanceLog()">⇩ Export log</button>
-   </div>
-   <div class="section-label">Choose a child</div>
-   <div class="kid-grid" id="allowanceKids"></div>
-   <div class="allowance-tabs">
-    <button class="am-tab active" id="amTabActive" type="button" onclick="setAllowanceView('active')">🛍️ Active purchases</button>
-    <button class="am-tab" id="amTabHistory" type="button" onclick="setAllowanceView('history')">🧾 History &amp; archive</button>
-   </div>
-   <div id="allowanceContent"></div>
-   <div class="am-log-note">🛡️ To remove a purchase, use the two-step delete process. It is never erased immediately and can always be restored from history.</div>
-  </div>
- </div>
- <div class="am-modal" id="allowanceModal" onclick="if(event.target===this)closeAllowanceModal()">
-  <div class="am-dialog">
-   <div class="am-dialog-head"><div class="am-dialog-title">Add a purchase 🛍️</div><button class="am-close" type="button" onclick="closeAllowanceModal()">×</button></div>
-   <div class="am-form-grid">
-    <div class="am-field"><label for="amKid">Kid</label><select id="amKid"><option>Scarly</option><option>Bebe</option><option>Seb</option></select></div>
-    <div class="am-field"><label for="amDate">Date</label><input id="amDate" type="date"></div>
-    <div class="am-field"><label for="amStore">Shop / place</label><input id="amStore" placeholder="Nike, Disney Springs…"></div>
-    <div class="am-field"><label for="amItem">What was bought</label><input id="amItem" placeholder="Shoes, hoodie…"></div>
-    <div class="am-field"><label for="amCategory">Category</label><select id="amCategory"><option>Clothing</option><option>Electronics</option><option>Souvenirs</option><option>Beauty</option><option>Books / Games</option><option>Other</option></select></div>
-    <div class="am-field"><label for="amAmount">Amount (USD)</label><input id="amAmount" type="number" min="0" step="0.01" placeholder="0.00"></div>
-    <div class="am-field"><label for="amPayment">Paid with</label><select id="amPayment"><option>Cash</option><option>Card</option><option>Other</option></select></div>
-    <div class="am-field"><label for="amAddedBy">Added by</label><input id="amAddedBy" placeholder="Tara"></div>
-    <div class="am-field full"><label for="amNotes">Notes</label><textarea id="amNotes" placeholder="Optional note or receipt reference"></textarea></div>
-   </div>
-   <div class="am-dialog-actions"><button class="am-btn am-muted" type="button" onclick="closeAllowanceModal()">Cancel</button><button class="am-btn am-primary" type="button" onclick="saveAllowancePurchase()">Save purchase</button></div>
-  </div>
- </div>
- <div class="am-modal" id="deleteModal" onclick="if(event.target===this)closeDeleteModal()">
-  <div class="am-dialog">
-   <div class="am-dialog-head"><div class="am-dialog-title">Remove this purchase?</div><button class="am-close" type="button" onclick="closeDeleteModal()">×</button></div>
-   <div class="am-warning">The purchase will be marked as deleted, not erased. It will remain in History &amp; Archive and can be restored later.</div>
-   <div id="deleteFirstStep"><div id="deletePurchaseSummary" style="font-size:13px;font-weight:700;margin-bottom:14px;"></div><div class="am-dialog-actions"><button class="am-btn am-muted" type="button" onclick="closeDeleteModal()">Keep it</button><button class="am-btn am-danger" type="button" onclick="continueDeleteAllowance()">Continue →</button></div></div>
-   <div id="deleteSecondStep" style="display:none"><div style="font-size:12px;color:#667085;line-height:1.45;margin-bottom:10px">Second confirmation: type <strong>DELETE</strong> below to complete the action.</div><input id="deleteConfirmInput" class="am-field input am-confirm-input" placeholder="TYPE DELETE" autocomplete="off"><div class="am-dialog-actions"><button class="am-btn am-muted" type="button" onclick="closeDeleteModal()">Cancel</button><button class="am-btn am-danger" type="button" onclick="finishDeleteAllowance()">Delete safely</button></div></div>
-  </div>
- </div>
-
  <div class="page" id="p-costs">
  <div class="container">
  <div class="section">
@@ -1350,75 +1231,6 @@
  </div>
 
 <script>
-
-/* ── Kids allowance tracker ── */
-var allowanceKids = [
- {name:'Scarly', budget:500, icon:'🎀'},
- {name:'Bebe', budget:500, icon:'🌸'},
- {name:'Seb', budget:500, icon:'🧢'}
-];
-var allowanceView = 'active';
-var allowanceSelectedKid = 'all';
-var allowancePendingDelete = null;
-function allowanceLoad() {
- try { return JSON.parse(localStorage.getItem('floridaAllowance_v1') || '[]'); } catch(e) { return []; }
-}
-function allowanceSave(items) { localStorage.setItem('floridaAllowance_v1', JSON.stringify(items)); }
-function allowanceMoney(n) { return new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(Number(n)||0); }
-function allowanceEscape(v) { return String(v == null ? '' : v).replace(/[&<>'"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c];}); }
-function allowanceCategoryIcon(category) { return ({Clothing:'👕',Electronics:'🎧',Souvenirs:'🎁',Beauty:'💄','Books / Games':'🎮',Other:'🛍️'})[category] || '🛍️'; }
-function allowanceStats(items) {
- var active = items.filter(function(x){return x.status !== 'deleted';});
- var spent = active.reduce(function(t,x){return t + Number(x.amount||0);},0);
- var budget = allowanceKids.reduce(function(t,x){return t+x.budget;},0);
- return {active:active,spent:spent,budget:budget,remaining:budget-spent};
-}
-function renderAllowance() {
- var items = allowanceLoad(), stats = allowanceStats(items);
- var kpis = document.getElementById('allowanceKpis');
- if (!kpis) return;
- kpis.innerHTML = '<div class="am-kpi"><div class="am-kpi-value">'+allowanceMoney(stats.spent)+'</div><div class="am-kpi-label">Spent</div></div><div class="am-kpi"><div class="am-kpi-value">'+allowanceMoney(stats.remaining)+'</div><div class="am-kpi-label">Remaining</div></div><div class="am-kpi"><div class="am-kpi-value">'+stats.active.length+'</div><div class="am-kpi-label">Purchases</div></div>';
- document.getElementById('allowanceKids').innerHTML = '<button type="button" class="kid-card" onclick="selectAllowanceKid(\'all\')"><div class="kid-avatar">👨‍👩‍👧‍👦</div><div class="kid-name">Everyone</div><div class="kid-spent">'+allowanceMoney(stats.spent)+' spent</div><div class="progress-track"><div class="progress-fill" style="width:'+Math.min(100,(stats.spent/stats.budget)*100)+'%"></div></div></button>' + allowanceKids.map(function(k){
-   var kidItems = items.filter(function(x){return x.kid===k.name && x.status!=='deleted';});
-   var kidSpent = kidItems.reduce(function(t,x){return t+Number(x.amount||0);},0);
-   return '<button type="button" class="kid-card" onclick="selectAllowanceKid(\''+k.name+'\')"><div class="kid-avatar">'+k.icon+'</div><div class="kid-name">'+k.name+'</div><div class="kid-spent">'+allowanceMoney(kidSpent)+' / '+allowanceMoney(k.budget)+'</div><div class="progress-track"><div class="progress-fill" style="width:'+Math.min(100,(kidSpent/k.budget)*100)+'%"></div></div></button>';
- }).join('');
- document.getElementById('amTabActive').classList.toggle('active', allowanceView==='active');
- document.getElementById('amTabHistory').classList.toggle('active', allowanceView==='history');
- var shown = items.filter(function(x){return allowanceSelectedKid==='all' || x.kid===allowanceSelectedKid;});
- if (allowanceView==='active') shown = shown.filter(function(x){return x.status!=='deleted';});
- shown.sort(function(a,b){return new Date(b.date||b.createdAt)-new Date(a.date||a.createdAt);});
- var content = document.getElementById('allowanceContent');
- if (!shown.length) { content.innerHTML='<div class="am-empty"><div class="am-empty-icon">'+(allowanceView==='history'?'🧾':'🛍️')+'</div><div class="am-empty-title">'+(allowanceView==='history'?'No purchase history yet':'No purchases recorded yet')+'</div><div class="am-empty-sub">Tap <strong>Add purchase</strong> after a shopping trip and the totals update automatically.</div></div>'; return; }
- content.innerHTML = shown.map(function(x){
-   var deleted = x.status==='deleted';
-   return '<div class="purchase-card"><div class="purchase-top"><div class="purchase-icon">'+allowanceCategoryIcon(x.category)+'</div><div class="purchase-main"><div class="purchase-name">'+allowanceEscape(x.item||'Purchase')+'</div><div class="purchase-meta">'+allowanceEscape(x.kid)+' · '+allowanceEscape(x.store||'Shop not recorded')+' · '+allowanceEscape(x.date||'No date')+'</div></div><div class="purchase-amount">'+allowanceMoney(x.amount)+'</div></div><div class="purchase-foot"><div class="purchase-tags"><span class="am-tag '+(deleted?'deleted':'active')+'">'+(deleted?'Deleted':'Active')+'</span><span class="am-tag">'+allowanceEscape(x.category||'Other')+'</span><span class="am-tag">'+allowanceEscape(x.payment||'Cash')+'</span></div>'+(deleted?'<button type="button" class="am-restore" onclick="restoreAllowancePurchase(\''+x.id+'\')">Restore</button>':'<button type="button" class="am-delete" onclick="requestDeleteAllowance(\''+x.id+'\')">Delete</button>')+'</div>'+(x.notes?'<div class="purchase-meta" style="margin-top:9px">📝 '+allowanceEscape(x.notes)+'</div>':'')+'</div>';
- }).join('');
-}
-function selectAllowanceKid(kid) { allowanceSelectedKid=kid; allowanceView='active'; renderAllowance(); }
-function setAllowanceView(view) { allowanceView=view; renderAllowance(); }
-function openAllowanceModal() {
- document.getElementById('amDate').value = new Date().toISOString().slice(0,10);
- document.getElementById('amKid').value = allowanceSelectedKid==='all'?'Scarly':allowanceSelectedKid;
- document.getElementById('amStore').value=''; document.getElementById('amItem').value=''; document.getElementById('amAmount').value=''; document.getElementById('amNotes').value=''; document.getElementById('amAddedBy').value='Tara';
- document.getElementById('allowanceModal').classList.add('open');
-}
-function closeAllowanceModal() { document.getElementById('allowanceModal').classList.remove('open'); }
-function saveAllowancePurchase() {
- var amount=Number(document.getElementById('amAmount').value), item=document.getElementById('amItem').value.trim();
- if (!amount || amount<0 || !item) { alert('Please add what was bought and the amount.'); return; }
- var items=allowanceLoad(); items.push({id:'p_'+Date.now()+'_'+Math.random().toString(36).slice(2,7),kid:document.getElementById('amKid').value,date:document.getElementById('amDate').value||new Date().toISOString().slice(0,10),store:document.getElementById('amStore').value.trim(),item:item,category:document.getElementById('amCategory').value,amount:amount,payment:document.getElementById('amPayment').value,notes:document.getElementById('amNotes').value.trim(),addedBy:document.getElementById('amAddedBy').value.trim()||'Tara',status:'active',createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()});
- allowanceSave(items); closeAllowanceModal(); allowanceSelectedKid=document.getElementById('amKid').value; allowanceView='active'; renderAllowance();
-}
-function requestDeleteAllowance(id) {
- var x=allowanceLoad().find(function(p){return p.id===id;}); if(!x)return; allowancePendingDelete=id; document.getElementById('deletePurchaseSummary').textContent=x.kid+' · '+x.item+' · '+allowanceMoney(x.amount); document.getElementById('deleteFirstStep').style.display='block'; document.getElementById('deleteSecondStep').style.display='none'; document.getElementById('deleteConfirmInput').value=''; document.getElementById('deleteModal').classList.add('open');
-}
-function continueDeleteAllowance() { document.getElementById('deleteFirstStep').style.display='none'; document.getElementById('deleteSecondStep').style.display='block'; setTimeout(function(){document.getElementById('deleteConfirmInput').focus();},50); }
-function finishDeleteAllowance() { if(document.getElementById('deleteConfirmInput').value.trim().toUpperCase()!=='DELETE'){alert('Type DELETE to confirm.');return;} var items=allowanceLoad(); items=items.map(function(x){return x.id===allowancePendingDelete?Object.assign({},x,{status:'deleted',deletionRequestedAt:new Date().toISOString(),updatedAt:new Date().toISOString()}):x;}); allowanceSave(items); closeDeleteModal(); renderAllowance(); }
-function closeDeleteModal() { allowancePendingDelete=null; document.getElementById('deleteModal').classList.remove('open'); }
-function restoreAllowancePurchase(id) { var items=allowanceLoad().map(function(x){return x.id===id?Object.assign({},x,{status:'active',updatedAt:new Date().toISOString()}):x;}); allowanceSave(items); renderAllowance(); }
-function downloadAllowanceLog() { var blob=new Blob([JSON.stringify(allowanceLoad(),null,2)],{type:'application/json'}), a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='florida-2026-kids-purchase-history.json'; a.click(); URL.revokeObjectURL(a.href); }
-
 function itToggle(header) {
  var body = header.nextElementSibling;
  var chevron = header.querySelector('.it-chevron');
@@ -1430,7 +1242,6 @@ function nav(id, el) {
  document.querySelectorAll('.bn-item').forEach(function(b){ b.classList.remove('active'); });
  document.getElementById('p-' + id).classList.add('active');
  el.classList.add('active');
- if (id === 'allowance') renderAllowance();
  document.getElementById('app').scrollTo({top: 0, behavior: 'smooth'});
 }
 function tick() {
@@ -1441,7 +1252,6 @@ function tick() {
  document.getElementById('cd-m').textContent = Math.floor((d%3600000)/60000);
 }
 tick(); setInterval(tick, 30000);
-renderAllowance();
 function ctSwitch(id, el) {
  document.querySelectorAll('.ct-panel').forEach(function(p){ p.classList.remove('active'); });
  document.querySelectorAll('.ct-tab').forEach(function(t){ t.classList.remove('active'); });
